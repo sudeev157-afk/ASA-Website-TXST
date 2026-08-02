@@ -1,0 +1,205 @@
+/* ═══════════════════════════════════════════════════════
+   Landing Page – landing.module.css
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Full-viewport wrapper ──────────────────────────── */
+.landing {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  background: #0e1015;
+}
+
+/* ── Video background layer ─────────────────────────── */
+.videoBg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.videoOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(14, 16, 21, 0.3) 0%,
+    rgba(14, 16, 21, 0.55) 40%,
+    rgba(14, 16, 21, 0.88) 75%,
+    rgba(14, 16, 21, 0.97) 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Ambient glow (animated by anime.js) ────────────── */
+.ambientGlow {
+  position: absolute;
+  bottom: -15%;
+  left: -8%;
+  width: 55vw;
+  height: 55vw;
+  max-width: 800px;
+  max-height: 800px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(47, 95, 163, 0.18) 0%,
+    rgba(20, 184, 166, 0.06) 50%,
+    transparent 70%
+  );
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Particle field (particles injected by anime.js) ── */
+.particleField {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(47, 95, 163, 0.8) 0%,
+    rgba(20, 184, 166, 0.4) 70%,
+    transparent 100%
+  );
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* ── Hero content ───────────────────────────────────── */
+.hero {
+  position: relative;
+  z-index: 10;
+  padding: 0 clamp(2rem, 5vw, 6rem);
+  padding-bottom: clamp(3rem, 7vh, 6rem);
+  max-width: 760px;
+}
+
+.heroTag {
+  font-family: "Merriweather", Georgia, serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #14b8a6;
+  margin-bottom: 1rem;
+}
+
+.heroTitle {
+  font-family: "Merriweather", Georgia, serif;
+  font-size: clamp(2.4rem, 4.5vw, 4.2rem);
+  font-weight: 900;
+  line-height: 1.12;
+  color: #f6f7f9;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.25rem;
+}
+
+.heroAccent {
+  background: linear-gradient(135deg, #2f5fa3 0%, #14b8a6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.heroSub {
+  font-family: "Merriweather", Georgia, serif;
+  font-size: clamp(0.875rem, 1.1vw, 1.05rem);
+  font-weight: 300;
+  line-height: 1.75;
+  color: rgba(246, 247, 249, 0.6);
+  max-width: 520px;
+  margin-bottom: 2rem;
+}
+
+/* ── CTAs ────────────────────────────────────────────── */
+.heroCtas {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ctaPrimary {
+  font-family: "Merriweather", Georgia, serif;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #f6f7f9;
+  background: linear-gradient(135deg, #2f5fa3 0%, #245a9a 100%);
+  padding: 0.75rem 1.75rem;
+  border-radius: 6px;
+  border: 1px solid rgba(47, 95, 163, 0.4);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.3s ease;
+}
+
+.ctaPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(47, 95, 163, 0.4),
+    0 0 0 1px rgba(47, 95, 163, 0.3);
+  background: linear-gradient(135deg, #3668b0 0%, #2a64a6 100%);
+}
+
+.ctaPrimary:active {
+  transform: translateY(0);
+}
+
+.ctaSecondary {
+  font-family: "Merriweather", Georgia, serif;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(246, 247, 249, 0.75);
+  background: transparent;
+  padding: 0.75rem 1.75rem;
+  border-radius: 6px;
+  border: 1px solid rgba(246, 247, 249, 0.15);
+  cursor: pointer;
+  transition: transform 0.25s ease, border-color 0.25s ease, color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.ctaSecondary:hover {
+  transform: translateY(-2px);
+  color: #f6f7f9;
+  border-color: rgba(246, 247, 249, 0.35);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.ctaSecondary:active {
+  transform: translateY(0);
+}
+
+/* ── Corner decorative line ─────────────────────────── */
+.cornerDecor {
+  position: absolute;
+  bottom: 2.5rem;
+  right: 3rem;
+  width: 1px;
+  height: 120px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(47, 95, 163, 0.35) 50%,
+    transparent 100%
+  );
+  z-index: 10;
+}
