@@ -10,7 +10,8 @@
   align-items: center;
   justify-content: center;
   height: auto;
-  padding: clamp(0.75rem, 1.2vw, 1.25rem) clamp(1.5rem, 4vw, 3rem) 0;
+  /* Top padding updated to exactly vertically align the header's center with the logo's center */
+  padding: 2.75rem clamp(1.5rem, 4vw, 3rem) 0;
   background: transparent;
   transition: box-shadow 0.35s ease;
 }
@@ -36,21 +37,31 @@
 }
 
 /* ── Logo ─────────────────────────────────────────────── */
-.logoLink {
-  flex-shrink: 0;
+.floatingLogoLink {
+  position: absolute;
+  top: 1.5rem;
+  left: 3rem;
+  z-index: 110;
   display: flex;
   align-items: center;
 }
 
-.logoWrapper {
-  width: 64px;
-  height: 64px;
+.floatingLogoWrapper {
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  background: white;
+}
+
+.floatingLogoWrapper:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .logoImage {

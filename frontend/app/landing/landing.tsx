@@ -205,10 +205,10 @@ export default function LandingPage() {
 
         <motion.div className={styles.heroTextContainer} variants={fadeUp}>
           <p className={styles.heroParagraph}>
-            <strong className={styles.dropCap}>We</strong> are a student led organization at <strong>Texas State University</strong> dedicated to advancing <strong>statistical literacy</strong>, analytical thinking, and data-driven decision-making.
+            We are a student led organization at Texas State University dedicated to advancing statistical literacy, analytical thinking, and data-driven decision-making.
           </p>
           <p className={styles.heroParagraph}>
-            We welcome students from all academic disciplines to join a <strong>community</strong> focused on professional development, technical skill building, networking, and the <strong>responsible</strong> use of data to address real-world challenges.
+            We welcome students from all academic disciplines to join a community focused on professional development, technical skill building, networking, and the responsible use of data to address real-world challenges.
           </p>
         </motion.div>
       </motion.section>

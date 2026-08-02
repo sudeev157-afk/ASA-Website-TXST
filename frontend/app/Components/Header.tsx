@@ -33,20 +33,21 @@ export default function Header() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
     >
+      {/* ── Logo moved outside header box ── */}
+      <Link href="/landing" className={styles.floatingLogoLink} aria-label="ASA Home">
+        <div className={styles.floatingLogoWrapper}>
+          <Image
+            src="/Logo_ASA.png"
+            alt="Association for Statistics and Analytics – Texas State University"
+            width={110}
+            height={110}
+            priority
+            className={styles.logoImage}
+          />
+        </div>
+      </Link>
+
       <div className={styles.inner}>
-        {/* ── Logo ── */}
-        <Link href="/landing" className={styles.logoLink} aria-label="ASA Home">
-          <div className={styles.logoWrapper}>
-            <Image
-              src="/Logo_ASA.png"
-              alt="Association for Statistics and Analytics – Texas State University"
-              width={64}
-              height={64}
-              priority
-              className={styles.logoImage}
-            />
-          </div>
-        </Link>
 
         {/* ── Navigation ── */}
         <nav className={styles.nav} aria-label="Primary navigation">
