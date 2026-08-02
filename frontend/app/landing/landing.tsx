@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import anime from "animejs";
 import styles from "./landing.module.css";
@@ -35,9 +35,59 @@ const fadeIn = {
 /* ────────────────────────────────────────────────────────
    Page Component
    ──────────────────────────────────────────────────────── */
+const CROSSFADE_DURATION = 1.5; // seconds to crossfade before video ends
+
 export default function LandingPage() {
   const particleContainerRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
+  const videoARef = useRef<HTMLVideoElement>(null);
+  const videoBRef = useRef<HTMLVideoElement>(null);
+  const activeRef = useRef<"A" | "B">("A");
+
+  /* ── Seamless video crossfade loop ───────────────── */
+  const startCrossfade = useCallback(() => {
+    const incoming = activeRef.current === "A" ? videoBRef.current : videoARef.current;
+    const outgoing = activeRef.current === "A" ? videoARef.current : videoBRef.current;
+    if (!incoming || !outgoing) return;
+
+    // Reset incoming video and start it
+    incoming.currentTime = 0;
+    incoming.play();
+
+    // Crossfade: fade incoming in, outgoing out
+    incoming.style.transition = `opacity ${CROSSFADE_DURATION}s ease`;
+    outgoing.style.transition = `opacity ${CROSSFADE_DURATION}s ease`;
+    incoming.style.opacity = "1";
+    outgoing.style.opacity = "0";
+
+    // Flip active
+    activeRef.current = activeRef.current === "A" ? "B" : "A";
+  }, []);
+
+  useEffect(() => {
+    const videoA = videoARef.current;
+    const videoB = videoBRef.current;
+    if (!videoA || !videoB) return;
+
+    // B starts hidden
+    videoB.style.opacity = "0";
+    videoA.style.opacity = "1";
+
+    const onTimeUpdate = () => {
+      const active = activeRef.current === "A" ? videoA : videoB;
+      if (active.duration && active.currentTime >= active.duration - CROSSFADE_DURATION) {
+        startCrossfade();
+      }
+    };
+
+    videoA.addEventListener("timeupdate", onTimeUpdate);
+    videoB.addEventListener("timeupdate", onTimeUpdate);
+
+    return () => {
+      videoA.removeEventListener("timeupdate", onTimeUpdate);
+      videoB.removeEventListener("timeupdate", onTimeUpdate);
+    };
+  }, [startCrossfade]);
 
   /* ── Anime.js: floating ambient particles ────────── */
   useEffect(() => {
@@ -110,19 +160,23 @@ export default function LandingPage() {
 
   return (
     <main className={styles.landing}>
-      {/* ── Video Background (dummy placeholder) ──────── */}
+      {/* ── Video Background (crossfade loop) ─────────── */}
       <div className={styles.videoBg}>
         <video
+          ref={videoARef}
           className={styles.video}
           autoPlay
           muted
-          loop
           playsInline
-          poster=""
-        >
-          {/* Replace src with your HLS .m3u8 via hls.js or a direct mp4 */}
-          <source src="" type="video/mp4" />
-        </video>
+          src="/Video_Backfround.mp4"
+        />
+        <video
+          ref={videoBRef}
+          className={styles.video}
+          muted
+          playsInline
+          src="/Video_Backfround.mp4"
+        />
         {/* Dark gradient overlay */}
         <div className={styles.videoOverlay} />
       </div>
@@ -141,27 +195,21 @@ export default function LandingPage() {
         animate="show"
       >
         <motion.p className={styles.heroTag} variants={fadeUp}>
-          Association for Statistics &amp; Analytics
+          Our Vision &amp; Mission
         </motion.p>
 
         <motion.h1 className={styles.heroTitle} variants={fadeUp}>
-          Data-Driven
-          <br />
-          <span className={styles.heroAccent}>Futures Start Here.</span>
+          Association for<br />
+          <span className={styles.heroAccent}>Statistics and Analytics</span>
         </motion.h1>
 
-        <motion.p className={styles.heroSub} variants={fadeUp}>
-          Empowering Texas State students through analytics workshops, industry
-          networking, and a community built on curiosity.
-        </motion.p>
-
-        <motion.div className={styles.heroCtas} variants={fadeUp}>
-          <a href="/join" className={styles.ctaPrimary}>
-            Become a Member
-          </a>
-          <a href="/events" className={styles.ctaSecondary}>
-            Explore Events
-          </a>
+        <motion.div className={styles.heroTextContainer} variants={fadeUp}>
+          <p className={styles.heroParagraph}>
+            <strong className={styles.dropCap}>We</strong> are a student led organization at <strong>Texas State University</strong> dedicated to advancing <strong>statistical literacy</strong>, analytical thinking, and data-driven decision-making.
+          </p>
+          <p className={styles.heroParagraph}>
+            We welcome students from all academic disciplines to join a <strong>community</strong> focused on professional development, technical skill building, networking, and the <strong>responsible</strong> use of data to address real-world challenges.
+          </p>
         </motion.div>
       </motion.section>
 
