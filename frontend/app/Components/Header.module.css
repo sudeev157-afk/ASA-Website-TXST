@@ -13,11 +13,11 @@
   /* Top padding updated to exactly vertically align the header's center with the logo's center */
   padding: 2.75rem clamp(1.5rem, 4vw, 3rem) 0;
   background: transparent;
-  transition: box-shadow 0.35s ease;
 }
 
-.header.scrolled {
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+/* Scroll state kept as a styling hook — no chrome while the header is bare */
+.scrolled {
+  background: transparent;
 }
 
 /* ── Inner wrapper (contained, not edge-to-edge) ────── */
@@ -30,13 +30,14 @@
   align-items: center;
   justify-content: space-between;
   gap: 2.5rem;
-  background: #ffffff;
-  border-radius: 14px;
+  /* Chrome-free: no box, no border, no shadow */
+  background: transparent;
+  border: none;
+  box-shadow: none;
   padding: 0.75rem clamp(1.5rem, 3vw, 2.5rem);
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
 }
 
-/* ── Logo ─────────────────────────────────────────────── */
+/* ── Logo (sits flush on the background) ─────────────── */
 .floatingLogoLink {
   position: absolute;
   top: 1.5rem;
@@ -49,25 +50,22 @@
 .floatingLogoWrapper {
   width: 110px;
   height: 110px;
-  border-radius: 50%;
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  background: white;
+  background: transparent;
+  transition: transform 0.3s ease;
 }
 
 .floatingLogoWrapper:hover {
   transform: scale(1.05);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .logoImage {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  transition: filter 0.45s ease;
 }
 
 /* ── Nav ──────────────────────────────────────────────── */
@@ -118,22 +116,19 @@
   font-size: 1.1rem;
   font-weight: 700;
   letter-spacing: 0.015em;
-  color: #1a1d23;
+  color: var(--black);
   transition: color 0.45s ease;
 }
 
+/* Maroon appears on hover only */
 .navLink:hover .navText {
-  color: #501214;
+  color: var(--maroon);
   transition: color 0.45s ease;
 }
 
-/* ── Active route ─────────────────────────────────────── */
-.navLinkActive {
-  background: rgba(80, 18, 20, 0.08);
-}
-
+/* ── Active route (monochrome) ───────────────────────── */
 .navLinkActive .navText {
-  color: #501214;
+  color: var(--black);
 }
 
 .navUnderline {
@@ -143,7 +138,35 @@
   bottom: 0.25rem;
   height: 2px;
   border-radius: 2px;
-  background: linear-gradient(90deg, #501214 0%, #7a1e21 100%);
+  background: var(--black);
+}
+
+/* ── Dark variant (landing page, over video) ─────────── */
+.dark .logoImage {
+  /* Flatten the logo to pure white so it reads on the video */
+  filter: brightness(0) invert(1);
+}
+
+.dark .navText,
+.dark .navLinkActive .navText {
+  color: var(--white);
+}
+
+.dark .navUnderline {
+  background: var(--white);
+}
+
+/* Maroon still drives hover, kept legible on dark */
+.dark .navLink:hover {
+  background: rgba(80, 18, 20, 0.55);
+}
+
+.dark .navLink:hover .navText {
+  color: var(--white);
+}
+
+.dark .navLink:active {
+  background: rgba(80, 18, 20, 0.75);
 }
 
 /* ── Join Us CTA ─────────────────────────────────────── */
@@ -153,8 +176,8 @@
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #ffffff;
-  background: linear-gradient(135deg, #501214 0%, #7a1e21 100%);
+  color: var(--white);
+  background: var(--maroon);
   border: none;
   border-radius: 8px;
   padding: 0.7rem 1.6rem;
@@ -165,8 +188,8 @@
 
 .joinBtn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 24px rgba(80, 18, 20, 0.35);
-  background: linear-gradient(135deg, #601518 0%, #8e2326 100%);
+  box-shadow: 0 6px 20px rgba(80, 18, 20, 0.3);
+  background: var(--maroon-dark);
 }
 
 .joinBtn:active {

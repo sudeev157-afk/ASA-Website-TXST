@@ -2,28 +2,33 @@
 
 /* ─── Design Tokens ─────────────────────────────────── */
 :root {
-  /* Primary palette */
-  --charcoal: #1a1d23;
-  --data-blue: #2f5fa3;
-  --cool-white: #f6f7f9;
-  --maroon: #501214;
+  /* Monochrome ramp — the whole theme lives here */
+  --black: #000000;
+  --grey-900: #0d0d0d;
+  --grey-700: #333333;
+  --grey-500: #757575;
+  --grey-300: #bdbdbd;
+  --grey-100: #f2f2f2;
+  --white: #ffffff;
 
-  /* Secondary palette */
-  --teal: #14b8a6;
-  --amber: #f59e0b;
+  /* Accent — reserved for hover states and the Join Us CTA only */
+  --maroon: #501214;
+  --maroon-dark: #3a0d0e;
 
   /* Derived */
-  --header-bg: rgba(26, 29, 35, 0.82);
-  --glass-border: rgba(246, 247, 249, 0.08);
+  --hairline: rgba(0, 0, 0, 0.1);
+  --hairline-inverse: rgba(255, 255, 255, 0.12);
 }
 
 @theme inline {
-  --color-charcoal: var(--charcoal);
-  --color-data-blue: var(--data-blue);
-  --color-cool-white: var(--cool-white);
+  --color-black: var(--black);
+  --color-grey-900: var(--grey-900);
+  --color-grey-700: var(--grey-700);
+  --color-grey-500: var(--grey-500);
+  --color-grey-300: var(--grey-300);
+  --color-grey-100: var(--grey-100);
+  --color-white: var(--white);
   --color-maroon: var(--maroon);
-  --color-teal: var(--teal);
-  --color-amber: var(--amber);
 }
 
 /* ─── Base Reset ────────────────────────────────────── */
@@ -35,13 +40,17 @@
   box-sizing: border-box;
 }
 
-html,
-body {
+html {
   height: 100%;
-  overflow: hidden;
+}
+
+body {
+  min-height: 100%;
+  /* Vertical scrolling is enabled; nothing should ever scroll sideways */
+  overflow-x: hidden;
   font-family: "Merriweather", Georgia, serif;
-  background: var(--charcoal);
-  color: var(--cool-white);
+  background: var(--black);
+  color: var(--white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -53,6 +62,6 @@ a {
 }
 
 ::selection {
-  background: var(--data-blue);
-  color: var(--cool-white);
+  background: var(--white);
+  color: var(--black);
 }

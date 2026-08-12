@@ -160,66 +160,80 @@ export default function LandingPage() {
 
   return (
     <main className={styles.landing}>
-      {/* ── Video Background (crossfade loop) ─────────── */}
-      <div className={styles.videoBg}>
-        <video
-          ref={videoARef}
-          className={styles.video}
-          autoPlay
-          muted
-          playsInline
-          src="/Video_Backfround.mp4"
+      {/* ══ Section 1 — video hero ═══════════════════════ */}
+      <section className={styles.heroSection} data-header-theme="dark">
+        {/* ── Video Background (crossfade loop) ─────────── */}
+        <div className={styles.videoBg}>
+          <video
+            ref={videoARef}
+            className={styles.video}
+            autoPlay
+            muted
+            playsInline
+            src="/Video_Backfround.mp4"
+          />
+          <video
+            ref={videoBRef}
+            className={styles.video}
+            muted
+            playsInline
+            src="/Video_Backfround.mp4"
+          />
+          {/* Dark gradient overlay */}
+          <div className={styles.videoOverlay} />
+        </div>
+
+        {/* ── Ambient glow (anime.js controlled) ────────── */}
+        <div ref={glowRef} className={styles.ambientGlow} />
+
+        {/* ── Floating particles (anime.js controlled) ──── */}
+        <div ref={particleContainerRef} className={styles.particleField} />
+
+        {/* ── Hero Content ──────────────────────────────── */}
+        <motion.section
+          className={styles.hero}
+          variants={container}
+          initial="hidden"
+          animate="show"
+        >
+          <motion.h1 className={styles.heroTitle} variants={fadeUp}>
+            Association for<br />
+            <span className={styles.heroAccent}>Statistics and Analytics</span>
+          </motion.h1>
+        </motion.section>
+
+        {/* ── Decorative corner line ────────────────────── */}
+        <motion.div
+          className={styles.cornerDecor}
+          variants={fadeIn}
+          initial="hidden"
+          animate="show"
         />
-        <video
-          ref={videoBRef}
-          className={styles.video}
-          muted
-          playsInline
-          src="/Video_Backfround.mp4"
-        />
-        {/* Dark gradient overlay */}
-        <div className={styles.videoOverlay} />
-      </div>
+      </section>
 
-      {/* ── Ambient glow (anime.js controlled) ────────── */}
-      <div ref={glowRef} className={styles.ambientGlow} />
-
-      {/* ── Floating particles (anime.js controlled) ──── */}
-      <div ref={particleContainerRef} className={styles.particleField} />
-
-      {/* ── Hero Content ──────────────────────────────── */}
-      <motion.section
-        className={styles.hero}
-        variants={container}
-        initial="hidden"
-        animate="show"
+      {/* ══ Section 2 — white ════════════════════════════ */}
+      <section
+        className={`${styles.section} ${styles.sectionLight}`}
+        data-header-theme="light"
       >
-        <motion.p className={styles.heroTag} variants={fadeUp}>
-          Our Vision &amp; Mission
-        </motion.p>
+        <div className={styles.sectionInner} />
+      </section>
 
-        <motion.h1 className={styles.heroTitle} variants={fadeUp}>
-          Association for<br />
-          <span className={styles.heroAccent}>Statistics and Analytics</span>
-        </motion.h1>
+      {/* ══ Section 3 — black ════════════════════════════ */}
+      <section
+        className={`${styles.section} ${styles.sectionDark}`}
+        data-header-theme="dark"
+      >
+        <div className={styles.sectionInner} />
+      </section>
 
-        <motion.div className={styles.heroTextContainer} variants={fadeUp}>
-          <p className={styles.heroParagraph}>
-            We are a student led organization at Texas State University dedicated to advancing statistical literacy, analytical thinking, and data-driven decision-making.
-          </p>
-          <p className={styles.heroParagraph}>
-            We welcome students from all academic disciplines to join a community focused on professional development, technical skill building, networking, and the responsible use of data to address real-world challenges.
-          </p>
-        </motion.div>
-      </motion.section>
-
-      {/* ── Decorative corner line ────────────────────── */}
-      <motion.div
-        className={styles.cornerDecor}
-        variants={fadeIn}
-        initial="hidden"
-        animate="show"
-      />
+      {/* ══ Section 4 — white ════════════════════════════ */}
+      <section
+        className={`${styles.section} ${styles.sectionLight}`}
+        data-header-theme="light"
+      >
+        <div className={styles.sectionInner} />
+      </section>
     </main>
   );
 }

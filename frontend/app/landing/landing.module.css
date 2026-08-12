@@ -2,15 +2,49 @@
    Landing Page – landing.module.css
    ═══════════════════════════════════════════════════════ */
 
-/* ── Full-viewport wrapper ──────────────────────────── */
+/* ── Page wrapper (scrolls through 4 sections) ──────── */
 .landing {
   position: relative;
-  width: 100vw;
+  width: 100%;
+  background: var(--black);
+}
+
+/* ── Section 1: video hero ──────────────────────────── */
+.heroSection {
+  position: relative;
+  width: 100%;
   height: 100vh;
   overflow: hidden;
   display: flex;
   align-items: flex-end;
-  background: #0e1015;
+  background: var(--black);
+}
+
+/* ── Sections 2-4: alternating white / black / white ── */
+.section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.sectionLight {
+  background: var(--white);
+  color: var(--black);
+}
+
+.sectionDark {
+  background: var(--black);
+  color: var(--white);
+}
+
+/* Content slot for the empty sections */
+.sectionInner {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 clamp(2rem, 5vw, 6rem);
 }
 
 /* ── Video background layer ─────────────────────────── */
@@ -26,6 +60,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Monochrome theme — drop for full colour footage */
+  filter: grayscale(1);
 }
 
 .videoOverlay {
@@ -33,10 +69,10 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(14, 16, 21, 0.3) 0%,
-    rgba(14, 16, 21, 0.55) 40%,
-    rgba(14, 16, 21, 0.88) 75%,
-    rgba(14, 16, 21, 0.97) 100%
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.55) 40%,
+    rgba(0, 0, 0, 0.88) 75%,
+    rgba(0, 0, 0, 0.97) 100%
   );
   pointer-events: none;
 }
@@ -53,8 +89,8 @@
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(47, 95, 163, 0.18) 0%,
-    rgba(20, 184, 166, 0.06) 50%,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
     transparent 70%
   );
   filter: blur(80px);
@@ -76,8 +112,8 @@
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(47, 95, 163, 0.8) 0%,
-    rgba(20, 184, 166, 0.4) 70%,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(255, 255, 255, 0.35) 70%,
     transparent 100%
   );
   opacity: 0;
@@ -99,7 +135,7 @@
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #ffffff;
+  color: var(--white);
   margin-bottom: 1rem;
 }
 
@@ -108,16 +144,13 @@
   font-size: clamp(2.8rem, 5vw, 4.8rem);
   font-weight: 900;
   line-height: 1.12;
-  color: #f6f7f9;
+  color: var(--white);
   letter-spacing: -0.01em;
   margin-bottom: 1.25rem;
 }
 
 .heroAccent {
-  background: linear-gradient(135deg, #2f5fa3 0%, #14b8a6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--white);
 }
 
 .heroTextContainer {
@@ -132,12 +165,12 @@
   font-size: clamp(1.2rem, 1.8vw, 1.6rem);
   font-weight: 300;
   line-height: 1.85;
-  color: rgba(246, 247, 249, 0.8);
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .heroParagraph strong {
   font-weight: 700;
-  color: #f6f7f9;
+  color: var(--white);
 }
 
 .dropCap {
@@ -150,7 +183,7 @@
   margin-top: 0.3rem; /* aligns the flat top of the W with the text ascender */
   margin-bottom: -0.5rem; /* allows it to hug the bottom line */
   font-weight: 900;
-  color: #ffffff;
+  color: var(--white);
 }
 
 /* ── Corner decorative line ─────────────────────────── */
@@ -163,7 +196,7 @@
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(47, 95, 163, 0.35) 50%,
+    rgba(255, 255, 255, 0.3) 50%,
     transparent 100%
   );
   z-index: 10;

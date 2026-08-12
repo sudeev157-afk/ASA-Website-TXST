@@ -15,22 +15,53 @@ const NAV_LINKS = [
   { label: "Contact Us", href: "/contact" },
 ];
 
+/* Y offset the header samples to decide which section sits beneath it */
+const THEME_PROBE_Y = 80;
+
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [sectionTheme, setSectionTheme] = useState<"light" | "dark" | null>(null);
   const headerRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
 
-  /* Track scroll for potential future use (currently landing has no scroll) */
+  /* Sections may declare `data-header-theme`; otherwise fall back to the route
+     (landing sits on dark video, every other route is a white page). */
+  const isDark = sectionTheme
+    ? sectionTheme === "dark"
+    : pathname.startsWith("/landing");
+
+  /* Track scroll position and the theme of the section under the header */
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 20);
+
+      const sections =
+        document.querySelectorAll<HTMLElement>("[data-header-theme]");
+      let theme: "light" | "dark" | null = null;
+      sections.forEach((el) => {
+        const { top, bottom } = el.getBoundingClientRect();
+        if (top <= THEME_PROBE_Y && bottom > THEME_PROBE_Y) {
+          theme = el.dataset.headerTheme === "light" ? "light" : "dark";
+        }
+      });
+      setSectionTheme(theme);
+    };
+
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [pathname]);
 
   return (
     <motion.header
       ref={headerRef}
-      className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}
+      className={`${styles.header} ${isDark ? styles.dark : ""} ${
+        scrolled ? styles.scrolled : ""
+      }`}
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
@@ -39,7 +70,7 @@ export default function Header() {
       <Link href="/landing" className={styles.floatingLogoLink} aria-label="ASA Home">
         <div className={styles.floatingLogoWrapper}>
           <Image
-            src="/Logo_ASA.png"
+            src="/Logo_ASA_transparent.png"
             alt="Association for Statistics and Analytics – Texas State University"
             width={110}
             height={110}

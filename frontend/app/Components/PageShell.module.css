@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════
-   Shared page background – PageShell.module.css
-   Used by every route except the landing page.
+   Shared page shell – PageShell.module.css
+   Used by every route except the landing page. Plain white.
    ═══════════════════════════════════════════════════════ */
 
 /* ── Full-viewport wrapper ──────────────────────────── */
@@ -11,31 +11,8 @@
   overflow: hidden;
   display: flex;
   align-items: flex-end;
-  background: #0e1015;
-}
-
-/* ── Image background layer ─────────────────────────── */
-.imageBg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-.image {
-  object-fit: cover;
-}
-
-.imageOverlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(14, 16, 21, 0.3) 0%,
-    rgba(14, 16, 21, 0.55) 40%,
-    rgba(14, 16, 21, 0.88) 75%,
-    rgba(14, 16, 21, 0.97) 100%
-  );
-  pointer-events: none;
+  background: var(--white);
+  color: var(--black);
 }
 
 /* ── Content slot (empty for now) ───────────────────── */
