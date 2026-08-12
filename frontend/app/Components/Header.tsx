@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 import styles from "./Header.module.css";
 
 const NAV_LINKS = [
@@ -17,6 +18,7 @@ const NAV_LINKS = [
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
+  const pathname = usePathname();
 
   /* Track scroll for potential future use (currently landing has no scroll) */
   useEffect(() => {
@@ -52,18 +54,29 @@ export default function Header() {
         {/* ── Navigation ── */}
         <nav className={styles.nav} aria-label="Primary navigation">
           <ul className={styles.navList}>
-            {NAV_LINKS.map(({ label, href }) => (
-              <li key={href}>
-                <Link href={href} className={styles.navLink}>
-                  <span className={styles.navText}>{label}</span>
-                  <motion.span
-                    className={styles.navUnderline}
-                    layoutId="nav-underline"
-                    initial={false}
-                  />
-                </Link>
-              </li>
-            ))}
+            {NAV_LINKS.map(({ label, href }) => {
+              const isActive =
+                pathname === href || pathname.startsWith(`${href}/`);
+
+              return (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className={`${styles.navLink} ${isActive ? styles.navLinkActive : ""}`}
+                    aria-current={isActive ? "page" : undefined}
+                  >
+                    <span className={styles.navText}>{label}</span>
+                    {isActive && (
+                      <motion.span
+                        className={styles.navUnderline}
+                        layoutId="nav-underline"
+                        initial={false}
+                      />
+                    )}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </nav>
 

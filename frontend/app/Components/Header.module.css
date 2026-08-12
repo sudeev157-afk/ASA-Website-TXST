@@ -127,8 +127,23 @@
   transition: color 0.45s ease;
 }
 
+/* ── Active route ─────────────────────────────────────── */
+.navLinkActive {
+  background: rgba(80, 18, 20, 0.08);
+}
+
+.navLinkActive .navText {
+  color: #501214;
+}
+
 .navUnderline {
-  display: none;
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 0.25rem;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #501214 0%, #7a1e21 100%);
 }
 
 /* ── Join Us CTA ─────────────────────────────────────── */

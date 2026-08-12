@@ -1,0 +1,48 @@
+/* ═══════════════════════════════════════════════════════
+   Shared page background – PageShell.module.css
+   Used by every route except the landing page.
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Full-viewport wrapper ──────────────────────────── */
+.shell {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  background: #0e1015;
+}
+
+/* ── Image background layer ─────────────────────────── */
+.imageBg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.imageOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(14, 16, 21, 0.3) 0%,
+    rgba(14, 16, 21, 0.55) 40%,
+    rgba(14, 16, 21, 0.88) 75%,
+    rgba(14, 16, 21, 0.97) 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Content slot (empty for now) ───────────────────── */
+.content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  padding: 0 clamp(2rem, 5vw, 6rem);
+  padding-bottom: clamp(3rem, 7vh, 6rem);
+}
