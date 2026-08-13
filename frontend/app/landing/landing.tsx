@@ -219,18 +219,18 @@ export default function LandingPage() {
         <div className={styles.sectionInner} />
       </section>
 
-      {/* ══ Section 3 — black ════════════════════════════ */}
+      {/* ══ Section 3 — white ════════════════════════════ */}
       <section
-        className={`${styles.section} ${styles.sectionDark}`}
-        data-header-theme="dark"
+        className={`${styles.section} ${styles.sectionLight}`}
+        data-header-theme="light"
       >
         <div className={styles.sectionInner} />
       </section>
 
-      {/* ══ Section 4 — white ════════════════════════════ */}
+      {/* ══ Section 4 — black ════════════════════════════ */}
       <section
-        className={`${styles.section} ${styles.sectionLight}`}
-        data-header-theme="light"
+        className={`${styles.section} ${styles.sectionDark}`}
+        data-header-theme="dark"
       >
         <div className={styles.sectionInner} />
       </section>
