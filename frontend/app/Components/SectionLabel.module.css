@@ -1,0 +1,43 @@
+/* ═══════════════════════════════════════════════════════
+   Section label – SectionLabel.module.css
+   ═══════════════════════════════════════════════════════ */
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Draws out from the left. Its own transform origin, or it would grow from
+   the middle and read as a dash rather than a line being drawn. */
+.rule {
+  display: block;
+  flex-shrink: 0;
+  width: clamp(28px, 3vw, 44px);
+  height: 2px;
+  background: var(--accent);
+  transform-origin: left center;
+}
+
+.text {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  /* Wide, because at this size the tracking is what makes it read as a
+     label and not as small body text */
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .label {
+    gap: 0.8rem;
+  }
+
+  .text {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+  }
+}

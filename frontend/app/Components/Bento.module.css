@@ -1,0 +1,159 @@
+/* ═══════════════════════════════════════════════════════
+   Bento tiles – Bento.module.css
+
+   The chrome only. Each page owns its own arrangement through
+   `grid-template-areas`, and sets `--tile-word` / `--tile-icon` per area so
+   a large tile carries larger type without needing its own rules here.
+   ═══════════════════════════════════════════════════════ */
+
+.grid {
+  list-style: none;
+  display: grid;
+  gap: clamp(0.7rem, 1.3vw, 1.1rem);
+}
+
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(0.9rem, 2.3vh, 1.4rem);
+  /* Sets the row height, and so the height of the double tile above it —
+     tall enough to breathe, short enough that the big tile is not mostly
+     empty space */
+  min-height: clamp(136px, 16.5vh, 166px);
+  padding: clamp(1.3rem, 2.1vw, 1.9rem);
+  border: 1px solid var(--ink-4);
+  border-radius: 16px;
+  /* A lift off the ground rather than a second colour — the page is still
+     one surface. Both values come from the section's tone, so the same
+     tile works on pine and on paper. */
+  background: var(--surface);
+  overflow: hidden;
+  transition: border-color 0.4s ease, background 0.4s ease;
+}
+
+.tile:hover {
+  border-color: var(--accent-soft);
+  background: var(--surface-hi);
+}
+
+.iconWrap {
+  display: block;
+  flex-shrink: 0;
+}
+
+.icon {
+  width: var(--tile-icon, 30px);
+  height: var(--tile-icon, 30px);
+  flex-shrink: 0;
+  color: var(--ink-3);
+  transition: color 0.35s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tile:hover .icon {
+  color: var(--accent);
+  transform: translateY(-3px);
+}
+
+.word {
+  font-family: var(--font-body);
+  font-size: var(--tile-word, clamp(1.5rem, 2.6vw, 2.1rem));
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  color: var(--ink-1);
+}
+
+/* The stretched link: named by the word, sized to the tile */
+.wordLink {
+  color: inherit;
+  transition: color 0.35s ease;
+}
+
+.wordLink::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  cursor: pointer;
+}
+
+.tile:hover .wordLink {
+  color: var(--accent);
+}
+
+.tail {
+  /* Two lines' worth, whether the sentence needs them or not. Without it a
+     tile whose tail wraps pushes its word up and the row goes ragged. */
+  min-height: 2.9em;
+  margin-top: 0.65rem;
+  font-family: var(--font-body);
+  font-size: clamp(0.85rem, 1.05vw, 0.95rem);
+  line-height: 1.55;
+  letter-spacing: -0.005em;
+  color: var(--ink-3);
+  max-width: 34ch;
+  transition: color 0.35s ease;
+}
+
+.tile:hover /* The stretched link: named by the word, sized to the tile */
+.wordLink {
+  color: inherit;
+  transition: color 0.35s ease;
+}
+
+.wordLink::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  cursor: pointer;
+}
+
+.tile:hover .wordLink {
+  color: var(--accent);
+}
+
+.tail {
+  color: var(--ink-2);
+}
+
+.index {
+  position: absolute;
+  top: clamp(1.3rem, 2.1vw, 1.9rem);
+  right: clamp(1.3rem, 2.1vw, 1.9rem);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  color: var(--ink-4);
+  transition: color 0.35s ease;
+}
+
+.tile:hover .index {
+  color: var(--accent);
+}
+
+/*
+   Reduced motion: the tiles are simply there. Motion disables transform
+   animations under this setting, so a tile left at its entry offset would
+   sit outside its own grid area — `!important` beats the inline transform
+   Motion writes.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .tile {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Same trim as the pages make on short laptop screens */
+@media (min-width: 901px) and (max-height: 820px) {
+  .tile {
+    min-height: clamp(112px, 14.5vh, 142px);
+    gap: clamp(0.85rem, 2.4vh, 1.3rem);
+    padding: clamp(1.1rem, 1.8vw, 1.55rem);
+  }
+}

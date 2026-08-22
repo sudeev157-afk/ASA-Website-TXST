@@ -1,0 +1,32 @@
+/*
+   The clip a line rises into.
+
+   The padding is the important part. A clip box sized to the line box cuts
+   the tail off every descender — the g in "nothing", the y in "You" — so
+   the box is grown to clear them and pulled back by the same amount, which
+   leaves the surrounding rhythm untouched.
+*/
+.clip {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
+}
+
+.line {
+  display: block;
+  will-change: transform;
+}
+
+/*
+   Reduced motion: no offset at all. Framer disables transform animations
+   under this setting, so a line left at its starting offset would stay
+   clipped out of its box permanently — invisible rather than merely still.
+   `!important` is here to beat the inline transform Motion writes.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .line {
+    transform: none !important;
+    will-change: auto;
+  }
+}

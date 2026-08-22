@@ -1,0 +1,84 @@
+/* ═══════════════════════════════════════════════════════
+   Section motifs – Motifs.module.css
+
+   Every motif is one SVG on a 400 × 300 field, drawn only in the tone's own
+   variables so the same figure works on pine and on paper. They are
+   diagrams, not decoration: each one draws the sentence it sits beside.
+   ═══════════════════════════════════════════════════════ */
+
+.svg {
+  display: block;
+  width: 100%;
+  max-width: 470px;
+  height: auto;
+  overflow: visible;
+}
+
+/* Points, and anything else that is data */
+.dot {
+  fill: var(--ink-3);
+}
+
+.dotAccent {
+  fill: var(--accent);
+}
+
+/* The mark that carries the argument — one per motif */
+.line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+/* Structure: axes, rules, the boundary being crossed */
+.rule {
+  fill: none;
+  stroke: var(--ink-4);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.ruleDashed {
+  fill: none;
+  stroke: var(--ink-4);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 7;
+  stroke-linecap: round;
+}
+
+.shape {
+  fill: none;
+  stroke: var(--ink-3);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.shapeAccent {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  fill: var(--ink-4);
+}
+
+/*
+   Reduced motion: Motion disables transform animations, so anything whose
+   only route to its resting place is an x/y offset would stay put. These
+   figures are all legible in their starting arrangement, and nothing here
+   is hidden behind a transform — but the guard keeps opacity honest.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .svg :global(*) {
+    opacity: 1 !important;
+  }
+}

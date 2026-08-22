@@ -1,0 +1,164 @@
+/* ═══════════════════════════════════════════════════════
+   Events Page – events.module.css
+
+   One screen, and the same system as the rest of the site: the tone
+   supplies the ground and the accent, `--stack` supplies the rhythm, and
+   nothing here names a colour.
+   ═══════════════════════════════════════════════════════ */
+
+.page {
+  --stack: clamp(1.5rem, 3.6vh, 2.5rem);
+  /* How far a tone reaches into its neighbour before giving way */
+  --seam: clamp(2.5rem, 5.5vh, 4rem);
+
+  position: relative;
+  width: 100%;
+  background: var(--pine-900);
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+}
+
+/* The pine screen carries a wash; the paper one below it does not need one */
+.stage:first-child {
+  background-image: radial-gradient(
+    110% 85% at 12% 100%,
+    rgba(224, 165, 72, 0.13) 0%,
+    transparent 62%
+  );
+}
+
+/* The seam: the first screen fades out into the ground of the second, so
+   the change of voice arrives as a dissolve rather than a rule. The last
+   screen has none — there is nothing after it to become. */
+.stage:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: var(--seam);
+  z-index: 3;
+  pointer-events: none;
+  background: var(--seam-fade);
+}
+
+.inner {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(6rem, 9.5vh, 7.5rem) clamp(1.75rem, 5vw, 6rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+  align-items: center;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+  /* Half the width, and a date is a long word, so the poster scale steps
+     down further here than it does elsewhere */
+  --type-display: clamp(2.3rem, 5.4vw, 4.5rem);
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack);
+}
+
+.motif {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-size: var(--type-display);
+  font-weight: 400;
+  line-height: 0.94;
+  letter-spacing: -0.042em;
+  color: var(--ink-1);
+}
+
+.accent {
+  color: var(--accent);
+}
+
+.sub {
+  font-family: var(--font-body);
+  font-size: var(--type-sub);
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  color: var(--ink-2);
+  max-width: 40ch;
+}
+
+/* ── The meeting, as facts ──────────────────────────── */
+.details {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail {
+  display: grid;
+  grid-template-columns: 5rem minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: baseline;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--ink-4);
+}
+
+.detail:first-child {
+  border-top: 1px solid var(--ink-4);
+}
+
+.detailKey {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.detailValue {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  letter-spacing: -0.01em;
+  color: var(--ink-1);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr;
+    padding: 7rem 1.5rem 4.5rem;
+  }
+
+  .motif {
+    justify-content: flex-start;
+    max-width: 380px;
+  }
+
+  .detail {
+    grid-template-columns: 4.25rem minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

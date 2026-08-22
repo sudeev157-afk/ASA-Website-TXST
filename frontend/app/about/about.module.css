@@ -1,0 +1,398 @@
+/* ═══════════════════════════════════════════════════════
+   About Page – about.module.css
+
+   Two voices, four levels of text, no third colour.
+
+   Screens alternate between the club's pine-and-gold and Texas State's
+   maroon-on-white, declared per section by `tone-pine` / `tone-paper` in
+   globals.css. Nothing in this file names a ground colour or an accent —
+   it reads `--ink-1..4` and `--accent`, so the same rule serves both.
+
+   One rhythm runs the whole page: `--stack` is the only vertical gap
+   between blocks, and every section carries the same block padding. No
+   element sets its own margin, which is what keeps the spacing from
+   drifting section to section.
+
+   Type roles:
+     display / statement — Fraunces, the brand voice, at poster scale
+     tiles / body        — Inter Tight, tight and modern, for anything read
+                           at a glance
+     meta                — IBM Plex Mono, tiny and wide, for labels only
+   ═══════════════════════════════════════════════════════ */
+
+.page {
+  /* The page's single vertical interval */
+  --stack: clamp(1.5rem, 3.6vh, 2.5rem);
+  /* How far a tone reaches into its neighbour before giving way. Short on
+     purpose: this should read as a soft edge, not as haze in the gap. */
+  --seam: clamp(2.5rem, 5.5vh, 4rem);
+
+  position: relative;
+  width: 100%;
+  background: var(--pine-900);
+}
+
+/* ── One idea per screen ────────────────────────────── */
+.hero,
+.stage,
+.close {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+}
+
+.hero {
+  overflow: hidden;
+  background-image: radial-gradient(
+    120% 90% at 10% 100%,
+    rgba(224, 165, 72, 0.13) 0%,
+    transparent 62%
+  );
+}
+
+.close {
+  background-image: radial-gradient(
+    90% 80% at 50% 100%,
+    rgba(80, 18, 20, 0.09) 0%,
+    transparent 62%
+  );
+}
+
+/*
+   The seam. Each section fades out into the ground of the one below it, so
+   the change of voice arrives as a dissolve rather than a rule across the
+   page. It sits over the section's own background and under its content,
+   and the last screen has none — there is nothing after it to become.
+*/
+.hero::before,
+.stage::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: var(--seam);
+  z-index: 3;
+  pointer-events: none;
+  background: var(--seam-fade);
+}
+
+/* ── Rhythm ─────────────────────────────────────────── */
+.inner,
+.heroInner {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  /*
+     A floor, not the spacing itself. Sections are centred inside a full
+     screen, so on most of them the surrounding space is whatever is left
+     over; this only takes effect when the content is taller than the
+     viewport, and it keeps that case from ever looking cramped. The top
+     value also clears the fixed bar.
+  */
+  padding: clamp(6rem, 9.5vh, 7.5rem) clamp(1.75rem, 5vw, 6rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack);
+}
+
+/* Copy on the left, the figure that draws it on the right */
+.innerSplit {
+  /* Half the width, so the poster scale steps down with it */
+  --type-display: clamp(2.6rem, 6.4vw, 5.4rem);
+
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+  align-items: center;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.close .innerSplit {
+  grid-template-columns: minmax(0, 1.32fr) minmax(0, 0.68fr);
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack);
+}
+
+.motif {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Anything that belongs to the section rather than to one column */
+.spanAll {
+  grid-column: 1 / -1;
+}
+
+/* ── Hero motif ─────────────────────────────────────── */
+.netLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  /* Far enough back to be room rather than ornament */
+  opacity: 0.5;
+}
+
+.net {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.netEdges {
+  stroke: var(--gold);
+  stroke-width: 1;
+}
+
+.netNodes {
+  fill: var(--gold-hi);
+  opacity: 0.5;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    var(--pine-900) 4%,
+    rgba(11, 36, 31, 0.72) 46%,
+    rgba(11, 36, 31, 0.3) 100%
+  );
+}
+
+/* ═══ Type ══════════════════════════════════════════════
+   Three sizes, and nothing between them. The jumps are large on purpose:
+   a reader should be able to tell what matters from across the room.
+   ═══════════════════════════════════════════════════════ */
+
+/* Poster scale. Used twice on the page — the opening claim and the close. */
+.display {
+  font-family: var(--font-display);
+  font-size: var(--type-display);
+  font-weight: 400;
+  line-height: 0.94;
+  letter-spacing: -0.042em;
+  color: var(--ink-1);
+}
+
+/* Section scale. One thought, broken by hand so every line lands. */
+.statement {
+  font-family: var(--font-display);
+  font-size: var(--type-statement);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: var(--ink-1);
+}
+
+.accent {
+  color: var(--accent);
+}
+
+/* The only running text on most screens, and deliberately quiet */
+.sub {
+  font-family: var(--font-body);
+  font-size: var(--type-sub);
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  color: var(--ink-2);
+  max-width: 38ch;
+}
+
+/* ── The four ways in: a bento ──────────────────────── */
+/*
+   Learn takes the two-by-two block and the largest type; Build and
+   Research stack beside it; Compete runs the full width underneath. The
+   arrangement is the hierarchy — no tile needs a label saying it matters
+   more.
+*/
+.bentoWays {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-areas:
+    "lead lead b"
+    "lead lead c"
+    "wide wide wide";
+}
+
+.tileLead {
+  grid-area: lead;
+  --tile-word: clamp(2.1rem, 4.2vw, 3.6rem);
+  --tile-icon: 60px;
+}
+
+.tileB {
+  grid-area: b;
+}
+
+.tileC {
+  grid-area: c;
+}
+
+.tileWide {
+  grid-area: wide;
+  --tile-word: clamp(1.9rem, 3.4vw, 2.9rem);
+  --tile-icon: 36px;
+}
+
+/* ── Roster ─────────────────────────────────────────── */
+.roster {
+  list-style: none;
+  max-width: 760px;
+}
+
+.rosterRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: clamp(0.85rem, 1.8vh, 1.15rem) 0;
+  border-bottom: 1px solid var(--ink-4);
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  letter-spacing: -0.012em;
+  color: var(--ink-2);
+}
+
+.rosterName {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+
+/* ── Beyond campus ──────────────────────────────────── */
+.notes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2rem, 5vw, 4.5rem);
+  max-width: 980px;
+}
+
+.noteBody {
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  line-height: 1.7;
+  letter-spacing: -0.008em;
+  color: var(--ink-2);
+}
+
+.noteMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 1.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* Quietly marks the one thing on the page that is not settled yet */
+.noteDot {
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.inlineLink {
+  color: var(--ink-1);
+  border-bottom: 1px solid var(--accent-line);
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.inlineLink:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ── Actions ────────────────────────────────────────── */
+/* A row, so a primary and a secondary sit side by side without either one
+   needing to be explained. */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+/* The button that closes a note column sits under it, not beside it */
+.noteAction {
+  margin-top: 1.35rem;
+}
+
+/* ── Mobile ─────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .inner,
+  .heroInner {
+    padding: 7rem 1.5rem 4.5rem;
+  }
+
+  /* The figure moves under the sentence it draws, and gives up the right
+     half it was balancing. The closing screen's wider split is named with
+     two classes, so it has to be unset by two as well. */
+  .innerSplit,
+  .close .innerSplit {
+    grid-template-columns: 1fr;
+  }
+
+  .motif {
+    justify-content: flex-start;
+    max-width: 380px;
+  }
+
+  /* One column: a bento that has to squeeze is just a list with borders */
+  .bentoWays {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "lead"
+      "b"
+      "c"
+      "wide";
+  }
+
+  .notes {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .rosterRow {
+    font-size: 1rem;
+  }
+}
+
+/*
+   Short laptop screens (13-inch panels, and anything with browser chrome
+   eating the height). The rhythm is the same — it just needs less room to
+   keep a screen's worth of content on one screen.
+*/
+@media (min-width: 901px) and (max-height: 820px) {
+  .inner,
+  .heroInner {
+    padding-block: clamp(5rem, 8vh, 6.25rem);
+  }
+
+  .page {
+    --stack: clamp(1.15rem, 2.8vh, 1.9rem);
+  }
+}
