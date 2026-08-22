@@ -27,7 +27,7 @@ const interTight = Inter_Tight({
    listed explicitly. */
 const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
   variable: "--font-plex-mono",
 });

@@ -4,31 +4,19 @@ import { motion, type Variants } from "framer-motion";
 import styles from "./SectionLabel.module.css";
 
 /**
- * The small line that names a screen.
+ * The line that names a screen.
  *
- * A rule draws out from the left and the words follow it. It is the only
- * place besides the accent word in a headline where a screen shows which
- * voice it is speaking in, so it is worth the four extra frames.
+ * It used to lead with a drawn rule, which at label size read as a stray
+ * dash sitting next to the words rather than as part of them. The weight
+ * now does that work instead: the label is set bold and large enough to be
+ * a title in its own right, and it rises into place as one piece.
  */
-const group: Variants = {
-  hidden: {},
-  shown: { transition: { staggerChildren: 0.12 } },
-};
-
-const rule: Variants = {
-  hidden: { scaleX: 0 },
-  shown: {
-    scaleX: 1,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
-  },
-};
-
-const words: Variants = {
-  hidden: { opacity: 0, x: -8 },
+const label: Variants = {
+  hidden: { opacity: 0, y: 12 },
   shown: {
     opacity: 1,
-    x: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    y: 0,
+    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
@@ -45,7 +33,7 @@ export default function SectionLabel({
   return (
     <motion.p
       className={`${styles.label} ${className ?? ""}`}
-      variants={group}
+      variants={label}
       initial="hidden"
       {...(onLoad
         ? { animate: "shown" }
@@ -54,10 +42,7 @@ export default function SectionLabel({
             viewport: { once: true, margin: "0px 0px -14% 0px" },
           })}
     >
-      <motion.span className={styles.rule} variants={rule} aria-hidden="true" />
-      <motion.span className={styles.text} variants={words}>
-        {children}
-      </motion.span>
+      {children}
     </motion.p>
   );
 }

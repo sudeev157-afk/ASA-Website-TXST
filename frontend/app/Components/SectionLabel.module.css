@@ -2,42 +2,26 @@
    Section label – SectionLabel.module.css
    ═══════════════════════════════════════════════════════ */
 
+/*
+   Big enough to be read without looking for it, and heavy enough to hold
+   the top of a section on its own. The tracking comes down as the weight
+   goes up: 0.24em was what made a 0.72rem regular line read as a label,
+   but at this size and weight the same value pulls the word apart.
+*/
 .label {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-/* Draws out from the left. Its own transform origin, or it would grow from
-   the middle and read as a dash rather than a line being drawn. */
-.rule {
-  display: block;
-  flex-shrink: 0;
-  width: clamp(28px, 3vw, 44px);
-  height: 2px;
-  background: var(--accent);
-  transform-origin: left center;
-}
-
-.text {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 500;
-  /* Wide, because at this size the tracking is what makes it read as a
-     label and not as small body text */
-  letter-spacing: 0.24em;
+  font-size: clamp(0.95rem, 1.15vw, 1.15rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent);
 }
 
 @media (max-width: 900px) {
   .label {
-    gap: 0.8rem;
-  }
-
-  .text {
-    font-size: 0.68rem;
-    letter-spacing: 0.2em;
+    font-size: clamp(0.9rem, 3.6vw, 1.02rem);
+    letter-spacing: 0.12em;
   }
 }
