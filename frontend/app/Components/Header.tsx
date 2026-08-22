@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { JOIN_FORM_URL } from "@/app/lib/links";
 import styles from "./Header.module.css";
 
 const NAV_LINKS = [
@@ -155,7 +156,7 @@ export default function Header() {
               transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
             >
               <Link
-                href="https://docs.google.com/forms/d/1ZjyDyExlYR-Cw79MtM8xJM_trspFm1xg1Gj7Oq7-ZIE/edit?pli=1"
+                href={JOIN_FORM_URL}
                 className={styles.joinBtn}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -225,7 +226,7 @@ export default function Header() {
             </ul>
 
             <Link
-              href="https://docs.google.com/forms/d/1ZjyDyExlYR-Cw79MtM8xJM_trspFm1xg1Gj7Oq7-ZIE/edit?pli=1"
+              href={JOIN_FORM_URL}
               className={styles.mobileJoinBtn}
               target="_blank"
               rel="noopener noreferrer"

@@ -4,39 +4,51 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import anime from "animejs";
+import ActionButton from "@/app/Components/ActionButton";
+import Bento, { type BentoItem } from "@/app/Components/Bento";
+import {
+  CalendarIcon,
+  SparkIcon,
+  UsersIcon,
+} from "@/app/Components/Icons";
+import LineRise from "@/app/Components/LineRise";
+import { Branches } from "@/app/Components/Motifs";
+import Reveal from "@/app/Components/Reveal";
+import SectionLabel from "@/app/Components/SectionLabel";
+import { JOIN_FORM_URL } from "@/app/lib/links";
+import { mulberry32 } from "@/app/lib/random";
 import styles from "./landing.module.css";
 
 /* ────────────────────────────────────────────────────────
-   Section 2 content — all copy below is placeholder
+   The three doors.
+
+   A home page's job is to say what this is and then get out of the way.
+   Each tile is the whole target, not just its two words.
    ──────────────────────────────────────────────────────── */
-const INFO_BLOCKS = [
+const DOORS: BentoItem[] = [
   {
-    title: "About ASA",
-    lines: [
-      "Placeholder line one describing who we are.",
-      "Placeholder line two with a little more detail.",
-    ],
+    word: "About",
+    tail: "Who we are and where this goes.",
+    Icon: UsersIcon,
+    className: styles.tileLead,
+    from: { x: -44 },
+    href: "/about",
   },
   {
-    title: "Our Mission",
-    lines: [
-      "Placeholder line one describing what we set out to do.",
-      "Placeholder line two with a little more detail.",
-    ],
+    word: "Membership",
+    tail: "Free, and open to every major.",
+    Icon: SparkIcon,
+    className: styles.tileB,
+    from: { x: 44 },
+    href: "/membership",
   },
   {
-    title: "Connect with Us",
-    lines: [
-      "Placeholder line one about meetings and events.",
-      "Placeholder line two about how to reach the team.",
-    ],
-  },
-  {
-    title: "Benefits",
-    lines: [
-      "Placeholder line one about what members gain.",
-      "Placeholder line two with a little more detail.",
-    ],
+    word: "Events",
+    tail: "First meeting, September 16.",
+    Icon: CalendarIcon,
+    className: styles.tileC,
+    from: { x: 44 },
+    href: "/events",
   },
 ];
 
@@ -81,17 +93,6 @@ type Mode = {
 };
 
 type Ridge = { base: number; modes: Mode[]; scale: number };
-
-/** Small deterministic PRNG — keeps the markup stable across renders. */
-function mulberry32(seed: number) {
-  return () => {
-    seed |= 0;
-    seed = (seed + 0x6d2b79f5) | 0;
-    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
 
 function buildRidges(): Ridge[] {
   const rand = mulberry32(20260815);
@@ -217,25 +218,6 @@ const SOCIAL_LINKS = [
 ];
 
 /* ────────────────────────────────────────────────────────
-   Framer Motion variants
-   ──────────────────────────────────────────────────────── */
-const container = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.15, delayChildren: 0.3 },
-  },
-};
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] as const },
-  },
-};
-
-/* ────────────────────────────────────────────────────────
    Page Component
    ──────────────────────────────────────────────────────── */
 export default function LandingPage() {
@@ -318,12 +300,13 @@ export default function LandingPage() {
 
   return (
     <main className={styles.landing}>
-      {/* ══ Section 1 — hero ════════════════════════════ */}
-      <section className={styles.heroSection} data-header-theme="dark">
-        {/* ── The motif: a drifting ridgeline ──────────────
-             The hero's background plane. Stretched edge to edge, behind
-             everything, and never finished — the content sits on top of it
-             at z-index 10. */}
+      {/* ══ 1 — who this is ═════════════════════════════
+           The drifting ridgeline underneath is untouched: it is this
+           page's whole ground, and nothing here sits in its way. */}
+      <section
+        className={`${styles.heroSection} tone-pine`}
+        data-header-theme="dark"
+      >
         <div className={styles.plotLayer} aria-hidden="true">
           <svg
             ref={plotRef}
@@ -335,14 +318,14 @@ export default function LandingPage() {
             {/* Drawn back to front, so each ridge's opaque fill occludes the
                 crests behind it. Rendered at t = 0, which means the static
                 HTML already carries a complete field if JavaScript never
-                arrives — only the drift needs it. */}
+                arrives; only the drift needs it. */}
             {RIDGE_DATA.map((ridge, i) => {
               const crest = crestPath(ridge, 0);
               return (
                 <g
                   key={i}
                   className={`${styles.ridge} js-ridge`}
-                  /* Nearer ridges read brighter — that is what gives the
+                  /* Nearer ridges read brighter, which is what gives the
                      stack its depth */
                   style={
                     {
@@ -354,40 +337,64 @@ export default function LandingPage() {
                     className={`${styles.ridgeFill} js-fill`}
                     d={fillPath(crest, ridge.base)}
                   />
-                  <path
-                    className={`${styles.ridgeCrest} js-crest`}
-                    d={crest}
-                  />
+                  <path className={`${styles.ridgeCrest} js-crest`} d={crest} />
                 </g>
               );
             })}
           </svg>
         </div>
 
-        {/* ── Hero content: copy left, photo right ─────── */}
-        <div className={styles.heroInner}>
-          <motion.section
-            className={styles.hero}
-            variants={container}
-            initial="hidden"
-            animate="show"
-          >
-            <motion.p className={styles.heroEyebrow} variants={fadeUp}>
-              Texas State University
-            </motion.p>
-            <motion.h1 className={styles.heroTitle} variants={fadeUp}>
-              Association for<br />
-              <span className={styles.heroAccent}>Statistics and Analytics</span>
-            </motion.h1>
-          </motion.section>
+        <div className={`${styles.inner} ${styles.innerSplit}`}>
+          <div className={styles.col}>
+            <SectionLabel onLoad>Texas State University</SectionLabel>
 
-          {/* Mock photo — placeholder art, swap in a real photo (and a
-              descriptive alt) when one is available */}
+            <LineRise
+              as="h1"
+              onLoad
+              className={styles.display}
+              lines={[
+                "Association for",
+                <>
+                  <span className={styles.accent}>Statistics</span> and
+                </>,
+                <>
+                  <span className={styles.accent}>Analytics</span>.
+                </>,
+              ]}
+            />
+
+            <motion.p
+              className={styles.sub}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            >
+              A student organization for anyone interested in statistics,
+              analytics, research, and working with data.
+            </motion.p>
+
+            <motion.div
+              className={styles.actions}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.9, delay: 0.7 }}
+            >
+              <ActionButton href={JOIN_FORM_URL} external>
+                Join ASA
+              </ActionButton>
+              <ActionButton href="/membership" variant="ghost">
+                See membership
+              </ActionButton>
+            </motion.div>
+          </div>
+
+          {/* Placeholder art. Swap in a real photo, and a descriptive alt,
+              when one is available. */}
           <motion.div
             className={styles.heroMedia}
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className={styles.heroMediaFrame}>
               <Image
@@ -403,35 +410,66 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ══ Section 2 — paper: info blocks, quote, social ═ */}
+      {/* ══ 2 — the motto ═══════════════════════════════ */}
       <section
-        className={`${styles.section} ${styles.sectionLight}`}
+        className={`${styles.stage} tone-paper`}
         data-header-theme="light"
       >
-        <div className={styles.sectionInner}>
-          {/* ── Info blocks (left aligned) ──────────────── */}
-          <div className={styles.infoColumn}>
-            {INFO_BLOCKS.map(({ title, lines }) => (
-              <div key={title} className={styles.infoBlock}>
-                <h2 className={styles.infoTitle}>{title}</h2>
-                <p className={styles.infoText}>
-                  {lines[0]}
-                  <br />
-                  {lines[1]}
-                </p>
-              </div>
-            ))}
+        <div className={`${styles.inner} ${styles.innerSplit}`}>
+          <div className={styles.col}>
+            <SectionLabel>Our motto</SectionLabel>
+
+            <LineRise
+              className={styles.display}
+              lines={[
+                "Patterns into",
+                <>
+                  <span className={styles.accent}>Possibilities.</span>
+                </>,
+              ]}
+            />
+
+            <Reveal delay={0.3}>
+              <p className={styles.sub}>
+                We run workshops, projects, research, and events. We connect
+                students with faculty and people working in the field. And we
+                care about using data responsibly.
+              </p>
+            </Reveal>
           </div>
 
-          {/* ── Centered quote ──────────────────────────── */}
-          <blockquote className={styles.quote}>
-            <p className={styles.quoteText}>
-              &ldquo;Statistics is the grammar of science.&rdquo;
-            </p>
-          </blockquote>
+          <div className={styles.motif}>
+            <Branches />
+          </div>
+        </div>
+      </section>
 
-          {/* ── Social buttons (close the section) ──────── */}
-          <div className={styles.socialRow}>
+      {/* ══ 3 — where to go next ════════════════════════ */}
+      <section className={`${styles.stage} tone-pine`} data-header-theme="dark">
+        <div className={styles.inner}>
+          <SectionLabel>Start here</SectionLabel>
+          <Bento items={DOORS} className={styles.bentoDoors} />
+        </div>
+      </section>
+
+      {/* ══ 4 — the close ═══════════════════════════════ */}
+      <section
+        className={`${styles.stage} tone-paper`}
+        id="connect"
+        data-header-theme="light"
+      >
+        <div className={styles.inner}>
+          <SectionLabel>Connect</SectionLabel>
+
+          <LineRise className={styles.statement} lines={["Come find us."]} />
+
+          <Reveal delay={0.25}>
+            <p className={styles.sub}>
+              We post what we are doing and when. Say hello.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.35}>
             <ul className={styles.socialList}>
               {SOCIAL_LINKS.map(({ label, href, Icon, brandClass }) => (
                 <li key={label}>
@@ -443,7 +481,7 @@ export default function LandingPage() {
                 </li>
               ))}
             </ul>
-          </div>
+          </Reveal>
         </div>
       </section>
     </main>

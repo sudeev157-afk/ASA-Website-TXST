@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import PageShell from "@/app/Components/PageShell";
+import Events from "./events";
 
 export const metadata: Metadata = {
   title: "Events | ASA – Texas State University",
+  description:
+    "Workshops, guest speakers, datathons, and projects from the Association for Statistics and Analytics at Texas State University. The first schedule is on its way.",
 };
 
 export default function EventsPage() {
-  return <PageShell />;
+  return <Events />;
 }

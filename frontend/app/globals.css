@@ -38,6 +38,36 @@
   --hairline: rgba(18, 37, 31, 0.12);
   --hairline-inverse: rgba(232, 239, 233, 0.14);
 
+  /*
+     Text in four steps of one colour, on each ground. Hierarchy comes from
+     how present a line is, not from giving it a different hue — which is
+     why the pages that use this need almost no colour at all.
+
+     Alpha rather than the `opacity` property: nesting never compounds it,
+     and the value stays the value.
+  */
+  --on-pine-1: var(--mist);
+  --on-pine-2: rgba(232, 239, 233, 0.62);
+  --on-pine-3: rgba(232, 239, 233, 0.34);
+  --on-pine-4: rgba(232, 239, 233, 0.14);
+
+  --on-paper-1: var(--ink);
+  --on-paper-2: rgba(18, 37, 31, 0.66);
+  --on-paper-3: rgba(18, 37, 31, 0.44);
+  --on-paper-4: rgba(18, 37, 31, 0.14);
+
+  /*
+     Editorial type scale. Three sizes with nothing between them: a reader
+     should be able to tell what matters from across the room. Shared by the
+     About and Membership pages so the two cannot drift apart.
+  */
+  --type-display: clamp(3rem, 9.5vw, 8.5rem); /* the page's one claim */
+  --type-statement: clamp(2.2rem, 6.2vw, 5rem); /* one thought per section */
+  --type-word: clamp(2.3rem, 7vw, 5.5rem); /* list items, read at a glance */
+  --type-sub: clamp(1.02rem, 1.5vw, 1.3rem);
+  --type-body: clamp(0.95rem, 1.25vw, 1.08rem);
+  --type-meta: 0.66rem; /* labels, and nothing else */
+
   /* Typography — the font-family stacks are supplied by next/font in
      app/layout.tsx, which self-hosts them at build time. */
   --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
@@ -81,6 +111,91 @@
   --font-display: var(--font-display);
   --font-body: var(--font-body);
   --font-mono: var(--font-mono);
+}
+
+/* ─── The two voices ────────────────────────────────────
+   The site speaks in two registers, and the landing page established both:
+
+     tone-pine   pine and gold — ASA itself, the club
+     tone-paper  maroon on white — Texas State, the university it belongs to
+
+   A section declares which one it is speaking in, and everything inside it
+   follows: the four text steps, the accent, and the surface a tile sits on
+   are all read from these. Nothing downstream names a colour directly,
+   which is what lets one component work on either ground.
+   ─────────────────────────────────────────────────────── */
+.tone-pine {
+  --ink-1: var(--on-pine-1);
+  --ink-2: var(--on-pine-2);
+  --ink-3: var(--on-pine-3);
+  --ink-4: var(--on-pine-4);
+
+  --accent: var(--gold);
+  --accent-soft: rgba(224, 165, 72, 0.36);
+  --accent-line: rgba(224, 165, 72, 0.45);
+  /* What an action filled with the accent needs to stay readable */
+  --on-accent: var(--pine-900);
+  --accent-hi: var(--gold-hi);
+  --accent-shadow: rgba(224, 165, 72, 0.3);
+
+  /* What a raised surface (a tile) is, on this ground */
+  --surface: rgba(232, 239, 233, 0.028);
+  --surface-hi: rgba(232, 239, 233, 0.055);
+
+  /*
+     The seam: the ground the next section stands on, arriving as a fade so
+     the change of voice is not a rule drawn across the page.
+
+     The stops are eased rather than evenly spaced. A linear ramp spends
+     most of its length at the halfway mix — which, between two grounds this
+     far apart, is a band of grey. Weighting the stops toward the boundary
+     keeps each section its own colour until the last moment and leaves the
+     blend too short to read as fog.
+
+     Because the tones strictly alternate, one value serves both edges.
+  */
+  --seam-fade: linear-gradient(
+    to top,
+    rgba(242, 245, 241, 1) 0%,
+    rgba(242, 245, 241, 0.95) 16%,
+    rgba(242, 245, 241, 0.76) 36%,
+    rgba(242, 245, 241, 0.42) 60%,
+    rgba(242, 245, 241, 0.15) 80%,
+    rgba(242, 245, 241, 0) 100%
+  );
+
+  background-color: var(--pine-900);
+  color: var(--ink-1);
+}
+
+.tone-paper {
+  --ink-1: var(--on-paper-1);
+  --ink-2: var(--on-paper-2);
+  --ink-3: var(--on-paper-3);
+  --ink-4: var(--on-paper-4);
+
+  --accent: var(--maroon);
+  --accent-soft: rgba(80, 18, 20, 0.3);
+  --accent-line: rgba(80, 18, 20, 0.4);
+  --on-accent: var(--paper);
+  --accent-hi: var(--maroon-dark);
+  --accent-shadow: rgba(80, 18, 20, 0.28);
+
+  --surface: rgba(18, 37, 31, 0.024);
+  --surface-hi: rgba(18, 37, 31, 0.05);
+
+  --seam-fade: linear-gradient(
+    to top,
+    rgba(11, 36, 31, 1) 0%,
+    rgba(11, 36, 31, 0.95) 16%,
+    rgba(11, 36, 31, 0.76) 36%,
+    rgba(11, 36, 31, 0.42) 60%,
+    rgba(11, 36, 31, 0.15) 80%,
+    rgba(11, 36, 31, 0) 100%
+  );
+
+  background-color: var(--paper);
+  color: var(--ink-1);
 }
 
 /* ─── Base Reset ────────────────────────────────────── */
