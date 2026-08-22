@@ -154,7 +154,12 @@ export default function Header() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
             >
-              <Link href="/join" className={styles.joinBtn}>
+              <Link
+                href="https://docs.google.com/forms/d/1ZjyDyExlYR-Cw79MtM8xJM_trspFm1xg1Gj7Oq7-ZIE/edit?pli=1"
+                className={styles.joinBtn}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Join Us
               </Link>
             </motion.li>
@@ -220,8 +225,10 @@ export default function Header() {
             </ul>
 
             <Link
-              href="/join"
+              href="https://docs.google.com/forms/d/1ZjyDyExlYR-Cw79MtM8xJM_trspFm1xg1Gj7Oq7-ZIE/edit?pli=1"
               className={styles.mobileJoinBtn}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => setMenuOpen(false)}
             >
               Join Us

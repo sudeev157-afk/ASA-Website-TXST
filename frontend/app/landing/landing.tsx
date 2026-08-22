@@ -426,7 +426,7 @@ export default function LandingPage() {
           {/* ── Centered quote ──────────────────────────── */}
           <blockquote className={styles.quote}>
             <p className={styles.quoteText}>
-              &ldquo;Placeholder for quote&rdquo;
+              &ldquo;Statistics is the grammar of science.&rdquo;
             </p>
           </blockquote>
 
