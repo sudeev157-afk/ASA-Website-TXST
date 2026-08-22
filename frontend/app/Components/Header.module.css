@@ -229,6 +229,28 @@
   box-shadow: 0 6px 20px rgba(224, 165, 72, 0.28);
 }
 
+/* ── Reading progress ────────────────────────────────── */
+/*
+   Phones only. The bar's bottom edge doubles as the indicator, so it costs
+   no space and there is nothing new on the screen to look at. On a desktop
+   the whole nav is visible at once and this would be noise.
+*/
+.progress {
+  display: none;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  z-index: 130;
+  transform-origin: left center;
+  background: var(--maroon);
+}
+
+.dark .progress {
+  background: var(--gold);
+}
+
 /* ── Hamburger (hidden on desktop) ───────────────────── */
 .menuBtn {
   display: none;
@@ -281,89 +303,82 @@
 }
 
 /* ── Full-screen mobile menu ─────────────────────────── */
+/*
+   Not a dropdown. It takes the whole screen and reads like a contents
+   page: numbered, left-aligned, at a size you could hit without looking.
+   The ground and the accent come from the tone the bar is currently in, so
+   the menu never contradicts the page behind it.
+*/
 .mobilePanel {
   position: fixed;
   inset: 0;
   z-index: 90;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  gap: clamp(2rem, 6vh, 3.5rem);
-  padding: 6rem 1.5rem 3rem;
-  background: var(--paper);
-}
-
-.dark .mobilePanel {
-  background: var(--pine-900);
+  gap: clamp(2rem, 6vh, 3rem);
+  padding: 6.5rem 1.5rem calc(2.5rem + env(safe-area-inset-bottom, 0px));
 }
 
 .mobileList {
   list-style: none;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: clamp(1.25rem, 3.5vh, 2rem);
 }
 
-/* The full-screen menu is a page in its own right, so the display serif
-   is allowed here where it is not in the bar */
 .mobileLink {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  /* Well past the 44px minimum: this is the one control on the screen */
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--ink-4);
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 8vw, 2.5rem);
+  font-size: clamp(2rem, 10vw, 3rem);
   font-weight: 400;
-  letter-spacing: -0.01em;
-  color: var(--ink);
-  transition: color 0.35s ease;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--ink-1);
+  transition: color 0.3s ease;
 }
 
-.dark .mobileLink {
-  color: var(--mist);
+.mobileIndex {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--ink-4);
+  transition: color 0.3s ease;
 }
 
-.mobileLink:active {
-  color: var(--maroon);
-}
-
-.dark .mobileLink:active {
-  color: var(--gold);
-}
-
+.mobileLink:active,
 .mobileLinkActive {
-  border-bottom: 2px solid var(--maroon);
-  padding-bottom: 0.25rem;
-  color: var(--maroon);
+  color: var(--accent);
 }
 
-.dark .mobileLinkActive {
-  border-bottom-color: var(--gold);
-  color: var(--gold);
+.mobileLinkActive .mobileIndex {
+  color: var(--accent);
 }
 
 .mobileJoinBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1.15rem 2rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   font-weight: 500;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--paper);
-  background: var(--maroon);
-  border-radius: 6px;
-  padding: 1rem 3rem;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .mobileJoinBtn:active {
-  background: var(--maroon-dark);
-}
-
-.dark .mobileJoinBtn {
-  background: var(--gold);
-  color: var(--pine-900);
-}
-
-.dark .mobileJoinBtn:active {
-  background: var(--gold-hi);
+  background: var(--accent-hi);
+  transform: translateY(1px);
 }
 
 /* ── Mobile layout ───────────────────────────────────── */
@@ -390,6 +405,10 @@
 
   .menuBtn {
     display: flex;
+  }
+
+  .progress {
+    display: block;
   }
 }
 

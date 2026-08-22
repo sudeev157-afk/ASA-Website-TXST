@@ -34,6 +34,24 @@
   );
 }
 
+
+/*
+   The seam is space *between* two screens, not space taken out of the one
+   above it. Sized to the viewport exactly, a section's fade lands on the
+   bottom edge of the screen, so the first thing anyone sees is the next
+   section's ground bleeding up into the hero — a white strip under a dark
+   page, before they have scrolled at all.
+
+   So the section is one screen *plus* the seam, and the padding hands that
+   extra strip to the fade. Content still centres in the visible screen;
+   the dissolve simply lives below the fold until it is scrolled to.
+*/
+.stage:not(:last-child) {
+  min-height: calc(100vh + var(--seam));
+  min-height: calc(100svh + var(--seam));
+  padding-bottom: var(--seam);
+}
+
 /* The seam: the first screen fades out into the ground of the second, so
    the change of voice arrives as a dissolve rather than a rule. The last
    screen has none — there is nothing after it to become. */
@@ -60,8 +78,7 @@
   grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
   align-items: center;
   gap: clamp(2.5rem, 5vw, 4.5rem);
-  /* Half the width, and a date is a long word, so the poster scale steps
-     down further here than it does elsewhere */
+  /* A date is a long word, so this one steps down a little further */
   --type-display: clamp(2.3rem, 5.4vw, 4.5rem);
 }
 
@@ -142,14 +159,30 @@
 }
 
 @media (max-width: 900px) {
+  /*
+     A phone scrolls, it does not page. Holding every section to a full
+     screen leaves a third of each one empty, and empty space on a phone
+     reads as something failing to load. Only the opening poster keeps the
+     full height; everything after it is sized by what is in it.
+  */
+  .stage:not(:first-child) {
+    min-height: 0;
+  }
+
   .inner {
     grid-template-columns: 1fr;
+    padding: clamp(4rem, 9vh, 5.5rem) 1.5rem;
+  }
+
+  .stage:first-child .inner {
     padding: 7rem 1.5rem 4.5rem;
   }
 
+  /* The figure takes the whole column. Capped, it read as an
+     afterthought under the sentence rather than part of it. */
   .motif {
     justify-content: flex-start;
-    max-width: 380px;
+    max-width: none;
   }
 
   .detail {

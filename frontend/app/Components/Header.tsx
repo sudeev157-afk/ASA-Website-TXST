@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
+import MobileCta from "./MobileCta";
 import { JOIN_FORM_URL } from "@/app/lib/links";
 import styles from "./Header.module.css";
 
@@ -24,6 +25,16 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
+
+  /* How far down the page we are. Shown on phones only, where the scroll is
+     long and there is no other way to tell. Sprung, so it glides instead of
+     twitching with every scroll event. */
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 140,
+    damping: 26,
+    mass: 0.3,
+  });
 
   /* Sections may declare `data-header-theme`; otherwise fall back to the route
      (landing sits on dark video, every other route is a white page). */
@@ -168,6 +179,13 @@ export default function Header() {
         </nav>
       </div>
 
+      {/* ── Reading progress, along the bar's own bottom edge ── */}
+      <motion.span
+        className={styles.progress}
+        style={{ scaleX: progress }}
+        aria-hidden="true"
+      />
+
       {/* ── Hamburger (mobile) ── */}
       <button
         type="button"
@@ -187,7 +205,7 @@ export default function Header() {
         {menuOpen && (
           <motion.nav
             id="mobile-menu"
-            className={styles.mobilePanel}
+            className={`${styles.mobilePanel} ${isDark ? "tone-pine" : "tone-paper"}`}
             aria-label="Mobile navigation"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -202,11 +220,11 @@ export default function Header() {
                 return (
                   <motion.li
                     key={href}
-                    initial={{ opacity: 0, y: 16 }}
+                    initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{
-                      delay: 0.06 + i * 0.05,
-                      duration: 0.4,
+                      delay: 0.06 + i * 0.06,
+                      duration: 0.5,
                       ease: [0.22, 1, 0.36, 1],
                     }}
                   >
@@ -218,25 +236,36 @@ export default function Header() {
                       aria-current={isActive ? "page" : undefined}
                       onClick={() => setMenuOpen(false)}
                     >
-                      {label}
+                      <span className={styles.mobileIndex} aria-hidden="true">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span>{label}</span>
                     </Link>
                   </motion.li>
                 );
               })}
             </ul>
 
-            <Link
+            <motion.a
               href={JOIN_FORM_URL}
-              className={styles.mobileJoinBtn}
               target="_blank"
               rel="noopener noreferrer"
+              className={styles.mobileJoinBtn}
               onClick={() => setMenuOpen(false)}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                delay: 0.06 + NAV_LINKS.length * 0.06,
+                duration: 0.5,
+                ease: [0.22, 1, 0.36, 1],
+              }}
             >
-              Join Us
-            </Link>
+              Join ASA
+            </motion.a>
           </motion.nav>
         )}
       </AnimatePresence>
+      <MobileCta />
     </motion.header>
   );
 }

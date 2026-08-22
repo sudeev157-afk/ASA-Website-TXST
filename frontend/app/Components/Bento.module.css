@@ -149,6 +149,72 @@
   }
 }
 
+/*
+   ── The phone gets a different object ────────────────
+   A bento is a shape you read by scanning across. A phone has no across,
+   so stacking the tiles turns a grid into seven tall cards and a very long
+   scroll. Here each tile becomes a row instead: mark on the left, words
+   beside it, number on the right. It reads as a list you thumb through,
+   and it fits three times as much on a screen.
+*/
+@media (max-width: 900px) {
+  .grid {
+    gap: 0.6rem;
+    /*
+       Tiles wait off to the side until they are scrolled to, and a tile
+       parked 44px to the right of a 390px screen makes the whole document
+       wider than the phone. `clip` keeps that out of the scroll width
+       without becoming a scroll container, and leaves the vertical axis
+       alone so the hover lift still shows.
+    */
+    overflow-x: clip;
+    overflow-y: visible;
+  }
+
+  .grid .tile {
+    /* Every row the same, whatever size the tile is on a desktop */
+    --tile-word: clamp(1.35rem, 6.4vw, 1.7rem);
+    --tile-icon: 30px;
+
+    flex-direction: row;
+    align-items: center;
+    /* The tall tile pushes its two ends apart; a row has to start at the
+       left instead, or every word lands on a different margin */
+    justify-content: flex-start;
+    gap: 1.1rem;
+    min-height: 0;
+    padding: 1.1rem 1.2rem;
+    border-radius: 14px;
+  }
+
+  .grid .tile > div {
+    flex: 1 1 auto;
+    min-width: 0;
+    /* Clear of the number in the corner */
+    padding-right: 2.25rem;
+  }
+
+  .tail {
+    min-height: 0;
+    margin-top: 0.2rem;
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+
+  .index {
+    top: 50%;
+    right: 1.2rem;
+    transform: translateY(-50%);
+    /* Legible at arm's length, where 14% was not */
+    color: var(--ink-3);
+  }
+
+  /* Touch has no hover, so the arrival is the only motion a tile gets */
+  .tile:hover .icon {
+    transform: none;
+  }
+}
+
 /* Same trim as the pages make on short laptop screens */
 @media (min-width: 901px) and (max-height: 820px) {
   .tile {

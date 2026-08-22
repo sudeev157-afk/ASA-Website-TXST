@@ -61,6 +61,25 @@
   );
 }
 
+
+/*
+   The seam is space *between* two screens, not space taken out of the one
+   above it. Sized to the viewport exactly, a section's fade lands on the
+   bottom edge of the screen, so the first thing anyone sees is the next
+   section's ground bleeding up into the hero — a white strip under a dark
+   page, before they have scrolled at all.
+
+   So the section is one screen *plus* the seam, and the padding hands that
+   extra strip to the fade. Content still centres in the visible screen;
+   the dissolve simply lives below the fold until it is scrolled to.
+*/
+.hero,
+.stage {
+  min-height: calc(100vh + var(--seam));
+  min-height: calc(100svh + var(--seam));
+  padding-bottom: var(--seam);
+}
+
 /*
    The seam. Each section fades out into the ground of the one below it, so
    the change of voice arrives as a dissolve rather than a rule across the
@@ -103,8 +122,7 @@
 
 /* Copy on the left, the figure that draws it on the right */
 .innerSplit {
-  /* Half the width, so the poster scale steps down with it */
-  --type-display: clamp(2.6rem, 6.4vw, 5.4rem);
+  --type-display: var(--type-display-split);
 
   display: grid;
   grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
@@ -338,7 +356,22 @@
 
 /* ── Mobile ─────────────────────────────────────────── */
 @media (max-width: 900px) {
-  .inner,
+  /*
+     A phone scrolls, it does not page. Holding every section to a full
+     screen leaves a third of each one empty, and empty space on a phone
+     reads as something failing to load. Only the opening poster keeps the
+     full height; everything after it is sized by what is in it.
+  */
+  .stage,
+  .close {
+    min-height: 0;
+  }
+
+  .inner {
+    padding: clamp(4rem, 9vh, 5.5rem) 1.5rem;
+  }
+
+  /* The poster still clears the bar and still fills the screen */
   .heroInner {
     padding: 7rem 1.5rem 4.5rem;
   }
@@ -351,9 +384,11 @@
     grid-template-columns: 1fr;
   }
 
+  /* The figure takes the whole column. Capped, it read as an
+     afterthought under the sentence rather than part of it. */
   .motif {
     justify-content: flex-start;
-    max-width: 380px;
+    max-width: none;
   }
 
   /* One column: a bento that has to squeeze is just a list with borders */

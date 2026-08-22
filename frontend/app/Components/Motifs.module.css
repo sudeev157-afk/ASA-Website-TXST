@@ -14,6 +14,13 @@
   overflow: visible;
 }
 
+/* On a phone the figure is the width of the screen, not a thumbnail */
+@media (max-width: 900px) {
+  .svg {
+    max-width: none;
+  }
+}
+
 /* Points, and anything else that is data */
 .dot {
   fill: var(--ink-3);

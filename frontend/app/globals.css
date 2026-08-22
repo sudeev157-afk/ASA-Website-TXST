@@ -68,6 +68,10 @@
   --type-body: clamp(0.95rem, 1.25vw, 1.08rem);
   --type-meta: 0.66rem; /* labels, and nothing else */
 
+  /* What the claim drops to when a figure takes the other half of the
+     measure. On a phone there is no other half, so it goes back up. */
+  --type-display-split: clamp(2.6rem, 6.4vw, 5.4rem);
+
   /* Typography — the font-family stacks are supplied by next/font in
      app/layout.tsx, which self-hosts them at build time. */
   --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
@@ -196,6 +200,27 @@
 
   background-color: var(--paper);
   color: var(--ink-1);
+}
+
+/* ─── The phone is not a narrow desktop ─────────────────
+   Type here is cut to the viewport rather than scaled down from the wide
+   ramp. On a phone the headline is the entire page: it should reach both
+   edges and leave no doubt about what it is saying. Everything else steps
+   back further than it does on a desktop, because there is no room for two
+   things to compete.
+   ─────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  :root {
+    /* Sized so the hand-set line breaks still hold at 390px. Any larger
+       and lines like "learn in a classroom" break again on their own, in
+       the wrong place. */
+    --type-display: clamp(2.4rem, 11.5vw, 3.8rem);
+    --type-display-split: clamp(2.4rem, 11.5vw, 3.8rem);
+    --type-statement: clamp(1.9rem, 9vw, 3rem);
+    --type-word: clamp(1.9rem, 9vw, 2.8rem);
+    --type-sub: clamp(1rem, 4.4vw, 1.15rem);
+    --type-body: clamp(0.95rem, 4vw, 1.05rem);
+  }
 }
 
 /* ─── Base Reset ────────────────────────────────────── */
