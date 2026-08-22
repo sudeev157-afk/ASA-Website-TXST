@@ -12,7 +12,6 @@ const NAV_LINKS = [
   { label: "About", href: "/about" },
   { label: "Membership", href: "/membership" },
   { label: "Events", href: "/events" },
-  { label: "Contact Us", href: "/contact" },
 ];
 
 /* Fallback probe offset, used until the bar has been measured */
@@ -148,20 +147,19 @@ export default function Header() {
                 </li>
               );
             })}
+
+            {/* ── CTA (desktop), sitting in the last nav slot ── */}
+            <motion.li
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
+            >
+              <Link href="/join" className={styles.joinBtn}>
+                Join Us
+              </Link>
+            </motion.li>
           </ul>
         </nav>
-
-        {/* ── CTA (desktop) ── */}
-        <motion.div
-          className={styles.ctaWrap}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
-        >
-          <Link href="/join" className={styles.joinBtn}>
-            Join Us
-          </Link>
-        </motion.div>
       </div>
 
       {/* ── Hamburger (mobile) ── */}
