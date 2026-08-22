@@ -210,6 +210,45 @@
   object-fit: cover;
 }
 
+/* ═══ TXST lockup ═══════════════════════════════════════
+   Texas State deserves more than a label. This is a small institutional
+   badge that anchors the hero: the name in the display serif, a thin gold
+   rule as the university's mark, and a meta line for location and founding.
+   ═══════════════════════════════════════════════════════ */
+.txstLockup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-bottom: 0.6rem;
+}
+
+.txstRule {
+  display: block;
+  width: 36px;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 1px;
+  margin-bottom: 0.2rem;
+}
+
+.txstName {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--on-pine-1);
+}
+
+.txstMeta {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--on-pine-3);
+}
+
 /* ═══ Type ══════════════════════════════════════════════
    Three sizes, and nothing between them. The jumps are large on purpose:
    a reader should be able to tell what matters from across the room.

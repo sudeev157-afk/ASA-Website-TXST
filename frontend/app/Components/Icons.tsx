@@ -56,7 +56,7 @@ export function ResearchIcon({ className }: IconProps) {
   );
 }
 
-/* Compete / Datathons */
+/* Compete / Achievement */
 export function TrophyIcon({ className }: IconProps) {
   return (
     <svg className={className} {...base}>

@@ -217,16 +217,16 @@
 
 /* ── What you get: a bento ──────────────────────────── */
 /*
-   Projects holds the two-by-two block; six smaller tiles pack around it,
-   with Careers running wide to close the grid. Seven equal boxes would
-   have been a table — the uneven sizes are what make it scannable.
+   Projects holds the two-by-two block; five smaller tiles pack around it,
+   with Careers running wide to close the grid. Six tiles — the uneven
+   sizes are what make it scannable rather than a table.
 */
 .bentoGets {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-template-areas:
-    "lead lead b c"
-    "lead lead d d"
-    "e f wide wide";
+    "lead lead b"
+    "lead lead c"
+    "e f wide";
 }
 
 .tileLead {
@@ -241,10 +241,6 @@
 
 .tileC {
   grid-area: c;
-}
-
-.tileD {
-  grid-area: d;
 }
 
 .tileE {
@@ -346,7 +342,6 @@
     grid-template-areas:
       "lead lead"
       "b c"
-      "d d"
       "e f"
       "wide wide";
   }
@@ -370,7 +365,6 @@
       "lead"
       "b"
       "c"
-      "d"
       "e"
       "f"
       "wide";

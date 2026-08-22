@@ -14,7 +14,6 @@ import {
   ChartIcon,
   ResearchIcon,
   SparkIcon,
-  TrophyIcon,
 } from "@/app/Components/Icons";
 import LineRise from "@/app/Components/LineRise";
 import Reveal from "@/app/Components/Reveal";
@@ -54,13 +53,6 @@ const WAYS_IN: BentoItem[] = [
     Icon: ResearchIcon,
     className: styles.tileC,
     from: { x: 44 },
-  },
-  {
-    word: "Compete",
-    tail: "Datathons, against the clock, with a team.",
-    Icon: TrophyIcon,
-    className: styles.tileWide,
-    from: { y: 48 },
   },
 ];
 

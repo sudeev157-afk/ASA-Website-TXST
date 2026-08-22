@@ -11,7 +11,6 @@ import {
   MicIcon,
   ResearchIcon,
   ToolsIcon,
-  TrophyIcon,
   UsersIcon,
 } from "@/app/Components/Icons";
 import LineRise from "@/app/Components/LineRise";
@@ -46,17 +45,10 @@ const GETS: BentoItem[] = [
     from: { y: -40 },
   },
   {
-    word: "Datathons",
-    tail: "A problem, a team, and a clock.",
-    Icon: TrophyIcon,
-    className: styles.tileC,
-    from: { x: 46 },
-  },
-  {
     word: "Workshops",
     tail: "The tools your classes skip.",
     Icon: ToolsIcon,
-    className: styles.tileD,
+    className: styles.tileC,
     from: { x: 46 },
   },
   {
@@ -283,7 +275,7 @@ export default function MembershipPage() {
         <div className={styles.inner}>
           <SectionLabel>What you get</SectionLabel>
 
-          <Bento items={GETS} className={styles.bentoGets} numbered />
+          <Bento items={GETS} className={styles.bentoGets} />
         </div>
       </section>
 

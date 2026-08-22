@@ -236,9 +236,6 @@ export default function Header() {
                       aria-current={isActive ? "page" : undefined}
                       onClick={() => setMenuOpen(false)}
                     >
-                      <span className={styles.mobileIndex} aria-hidden="true">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
                       <span>{label}</span>
                     </Link>
                   </motion.li>

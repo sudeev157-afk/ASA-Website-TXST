@@ -346,7 +346,17 @@ export default function LandingPage() {
 
         <div className={`${styles.inner} ${styles.innerSplit}`}>
           <div className={styles.col}>
-            <SectionLabel onLoad>Texas State University</SectionLabel>
+            {/* ── TXST lockup ── */}
+            <motion.div
+              className={styles.txstLockup}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <span className={styles.txstRule} aria-hidden="true" />
+              <p className={styles.txstName}>Texas State University</p>
+              <p className={styles.txstMeta}>San Marcos, Texas · Est. 1899</p>
+            </motion.div>
 
             <LineRise
               as="h1"
@@ -358,7 +368,7 @@ export default function LandingPage() {
                   <span className={styles.accent}>Statistics</span> and
                 </>,
                 <>
-                  <span className={styles.accent}>Analytics</span>.
+                  <span className={styles.accent}>Analytics.</span>
                 </>,
               ]}
             />

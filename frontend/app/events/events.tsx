@@ -79,7 +79,7 @@ export default function EventsPage() {
 
             <Reveal delay={0.3}>
               <p className={styles.sub}>
-                Workshops, guest speakers, datathons, and projects. We&rsquo;ll
+                Workshops, guest speakers, and projects. We&rsquo;ll
                 post the full schedule here once it&rsquo;s set. Join now and
                 you&rsquo;ll hear about each one first.
               </p>

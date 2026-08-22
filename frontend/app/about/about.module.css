@@ -229,19 +229,17 @@
   max-width: 38ch;
 }
 
-/* ── The four ways in: a bento ──────────────────────── */
+/* ── The three ways in: a bento ─────────────────────── */
 /*
    Learn takes the two-by-two block and the largest type; Build and
-   Research stack beside it; Compete runs the full width underneath. The
-   arrangement is the hierarchy — no tile needs a label saying it matters
-   more.
+   Research stack beside it. The arrangement is the hierarchy — no tile
+   needs a label saying it matters more.
 */
 .bentoWays {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-template-areas:
     "lead lead b"
-    "lead lead c"
-    "wide wide wide";
+    "lead lead c";
 }
 
 .tileLead {
@@ -256,12 +254,6 @@
 
 .tileC {
   grid-area: c;
-}
-
-.tileWide {
-  grid-area: wide;
-  --tile-word: clamp(1.9rem, 3.4vw, 2.9rem);
-  --tile-icon: 36px;
 }
 
 /* ── Roster ─────────────────────────────────────────── */
@@ -397,8 +389,7 @@
     grid-template-areas:
       "lead"
       "b"
-      "c"
-      "wide";
+      "c";
   }
 
   .notes {
