@@ -1,203 +1,431 @@
 /* ═══════════════════════════════════════════════════════
    Landing Page – landing.module.css
+
+   Type roles: the display serif carries editorial voice (headlines,
+   quote), the body sans carries reading text, and mono carries every
+   label and figure.
    ═══════════════════════════════════════════════════════ */
 
-/* ── Page wrapper (scrolls through 4 sections) ──────── */
+/* ── Page wrapper ───────────────────────────────────── */
 .landing {
   position: relative;
   width: 100%;
-  background: var(--black);
+  background: var(--pine-900);
 }
 
-/* ── Section 1: video hero ──────────────────────────── */
+/* ── Section 1: hero ────────────────────────────────── */
 .heroSection {
+  /*
+     Shared with the background layer below, so it can work out where the
+     photo column starts without duplicating the grid maths. 1.05fr + 0.95fr
+     sums to 2, so the photo column is (content − gap) × 0.95 / 2.
+  */
+  --hero-pad-t: clamp(6rem, 13vh, 9rem);
+  --hero-pad-r: clamp(2rem, 5vw, 6rem);
+  --hero-pad-b: clamp(2.5rem, 7vh, 4rem);
+  --hero-pad-l: clamp(1.5rem, 3vw, 3rem);
+  --hero-gap: clamp(2rem, 5vw, 4.5rem);
+
   position: relative;
   width: 100%;
   height: 100vh;
+  /* svh keeps mobile browser chrome from clipping the section */
+  height: 100svh;
   overflow: hidden;
   display: flex;
-  align-items: flex-end;
-  background: var(--black);
+  align-items: stretch;
+  background: var(--pine-900);
+  /* A single static wash instead of a JS-driven glow loop — same warmth,
+     no per-frame work. */
+  background-image: radial-gradient(
+    120% 90% at 8% 100%,
+    rgba(224, 165, 72, 0.16) 0%,
+    rgba(224, 165, 72, 0.05) 38%,
+    transparent 68%
+  );
 }
 
-/* ── Sections 2-4: alternating white / black / white ── */
+/* ── Sections on paper ──────────────────────────────── */
 .section {
   position: relative;
   width: 100%;
   min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
 }
 
 .sectionLight {
-  background: var(--white);
-  color: var(--black);
+  background: var(--paper);
+  color: var(--ink);
 }
 
 .sectionDark {
-  background: var(--black);
-  color: var(--white);
+  background: var(--pine-900);
+  color: var(--mist);
 }
 
-/* Content slot for the empty sections */
+/* Content slot */
 .sectionInner {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 clamp(2rem, 5vw, 6rem);
+  padding: clamp(5rem, 11vh, 8rem) clamp(2rem, 5vw, 6rem);
 }
 
-/* ── Video background layer ─────────────────────────── */
-.videoBg {
+/* ── Hero motif: scatter + least-squares fit ────────── */
+/*
+   Background layer. It is taken out of flow entirely, so the headline and
+   photo keep the full width they had — the board costs them nothing. It is
+   parked in the band the two of them leave open, and `bottom` is the hero's
+   own bottom padding, which is the line the photo and the headline sit on.
+*/
+.plotLayer {
   position: absolute;
+  /* Edge to edge. It is the hero's ground, so it has no margins — the
+     headline and photo sit on top of it at z-index 10. */
   inset: 0;
-  z-index: 0;
+  z-index: 1;
+  pointer-events: none;
+  /* Sits well back: atmosphere, not a graphic on the page */
+  opacity: 0.32;
 }
 
-.video {
-  position: absolute;
-  inset: 0;
+.plot {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  /* Monochrome theme — drop for full colour footage */
-  filter: grayscale(1);
+  display: block;
+  overflow: visible;
 }
 
-.videoOverlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.3) 0%,
-    rgba(0, 0, 0, 0.55) 40%,
-    rgba(0, 0, 0, 0.88) 75%,
-    rgba(0, 0, 0, 0.97) 100%
-  );
-  pointer-events: none;
+/* `meet` never crops, and anchoring to YMax keeps the histogram baseline
+   pinned to the bottom of the box whatever the container aspect ends up. */
+.ridge {
+  /* Set per-ridge in the markup: 0.32 at the back, 1 at the front */
+  opacity: var(--depth);
 }
 
-/* ── Ambient glow (animated by anime.js) ────────────── */
-.ambientGlow {
-  position: absolute;
-  bottom: -15%;
-  left: -8%;
-  width: 55vw;
-  height: 55vw;
-  max-width: 800px;
-  max-height: 800px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.14) 0%,
-    rgba(255, 255, 255, 0.05) 50%,
-    transparent 70%
-  );
-  filter: blur(80px);
-  pointer-events: none;
-  z-index: 1;
+/* Opaque, and the same colour as the ground — invisible in itself, but it
+   is what makes each ridge hide the crests behind it. That occlusion is the
+   whole effect. */
+.ridgeFill {
+  fill: var(--pine-900);
 }
 
-/* ── Particle field (particles injected by anime.js) ── */
-.particleField {
+.ridgeCrest {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+/* Scrim: sits between the board and the content, so the headline keeps solid
+   ground under it now that the histogram runs the full width behind. */
+.heroSection::after {
+  content: "";
   position: absolute;
   inset: 0;
   z-index: 2;
   pointer-events: none;
-  overflow: hidden;
-}
-
-.particle {
-  position: absolute;
-  border-radius: 50%;
   background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.85) 0%,
-    rgba(255, 255, 255, 0.35) 70%,
-    transparent 100%
+    68% 56% at 0% 100%,
+    var(--pine-900) 0%,
+    rgba(11, 36, 31, 0.82) 34%,
+    rgba(11, 36, 31, 0) 72%
   );
-  opacity: 0;
-  will-change: transform, opacity;
 }
 
-/* ── Hero content ───────────────────────────────────── */
-.hero {
+
+/* ── Hero layout: copy left, photo right ────────────── */
+.heroInner {
   position: relative;
   z-index: 10;
-  padding: 0 clamp(2rem, 5vw, 6rem);
-  padding-bottom: clamp(3rem, 7vh, 6rem);
-  max-width: 1000px;
+  width: 100%;
+  height: 100%;
+  /* Full bleed, with a tight left gutter so the copy sits well left.
+     Driven by the shared tokens so the background layer stays in step. */
+  padding: var(--hero-pad-t) var(--hero-pad-r) var(--hero-pad-b)
+    var(--hero-pad-l);
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: stretch;
+  gap: var(--hero-gap);
 }
 
-.heroTag {
-  font-family: "Merriweather", Georgia, serif;
-  font-size: clamp(1rem, 2.5vw, 1.35rem);
-  font-weight: 700;
-  letter-spacing: 0.1em;
+/* ── Hero content (bottom left) ─────────────────────── */
+.hero {
+  position: relative;
+  align-self: end;
+  max-width: 640px;
+}
+
+/* ── Hero photo (fills the available height) ────────── */
+.heroMedia {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.heroMediaFrame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  /* Ties the photo to the ground it sits on rather than floating loose */
+  box-shadow: 0 0 0 1px var(--hairline-inverse);
+}
+
+.heroImage {
+  object-fit: cover;
+}
+
+.heroEyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--white);
-  margin-bottom: 1rem;
+  color: var(--gold);
+  margin-bottom: 1.1rem;
 }
 
 .heroTitle {
-  font-family: "Merriweather", Georgia, serif;
+  font-family: var(--font-display);
   font-size: clamp(2.8rem, 5vw, 4.8rem);
-  font-weight: 900;
-  line-height: 1.12;
-  color: var(--white);
-  letter-spacing: -0.01em;
-  margin-bottom: 1.25rem;
+  font-weight: 500;
+  line-height: 1.08;
+  color: var(--mist);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  /* No trailing margin: the headline is the last thing in its column, so its
+     foot has to sit on the hero's bottom line alongside the photo and the
+     histogram baseline. */
+  margin-bottom: 0;
 }
 
 .heroAccent {
-  color: var(--white);
-}
-
-.heroTextContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  max-width: 950px;
+  color: var(--gold);
 }
 
 .heroParagraph {
-  font-family: "Merriweather", Georgia, serif;
-  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
-  font-weight: 300;
-  line-height: 1.85;
-  color: rgba(255, 255, 255, 0.72);
+  font-family: var(--font-body);
+  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.8;
+  color: var(--mist-muted);
+  max-width: 46ch;
 }
 
-.heroParagraph strong {
-  font-weight: 700;
-  color: var(--white);
+/* ── Info blocks (left aligned) ─────────────────────── */
+.infoColumn {
+  margin-top: clamp(4rem, 9vh, 7rem);
+  max-width: 620px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 4.5vh, 3rem);
 }
 
-.dropCap {
-  float: left;
-  font-size: 4.2rem;
-  line-height: 0.8;
-  padding-top: 0;
-  padding-right: 0.6rem;
-  padding-bottom: 0;
-  margin-top: 0.3rem; /* aligns the flat top of the W with the text ascender */
-  margin-bottom: -0.5rem; /* allows it to hug the bottom line */
-  font-weight: 900;
-  color: var(--white);
+.infoTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
 }
 
-/* ── Corner decorative line ─────────────────────────── */
-.cornerDecor {
-  position: absolute;
-  bottom: 2.5rem;
-  right: 3rem;
-  width: 1px;
-  height: 120px;
+.infoText {
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+  font-weight: 400;
+  line-height: 1.8;
+  color: var(--ink-muted);
+  max-width: 62ch;
+}
+
+/* ── Centered quote ─────────────────────────────────── */
+.quote {
+  max-width: 900px;
+  margin: clamp(4rem, 9vh, 7rem) auto 0;
+  text-align: center;
+  /* The one place maroon appears as a mark on paper */
+  border-top: 2px solid var(--maroon);
+  padding-top: clamp(2rem, 4vh, 3rem);
+}
+
+.quoteText {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.8vw, 2.25rem);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.5;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.quoteAttribution {
+  margin-top: clamp(1.25rem, 3vh, 2rem);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+/* ── Social buttons (last in the section) ───────────── */
+.socialRow {
+  /* Sits just under the quote so the two read as one bottom cluster */
+  margin-top: clamp(2.5rem, 5vh, 4rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1rem, 2.5vh, 1.5rem);
+}
+
+.socialLabel {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.socialList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-width: 210px;
+  padding: 1.05rem 2rem;
+  border-radius: 8px;
+  background: var(--pine-900);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: background 0.35s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.socialLink:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(11, 36, 31, 0.24);
+}
+
+.socialLink:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* ── Brand colours (third-party marks keep their own) ─ */
+.socialInstagram {
   background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.3) 50%,
-    transparent 100%
+    45deg,
+    #feda75 0%,
+    #fa7e1e 25%,
+    #d62976 50%,
+    #962fbf 75%,
+    #4f5bd5 100%
   );
-  z-index: 10;
+}
+
+.socialLinkedin {
+  background: #0a66c2;
+}
+
+/* Email is not a third-party brand — uses the ASA maroon */
+.socialEmail {
+  background: var(--maroon);
+}
+
+.socialIcon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+/* ── Mobile layout ──────────────────────────────────── */
+
+@media (max-width: 900px) {
+  /* The field stays on mobile — it costs no layout space, `slice` keeps the
+     hills in proportion, and 16 paths is cheap. */
+
+  /* Photo first, copy underneath; top padding clears the fixed header */
+  .heroInner {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    gap: clamp(1.5rem, 4vh, 2.5rem);
+    padding: 5.5rem 1.5rem 2.5rem;
+  }
+
+  .heroMedia {
+    order: -1;
+    height: auto;
+  }
+
+  .hero {
+    max-width: none;
+  }
+
+  .heroMediaFrame {
+    height: auto;
+    aspect-ratio: 16 / 10;
+    /* Keep the stack inside one viewport */
+    max-height: 40svh;
+    border-radius: 10px;
+  }
+
+  .heroTitle {
+    font-size: clamp(2rem, 9vw, 3.2rem);
+    line-height: 1.12;
+  }
+
+  .heroEyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+  }
+
+  .heroParagraph {
+    font-size: clamp(1rem, 4vw, 1.15rem);
+    line-height: 1.7;
+  }
+
+  .sectionInner {
+    padding: clamp(3.5rem, 8vh, 5rem) 1.5rem;
+  }
+
+  .infoColumn,
+  .socialRow,
+  .quote {
+    margin-top: clamp(2.5rem, 6vh, 4rem);
+  }
+
+  /* Full-width buttons on narrow screens */
+  .socialList {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .socialLink {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .quoteText {
+    font-size: clamp(1.15rem, 5.5vw, 1.6rem);
+    line-height: 1.55;
+  }
 }

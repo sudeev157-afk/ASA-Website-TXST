@@ -1,6 +1,16 @@
 /* ── Header ───────────────────────────────────────────── */
+/*
+   Type roles in the bar: mono is the interface voice (nav, actions),
+   the display serif never appears here — it is reserved for editorial
+   headlines on the page itself.
+*/
 
 .header {
+  /* Bar height is driven by the logo: logo + equal breathing room above/below */
+  --logo-size: 76px;
+  --logo-gutter: 10px;
+  --header-height: calc(var(--logo-size) + var(--logo-gutter) * 2);
+
   position: fixed;
   top: 0;
   left: 0;
@@ -9,15 +19,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: auto;
-  /* Top padding updated to exactly vertically align the header's center with the logo's center */
-  padding: 2.75rem clamp(1.5rem, 4vw, 3rem) 0;
-  background: transparent;
+  height: var(--header-height);
+  padding: 0 clamp(1.5rem, 4vw, 3rem);
+  /* Solid bar of its own — never blended with what sits behind it */
+  background: var(--paper);
+  border-bottom: 1px solid var(--hairline);
+  transition: background 0.45s ease, border-color 0.45s ease,
+    box-shadow 0.3s ease;
 }
 
-/* Scroll state kept as a styling hook — no chrome while the header is bare */
+/* Scroll state only lifts the bar off the page with a shadow */
 .scrolled {
-  background: transparent;
+  box-shadow: 0 2px 18px rgba(11, 36, 31, 0.12);
 }
 
 /* ── Inner wrapper (contained, not edge-to-edge) ────── */
@@ -30,42 +43,52 @@
   align-items: center;
   justify-content: space-between;
   gap: 2.5rem;
-  /* Chrome-free: no box, no border, no shadow */
   background: transparent;
   border: none;
   box-shadow: none;
-  padding: 0.75rem clamp(1.5rem, 3vw, 2.5rem);
+  padding: 0 clamp(1.5rem, 3vw, 2.5rem);
 }
 
-/* ── Logo (sits flush on the background) ─────────────── */
+/* ── Logo (centred inside the bar) ───────────────────── */
 .floatingLogoLink {
   position: absolute;
-  top: 1.5rem;
-  left: 3rem;
+  top: 50%;
+  left: clamp(1.5rem, 4vw, 3rem);
+  transform: translateY(-50%);
   z-index: 110;
   display: flex;
   align-items: center;
 }
 
+/*
+   The seal is fixed artwork — maroon and gold on transparency — so it is
+   never recoloured or filtered. Its own maroon would vanish against pine
+   (2.24:1), so on the dark ground it sits on a paper plate instead. The
+   mark is already a circle, so the plate reads as part of it.
+*/
 .floatingLogoWrapper {
-  width: 110px;
-  height: 110px;
+  width: var(--logo-size);
+  height: var(--logo-size);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
-  transition: transform 0.3s ease;
+  border-radius: 50%;
+  background: var(--paper);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .floatingLogoWrapper:hover {
   transform: scale(1.05);
 }
 
+.dark .floatingLogoWrapper {
+  box-shadow: 0 0 0 1px var(--pine-700);
+}
+
 .logoImage {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  transition: filter 0.45s ease;
 }
 
 /* ── Nav ──────────────────────────────────────────────── */
@@ -79,120 +102,305 @@
   list-style: none;
   display: flex;
   align-items: center;
-  gap: clamp(1.5rem, 3.5vw, 3.2rem);
+  gap: clamp(0.75rem, 2vw, 1.75rem);
 }
 
 .navLink {
   position: relative;
   display: flex;
   align-items: center;
-  padding: 0.55rem 1rem;
-  border-radius: 8px;
+  padding: 0.5rem 0.7rem;
+  border-radius: 6px;
   background: transparent;
   transform: translateY(0);
-  transition:
-    background 0.45s ease,
-    transform 0.45s ease;
+  transition: background 0.45s ease, transform 0.45s ease;
 }
 
 .navLink:hover {
-  background: rgba(80, 18, 20, 0.1);
+  background: rgba(80, 18, 20, 0.08);
   transform: translateY(-1px);
-  transition:
-    background 0.45s ease,
-    transform 0.45s ease;
 }
 
 .navLink:active {
-  background: rgba(80, 18, 20, 0.18);
+  background: rgba(80, 18, 20, 0.14);
   transform: translateY(0);
-  transition:
-    background 0.08s ease-out,
-    transform 0.08s ease-out;
+  transition: background 0.08s ease-out, transform 0.08s ease-out;
 }
 
 .navText {
-  font-family: "Merriweather", Georgia, serif;
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: 0.015em;
-  color: var(--black);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--ink);
   transition: color 0.45s ease;
 }
 
-/* Maroon appears on hover only */
 .navLink:hover .navText {
   color: var(--maroon);
-  transition: color 0.45s ease;
 }
 
-/* ── Active route (monochrome) ───────────────────────── */
+/* ── Active route ────────────────────────────────────── */
 .navLinkActive .navText {
-  color: var(--black);
+  color: var(--maroon);
 }
 
 .navUnderline {
   position: absolute;
-  left: 1rem;
-  right: 1rem;
-  bottom: 0.25rem;
+  left: 0.7rem;
+  right: 0.7rem;
+  bottom: 0.2rem;
   height: 2px;
   border-radius: 2px;
-  background: var(--black);
+  background: var(--maroon);
 }
 
-/* ── Dark variant (landing page, over video) ─────────── */
-.dark .logoImage {
-  /* Flatten the logo to pure white so it reads on the video */
-  filter: brightness(0) invert(1);
+/* ── Dark variant (over the pine hero) ───────────────── */
+.dark {
+  background: var(--pine-900);
+  border-bottom-color: var(--hairline-inverse);
 }
 
-.dark .navText,
-.dark .navLinkActive .navText {
-  color: var(--white);
+.dark.scrolled {
+  box-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
 }
 
-.dark .navUnderline {
-  background: var(--white);
+.dark .navText {
+  color: var(--mist);
 }
 
-/* Maroon still drives hover, kept legible on dark */
+/* Gold is the interactive signal on pine — maroon cannot carry it there */
 .dark .navLink:hover {
-  background: rgba(80, 18, 20, 0.55);
+  background: var(--pine-700);
 }
 
-.dark .navLink:hover .navText {
-  color: var(--white);
+.dark .navLink:hover .navText,
+.dark .navLinkActive .navText {
+  color: var(--gold);
 }
 
 .dark .navLink:active {
-  background: rgba(80, 18, 20, 0.75);
+  background: var(--pine-600);
+}
+
+.dark .navUnderline {
+  background: var(--gold);
 }
 
 /* ── Join Us CTA ─────────────────────────────────────── */
 .joinBtn {
-  font-family: "Merriweather", Georgia, serif;
-  font-size: 0.875rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--white);
+  color: var(--paper);
   background: var(--maroon);
   border: none;
-  border-radius: 8px;
-  padding: 0.7rem 1.6rem;
+  border-radius: 6px;
+  padding: 0.65rem 1.3rem;
   cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.3s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.3s ease,
+    color 0.3s ease;
   white-space: nowrap;
 }
 
 .joinBtn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(80, 18, 20, 0.3);
+  box-shadow: 0 6px 20px rgba(80, 18, 20, 0.28);
   background: var(--maroon-dark);
 }
 
 .joinBtn:active {
   transform: translateY(0);
   box-shadow: 0 2px 8px rgba(80, 18, 20, 0.25);
+}
+
+/* On pine the action turns gold — 7.50:1 in both directions */
+.dark .joinBtn {
+  background: var(--gold);
+  color: var(--pine-900);
+}
+
+.dark .joinBtn:hover {
+  background: var(--gold-hi);
+  box-shadow: 0 6px 20px rgba(224, 165, 72, 0.28);
+}
+
+/* ── Hamburger (hidden on desktop) ───────────────────── */
+.menuBtn {
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  z-index: 120;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.menuBar {
+  position: absolute;
+  display: block;
+  width: 26px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--ink);
+  transition: transform 0.3s ease, opacity 0.2s ease, background 0.45s ease;
+}
+
+.dark .menuBar {
+  background: var(--mist);
+}
+
+.menuBar:nth-child(1) {
+  transform: translateY(-8px);
+}
+
+.menuBar:nth-child(3) {
+  transform: translateY(8px);
+}
+
+.menuBtnOpen .menuBar:nth-child(1) {
+  transform: rotate(45deg);
+}
+
+.menuBtnOpen .menuBar:nth-child(2) {
+  opacity: 0;
+}
+
+.menuBtnOpen .menuBar:nth-child(3) {
+  transform: rotate(-45deg);
+}
+
+/* ── Full-screen mobile menu ─────────────────────────── */
+.mobilePanel {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(2rem, 6vh, 3.5rem);
+  padding: 6rem 1.5rem 3rem;
+  background: var(--paper);
+}
+
+.dark .mobilePanel {
+  background: var(--pine-900);
+}
+
+.mobileList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1.25rem, 3.5vh, 2rem);
+}
+
+/* The full-screen menu is a page in its own right, so the display serif
+   is allowed here where it is not in the bar */
+.mobileLink {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 8vw, 2.5rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  transition: color 0.35s ease;
+}
+
+.dark .mobileLink {
+  color: var(--mist);
+}
+
+.mobileLink:active {
+  color: var(--maroon);
+}
+
+.dark .mobileLink:active {
+  color: var(--gold);
+}
+
+.mobileLinkActive {
+  border-bottom: 2px solid var(--maroon);
+  padding-bottom: 0.25rem;
+  color: var(--maroon);
+}
+
+.dark .mobileLinkActive {
+  border-bottom-color: var(--gold);
+  color: var(--gold);
+}
+
+.mobileJoinBtn {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--maroon);
+  border-radius: 6px;
+  padding: 1rem 3rem;
+  transition: background 0.3s ease;
+}
+
+.mobileJoinBtn:active {
+  background: var(--maroon-dark);
+}
+
+.dark .mobileJoinBtn {
+  background: var(--gold);
+  color: var(--pine-900);
+}
+
+.dark .mobileJoinBtn:active {
+  background: var(--gold-hi);
+}
+
+/* ── Mobile layout ───────────────────────────────────── */
+@media (max-width: 900px) {
+  .header {
+    --logo-size: 52px;
+    --logo-gutter: 8px;
+    padding: 0 1rem;
+  }
+
+  .floatingLogoLink {
+    left: 1rem;
+  }
+
+  .inner {
+    padding: 0;
+  }
+
+  /* Desktop nav and CTA give way to the hamburger */
+  .nav,
+  .ctaWrap {
+    display: none;
+  }
+
+  .menuBtn {
+    display: flex;
+  }
+}
+
+/* Pointer-based hover effects only where hover actually exists */
+@media (hover: none) {
+  .navLink:hover {
+    background: transparent;
+    transform: none;
+  }
+
+  .navLink:hover .navText {
+    color: inherit;
+  }
 }

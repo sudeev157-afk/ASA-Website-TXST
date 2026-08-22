@@ -1,34 +1,86 @@
 @import "tailwindcss";
 
 /* ─── Design Tokens ─────────────────────────────────── */
+/*
+   "Pine & Gild". Two grounds — deep evergreen and a green-cast off-white —
+   with maroon and gold carried straight out of the ASA seal. The seal is
+   fixed artwork and is never recoloured or filtered; the palette is built
+   to let it sit on either ground unaltered.
+*/
 :root {
-  /* Monochrome ramp — the whole theme lives here */
-  --black: #000000;
-  --grey-900: #0d0d0d;
-  --grey-700: #333333;
-  --grey-500: #757575;
-  --grey-300: #bdbdbd;
-  --grey-100: #f2f2f2;
-  --white: #ffffff;
+  /* Dark ground */
+  --pine-900: #0b241f;
+  --pine-800: #10302a;
+  --pine-700: #164036;
+  --pine-600: #235a4c;
 
-  /* Accent — reserved for hover states and the Join Us CTA only */
+  /* Light ground */
+  --paper: #f2f5f1;
+  --paper-100: #e3eae2;
+  --paper-200: #d2dcd1;
+
+  /* Type */
+  --ink: #12251f;
+  --ink-muted: #55665f;
+  --mist: #e8efe9;
+  --mist-muted: #9db3aa;
+
+  /* Brand — fixed, taken from the seal */
   --maroon: #501214;
   --maroon-dark: #3a0d0e;
 
+  /* The lift — the seal's own gold */
+  --gold: #e0a548;
+  --gold-hi: #f0c173;
+  --gold-deep: #b8832f;
+
   /* Derived */
-  --hairline: rgba(0, 0, 0, 0.1);
-  --hairline-inverse: rgba(255, 255, 255, 0.12);
+  --hairline: rgba(18, 37, 31, 0.12);
+  --hairline-inverse: rgba(232, 239, 233, 0.14);
+
+  /* Typography — the font-family stacks are supplied by next/font in
+     app/layout.tsx, which self-hosts them at build time. */
+  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+  --font-body: var(--font-inter-tight), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+
+  /*
+     Legacy aliases. The old theme was a pure monochrome ramp; these keep any
+     unmigrated rule landing inside the palette instead of falling back to
+     pure black or white. Prefer the named tokens above in new code.
+  */
+  --black: var(--pine-900);
+  --white: var(--paper);
+  --grey-900: var(--pine-800);
+  --grey-700: var(--ink-muted);
+  --grey-500: var(--ink-muted);
+  --grey-300: var(--paper-200);
+  --grey-100: var(--paper-100);
 }
 
 @theme inline {
-  --color-black: var(--black);
-  --color-grey-900: var(--grey-900);
-  --color-grey-700: var(--grey-700);
-  --color-grey-500: var(--grey-500);
-  --color-grey-300: var(--grey-300);
-  --color-grey-100: var(--grey-100);
-  --color-white: var(--white);
+  --color-pine-900: var(--pine-900);
+  --color-pine-800: var(--pine-800);
+  --color-pine-700: var(--pine-700);
+  --color-pine-600: var(--pine-600);
+  --color-paper: var(--paper);
+  --color-paper-100: var(--paper-100);
+  --color-paper-200: var(--paper-200);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-mist: var(--mist);
+  --color-mist-muted: var(--mist-muted);
   --color-maroon: var(--maroon);
+  --color-maroon-dark: var(--maroon-dark);
+  --color-gold: var(--gold);
+  --color-gold-hi: var(--gold-hi);
+  --color-gold-deep: var(--gold-deep);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
 }
 
 /* ─── Base Reset ────────────────────────────────────── */
@@ -42,15 +94,19 @@
 
 html {
   height: 100%;
+  /* Anchor links and in-page jumps clear the fixed header bar */
+  scroll-padding-top: 96px;
 }
 
 body {
   min-height: 100%;
   /* Vertical scrolling is enabled; nothing should ever scroll sideways */
   overflow-x: hidden;
-  font-family: "Merriweather", Georgia, serif;
-  background: var(--black);
-  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  background: var(--paper);
+  color: var(--ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -62,6 +118,26 @@ a {
 }
 
 ::selection {
-  background: var(--white);
-  color: var(--black);
+  background: var(--gold);
+  color: var(--pine-900);
+}
+
+/* Gold is the focus colour on both grounds — it is the only value in the
+   palette that clears 4.5:1 against pine and still reads on paper as a mark. */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Anything that animates does so only by consent */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

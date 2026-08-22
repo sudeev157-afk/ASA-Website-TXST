@@ -6,13 +6,15 @@
 /* ── Full-viewport wrapper ──────────────────────────── */
 .shell {
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
+  /* svh keeps mobile browser chrome from clipping the page */
+  height: 100svh;
   overflow: hidden;
   display: flex;
   align-items: flex-end;
-  background: var(--white);
-  color: var(--black);
+  background: var(--paper);
+  color: var(--ink);
 }
 
 /* ── Content slot (empty for now) ───────────────────── */
