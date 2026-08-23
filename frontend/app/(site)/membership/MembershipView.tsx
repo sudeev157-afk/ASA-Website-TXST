@@ -231,8 +231,6 @@ export default function MembershipView() {
         </div>
 
         <div className={styles.heroInner}>
-          <SectionLabel onLoad>Membership</SectionLabel>
-
           <LineRise
             as="h1"
             onLoad
@@ -251,7 +249,7 @@ export default function MembershipView() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
           >
-            It&rsquo;s open to every major at Texas State. No dues. No
+            We are open to every major at Texas State. No dues. No
             prerequisites. No background needed.
           </motion.p>
 
@@ -273,7 +271,7 @@ export default function MembershipView() {
         data-header-theme="light"
       >
         <div className={styles.inner}>
-          <SectionLabel>What you get</SectionLabel>
+          <SectionLabel>What you will get</SectionLabel>
 
           <Bento items={GETS} className={styles.bentoGets} />
         </div>
@@ -293,7 +291,7 @@ export default function MembershipView() {
               lines={[
                 "You don't need",
                 "to be a statistics",
-                "major. You need",
+                "major. You just need",
                 "to be interested.",
               ]}
             />
@@ -329,9 +327,6 @@ export default function MembershipView() {
             <Reveal delay={0.2} className={styles.actions}>
               <ActionButton href={JOIN_FORM_URL} external>
                 Fill out the form
-              </ActionButton>
-              <ActionButton href="/about" variant="ghost">
-                About ASA
               </ActionButton>
             </Reveal>
 
