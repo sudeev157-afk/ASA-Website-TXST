@@ -15,7 +15,7 @@ import LineRise from "@/components/ui/LineRise";
 import { Branches } from "@/components/graphics/Motifs";
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
-import { JOIN_FORM_URL } from "@/lib/links";
+import { CONTACT_EMAIL_HREF, INSTAGRAM_URL, JOIN_FORM_URL } from "@/lib/links";
 import { mulberry32 } from "@/lib/random";
 import styles from "./HomeView.module.css";
 
@@ -204,17 +204,26 @@ function EmailIcon() {
 const SOCIAL_LINKS = [
   {
     label: "Instagram",
-    href: "#",
+    href: INSTAGRAM_URL,
+    external: true,
     Icon: InstagramIcon,
     brandClass: styles.socialInstagram,
   },
   {
+    /* TODO: swap "#" for the real profile URL once the page exists. */
     label: "LinkedIn",
     href: "#",
+    external: true,
     Icon: LinkedInIcon,
     brandClass: styles.socialLinkedin,
   },
-  { label: "Email", href: "#", Icon: EmailIcon, brandClass: styles.socialEmail },
+  {
+    label: "Email",
+    href: CONTACT_EMAIL_HREF,
+    external: false,
+    Icon: EmailIcon,
+    brandClass: styles.socialEmail,
+  },
 ];
 
 /* ────────────────────────────────────────────────────────
@@ -355,7 +364,7 @@ export default function HomeView() {
             >
               <span className={styles.txstRule} aria-hidden="true" />
               <p className={styles.txstName}>Texas State University</p>
-              <p className={styles.txstMeta}>San Marcos, Texas · Est. 1899</p>
+              <p className={styles.txstMeta}>San Marcos, Texas</p>
             </motion.div>
 
             <LineRise
@@ -469,22 +478,27 @@ export default function HomeView() {
         data-header-theme="light"
       >
         <div className={styles.inner}>
-          <SectionLabel>Connect</SectionLabel>
+          <SectionLabel>Let us Connect</SectionLabel>
 
           <LineRise className={styles.statement} lines={["Come find us."]} />
 
           <Reveal delay={0.25}>
             <p className={styles.sub}>
-              We post what we are doing and when. Say hello.
+              We post what we are doing and when. If you have anything more please email us, we are open to any questions
             </p>
           </Reveal>
 
           <Reveal delay={0.35}>
             <ul className={styles.socialList}>
-              {SOCIAL_LINKS.map(({ label, href, Icon, brandClass }) => (
+              {SOCIAL_LINKS.map(({ label, href, external, Icon, brandClass }) => (
                 <li key={label}>
-                  {/* TODO: swap "#" for the real profile URL */}
-                  <a href={href} className={`${styles.socialLink} ${brandClass}`}>
+                  <a
+                    href={href}
+                    className={`${styles.socialLink} ${brandClass}`}
+                    {...(external
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                  >
                     <Icon />
                     <span>{label}</span>
                   </a>

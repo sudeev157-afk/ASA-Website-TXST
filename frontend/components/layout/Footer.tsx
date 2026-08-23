@@ -1,6 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { JOIN_FORM_URL } from "@/lib/links";
+import {
+  CONTACT_EMAIL,
+  CONTACT_EMAIL_HREF,
+  INSTAGRAM_URL,
+  JOIN_FORM_URL,
+} from "@/lib/links";
 import styles from "./Footer.module.css";
 
 const NAV_LINKS = [
@@ -23,7 +28,8 @@ const iconProps = {
 const SOCIAL_LINKS = [
   {
     label: "Instagram",
-    href: "#",
+    href: INSTAGRAM_URL,
+    external: true,
     icon: (
       <svg className={styles.socialSvg} {...iconProps}>
         <rect x="3" y="3" width="18" height="18" rx="5" />
@@ -33,8 +39,10 @@ const SOCIAL_LINKS = [
     ),
   },
   {
+    /* TODO: swap "#" for the real profile URL once the page exists. */
     label: "LinkedIn",
     href: "#",
+    external: true,
     icon: (
       <svg className={styles.socialSvg} {...iconProps}>
         <rect x="3" y="3" width="18" height="18" rx="4" />
@@ -46,7 +54,8 @@ const SOCIAL_LINKS = [
   },
   {
     label: "Email",
-    href: "mailto:asa@txstate.edu",
+    href: CONTACT_EMAIL_HREF,
+    external: false,
     icon: (
       <svg className={styles.socialSvg} {...iconProps}>
         <rect x="3" y="5" width="18" height="14" rx="2.5" />
@@ -119,18 +128,19 @@ export default function Footer() {
           <p className={styles.connectDetail}>
             Texas State University, San Marcos
           </p>
-          <a href="mailto:asa@txstate.edu" className={styles.connectEmail}>
-            asa@txstate.edu
+          <a href={CONTACT_EMAIL_HREF} className={styles.connectEmail}>
+            {CONTACT_EMAIL}
           </a>
           <div className={styles.socialRow}>
-            {SOCIAL_LINKS.map(({ label, href, icon }) => (
+            {SOCIAL_LINKS.map(({ label, href, external, icon }) => (
               <a
                 key={label}
                 href={href}
                 className={styles.socialIconLink}
                 aria-label={label}
-                target="_blank"
-                rel="noopener noreferrer"
+                {...(external
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
               >
                 {icon}
               </a>
