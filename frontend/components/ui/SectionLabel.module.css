@@ -1,0 +1,27 @@
+/* ═══════════════════════════════════════════════════════
+   Section label – SectionLabel.module.css
+   ═══════════════════════════════════════════════════════ */
+
+/*
+   Big enough to be read without looking for it, and heavy enough to hold
+   the top of a section on its own. The tracking comes down as the weight
+   goes up: 0.24em was what made a 0.72rem regular line read as a label,
+   but at this size and weight the same value pulls the word apart.
+*/
+.label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: clamp(0.95rem, 1.15vw, 1.15rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .label {
+    font-size: clamp(0.9rem, 3.6vw, 1.02rem);
+    letter-spacing: 0.12em;
+  }
+}

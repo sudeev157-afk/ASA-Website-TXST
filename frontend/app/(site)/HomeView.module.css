@@ -1,0 +1,447 @@
+/* ═══════════════════════════════════════════════════════
+   Landing Page – landing.module.css
+
+   The same system as every other page: tones from globals.css, one
+   `--stack` interval for the rhythm, and no rule here naming a colour.
+
+   The one thing that is this page's alone is the drifting ridgeline in the
+   hero, which is left exactly as it was.
+   ═══════════════════════════════════════════════════════ */
+
+.landing {
+  /* The page's single vertical interval */
+  --stack: clamp(1.5rem, 3.6vh, 2.5rem);
+  /* How far a tone reaches into its neighbour before giving way. Short on
+     purpose: this should read as a soft edge, not as haze in the gap. */
+  --seam: clamp(2.5rem, 5.5vh, 4rem);
+
+  position: relative;
+  width: 100%;
+  background: var(--pine-900);
+}
+
+/* ── One idea per screen ────────────────────────────── */
+.heroSection,
+.stage {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+}
+
+.heroSection {
+  overflow: hidden;
+  background-image: radial-gradient(
+    120% 90% at 8% 100%,
+    rgba(224, 165, 72, 0.16) 0%,
+    rgba(224, 165, 72, 0.05) 38%,
+    transparent 68%
+  );
+}
+
+
+/*
+   The seam is space *between* two screens, not space taken out of the one
+   above it. Sized to the viewport exactly, a section's fade lands on the
+   bottom edge of the screen, so the first thing anyone sees is the next
+   section's ground bleeding up into the hero — a white strip under a dark
+   page, before they have scrolled at all.
+
+   So the section is one screen *plus* the seam, and the padding hands that
+   extra strip to the fade. Content still centres in the visible screen;
+   the dissolve simply lives below the fold until it is scrolled to.
+*/
+.heroSection,
+.stage:not(:last-child) {
+  min-height: calc(100vh + var(--seam));
+  min-height: calc(100svh + var(--seam));
+  padding-bottom: var(--seam);
+}
+
+/*
+   The seam. Each section fades out into the ground of the one below it, so
+   the change of voice arrives as a dissolve rather than a rule across the
+   page. It sits over the section's own background and under its content,
+   and the last screen has none — there is nothing after it to become.
+*/
+.heroSection::before,
+.stage:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: var(--seam);
+  z-index: 3;
+  pointer-events: none;
+  background: var(--seam-fade);
+}
+
+/* ── Rhythm ─────────────────────────────────────────── */
+.inner {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  /*
+     A floor, not the spacing itself. Sections are centred inside a full
+     screen, so on most of them the surrounding space is whatever is left
+     over; this only takes effect when the content is taller than the
+     viewport, and it keeps that case from ever looking cramped. The top
+     value also clears the fixed bar.
+  */
+  padding: clamp(6rem, 9.5vh, 7.5rem) clamp(1.75rem, 5vw, 6rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack);
+}
+
+/* Copy on the left, the figure that draws it on the right */
+.innerSplit {
+  --type-display: var(--type-display-split);
+
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+  align-items: center;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.close .innerSplit {
+  grid-template-columns: minmax(0, 1.32fr) minmax(0, 0.68fr);
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack);
+}
+
+.motif {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Anything that belongs to the section rather than to one column */
+.spanAll {
+  grid-column: 1 / -1;
+}
+
+/* ── Hero motif: the drifting ridgeline ─────────────── */
+/*
+   Untouched. It is taken out of flow entirely, so the copy and the photo
+   keep the full width they had, and it reaches every edge as the page's
+   own ground.
+*/
+/* The hero's crop of the shared ridgeline. Everything structural — the
+   inset, the stacking, the crest colours — lives in Ridgeline.module.css;
+   this only says how much of the field this surface carries. */
+.plotLayer {
+  --ridgeline-opacity: 0.32;
+}
+
+/* Scrim: sits between the ridgeline and the copy, so the headline keeps
+   solid ground under it */
+.heroSection::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(
+    72% 62% at 0% 100%,
+    var(--pine-900) 0%,
+    rgba(11, 36, 31, 0.84) 34%,
+    rgba(11, 36, 31, 0) 74%
+  );
+}
+
+/* ── Hero photo ─────────────────────────────────────── */
+.heroMedia {
+  position: relative;
+  width: 100%;
+  /* Tall enough to balance the headline beside it without pushing the
+     section past one screen */
+  aspect-ratio: 4 / 5;
+  max-height: 62svh;
+}
+
+.heroMediaFrame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 14px;
+  /* Ties the photo to the ground it sits on rather than floating loose */
+  box-shadow: 0 0 0 1px var(--hairline-inverse);
+}
+
+.heroImage {
+  object-fit: cover;
+}
+
+/* ═══ TXST lockup ═══════════════════════════════════════
+   Texas State deserves more than a label. This is a small institutional
+   badge that anchors the hero: the name in the display serif, a thin gold
+   rule as the university's mark, and a meta line for location and founding.
+   ═══════════════════════════════════════════════════════ */
+.txstLockup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-bottom: 0.6rem;
+}
+
+.txstRule {
+  display: block;
+  width: 36px;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 1px;
+  margin-bottom: 0.2rem;
+}
+
+.txstName {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--on-pine-1);
+}
+
+.txstMeta {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--on-pine-3);
+}
+
+/* ═══ Type ══════════════════════════════════════════════
+   Three sizes, and nothing between them. The jumps are large on purpose:
+   a reader should be able to tell what matters from across the room.
+   ═══════════════════════════════════════════════════════ */
+
+/* Poster scale. Used twice on the page — the opening claim and the close. */
+.display {
+  font-family: var(--font-display);
+  font-size: var(--type-display);
+  font-weight: 400;
+  line-height: 0.94;
+  letter-spacing: -0.042em;
+  color: var(--ink-1);
+}
+
+/* Section scale. One thought, broken by hand so every line lands. */
+.statement {
+  font-family: var(--font-display);
+  font-size: var(--type-statement);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: var(--ink-1);
+}
+
+.accent {
+  color: var(--accent);
+}
+
+/* The only running text on most screens, and deliberately quiet */
+.sub {
+  font-family: var(--font-body);
+  font-size: var(--type-sub);
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  color: var(--ink-2);
+  max-width: 38ch;
+}
+
+/* ── The three doors ────────────────────────────────── */
+/*
+   About takes the two-by-two block because it is the one most first-time
+   readers want; Membership and Events stack beside it.
+*/
+.bentoDoors {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-areas:
+    "lead lead b"
+    "lead lead c";
+}
+
+.tileLead {
+  grid-area: lead;
+  --tile-word: clamp(2.1rem, 4.2vw, 3.6rem);
+  --tile-icon: 60px;
+}
+
+.tileB {
+  grid-area: b;
+}
+
+.tileC {
+  grid-area: c;
+}
+
+/* ── Social buttons, closing the page ───────────────── */
+.socialList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(0.75rem, 1.6vw, 1.1rem);
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-width: 200px;
+  padding: 1.05rem 2rem;
+  border-radius: 999px;
+  background: var(--pine-900);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease;
+}
+
+.socialLink:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px -10px rgba(11, 36, 31, 0.3);
+}
+
+.socialLink:active {
+  transform: translateY(-1px);
+}
+
+/* Third-party marks keep their own colours; email takes the ASA maroon */
+.socialInstagram {
+  background: linear-gradient(
+    45deg,
+    #feda75 0%,
+    #fa7e1e 25%,
+    #d62976 50%,
+    #962fbf 75%,
+    #4f5bd5 100%
+  );
+}
+
+.socialLinkedin {
+  background: #0a66c2;
+}
+
+.socialEmail {
+  background: var(--maroon);
+}
+
+.socialIcon {
+  width: 21px;
+  height: 21px;
+  flex-shrink: 0;
+}
+
+/* ── Actions ────────────────────────────────────────── */
+/* A row, so a primary and a secondary sit side by side without either one
+   needing to be explained. */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+/* The button that closes a note column sits under it, not beside it */
+.noteAction {
+  margin-top: 1.35rem;
+}
+
+/* ── Mobile ─────────────────────────────────────────── */
+@media (max-width: 900px) {
+  /*
+     A phone scrolls, it does not page. Holding every section to a full
+     screen leaves a third of each one empty, and empty space on a phone
+     reads as something failing to load. Only the opening poster keeps the
+     full height; everything after it is sized by what is in it.
+  */
+  .stage {
+    min-height: 0;
+  }
+
+  .inner {
+    padding: clamp(4rem, 9vh, 5.5rem) 1.5rem;
+  }
+
+  .heroSection .inner {
+    padding: 7rem 1.5rem 4.5rem;
+  }
+
+  /* The figure moves under the sentence it draws, and gives up the right
+     half it was balancing. The closing screen's wider split is named with
+     two classes, so it has to be unset by two as well. */
+  .innerSplit,
+  .close .innerSplit {
+    grid-template-columns: 1fr;
+  }
+
+  /* The figure takes the whole column. Capped, it read as an
+     afterthought under the sentence rather than part of it. */
+  .motif {
+    justify-content: flex-start;
+    max-width: none;
+  }
+
+  /* One column: a bento that has to squeeze is just a list with borders */
+  .bentoDoors {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "lead"
+      "b"
+      "c";
+  }
+
+  .actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  /* The photo goes above the copy and gives up its portrait crop */
+  .heroMedia {
+    order: -1;
+    aspect-ratio: 16 / 10;
+    max-height: 38svh;
+  }
+
+  .socialList {
+    flex-direction: column;
+  }
+
+  .socialLink {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+/*
+   Short laptop screens (13-inch panels, and anything with browser chrome
+   eating the height). The rhythm is the same — it just needs less room to
+   keep a screen's worth of content on one screen.
+*/
+@media (min-width: 901px) and (max-height: 820px) {
+  .inner,
+  .heroInner {
+    padding-block: clamp(5rem, 8vh, 6.25rem);
+  }
+
+  .page {
+    --stack: clamp(1.15rem, 2.8vh, 1.9rem);
+  }
+}

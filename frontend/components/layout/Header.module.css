@@ -1,0 +1,425 @@
+/* ── Header ───────────────────────────────────────────── */
+/*
+   Type roles in the bar: mono is the interface voice (nav, actions),
+   the display serif never appears here — it is reserved for editorial
+   headlines on the page itself.
+*/
+
+.header {
+  /* Bar height is driven by the logo: logo + equal breathing room above/below */
+  --logo-size: 76px;
+  --logo-gutter: 10px;
+  --header-height: calc(var(--logo-size) + var(--logo-gutter) * 2);
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--header-height);
+  padding: 0 clamp(1.5rem, 4vw, 3rem);
+  /* Solid bar of its own — never blended with what sits behind it */
+  background: var(--paper);
+  border-bottom: 1px solid var(--hairline);
+  transition: background 0.45s ease, border-color 0.45s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Scroll state only lifts the bar off the page with a shadow */
+.scrolled {
+  box-shadow: 0 2px 18px rgba(11, 36, 31, 0.12);
+}
+
+/* ── Inner wrapper (contained, not edge-to-edge) ────── */
+.inner {
+  width: 100%;
+  max-width: 1280px;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.5rem;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0 clamp(1.5rem, 3vw, 2.5rem);
+}
+
+/* ── Logo (centred inside the bar) ───────────────────── */
+.floatingLogoLink {
+  position: absolute;
+  top: 50%;
+  left: clamp(1.5rem, 4vw, 3rem);
+  transform: translateY(-50%);
+  z-index: 110;
+  display: flex;
+  align-items: center;
+}
+
+/*
+   The seal is fixed artwork — maroon and gold on transparency — so it is
+   never recoloured or filtered. Its own maroon would vanish against pine
+   (2.24:1), so on the dark ground it sits on a paper plate instead. The
+   mark is already a circle, so the plate reads as part of it.
+*/
+.floatingLogoWrapper {
+  width: var(--logo-size);
+  height: var(--logo-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--paper);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.floatingLogoWrapper:hover {
+  transform: scale(1.05);
+}
+
+.dark .floatingLogoWrapper {
+  box-shadow: 0 0 0 1px var(--pine-700);
+}
+
+.logoImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ── Nav ──────────────────────────────────────────────── */
+.nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.navList {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.75rem);
+}
+
+.navLink {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.7rem;
+  border-radius: 6px;
+  background: transparent;
+  transform: translateY(0);
+  transition: background 0.45s ease, transform 0.45s ease;
+}
+
+.navLink:hover {
+  background: rgba(80, 18, 20, 0.08);
+  transform: translateY(-1px);
+}
+
+.navLink:active {
+  background: rgba(80, 18, 20, 0.14);
+  transform: translateY(0);
+  transition: background 0.08s ease-out, transform 0.08s ease-out;
+}
+
+.navText {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--ink);
+  transition: color 0.45s ease;
+}
+
+.navLink:hover .navText {
+  color: var(--maroon);
+}
+
+/* ── Active route ────────────────────────────────────── */
+.navLinkActive .navText {
+  color: var(--maroon);
+}
+
+.navUnderline {
+  position: absolute;
+  left: 0.7rem;
+  right: 0.7rem;
+  bottom: 0.2rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--maroon);
+}
+
+/* ── Dark variant (over the pine hero) ───────────────── */
+.dark {
+  background: var(--pine-900);
+  border-bottom-color: var(--hairline-inverse);
+}
+
+.dark.scrolled {
+  box-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
+}
+
+.dark .navText {
+  color: var(--mist);
+}
+
+/* Gold is the interactive signal on pine — maroon cannot carry it there */
+.dark .navLink:hover {
+  background: var(--pine-700);
+}
+
+.dark .navLink:hover .navText,
+.dark .navLinkActive .navText {
+  color: var(--gold);
+}
+
+.dark .navLink:active {
+  background: var(--pine-600);
+}
+
+.dark .navUnderline {
+  background: var(--gold);
+}
+
+/* ── Join Us CTA ─────────────────────────────────────── */
+.joinBtn {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--maroon);
+  border: none;
+  border-radius: 6px;
+  padding: 0.65rem 1.3rem;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.3s ease,
+    color 0.3s ease;
+  white-space: nowrap;
+}
+
+.joinBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(80, 18, 20, 0.28);
+  background: var(--maroon-dark);
+}
+
+.joinBtn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(80, 18, 20, 0.25);
+}
+
+/* On pine the action turns gold — 7.50:1 in both directions */
+.dark .joinBtn {
+  background: var(--gold);
+  color: var(--pine-900);
+}
+
+.dark .joinBtn:hover {
+  background: var(--gold-hi);
+  box-shadow: 0 6px 20px rgba(224, 165, 72, 0.28);
+}
+
+/* ── Reading progress ────────────────────────────────── */
+/*
+   Phones only. The bar's bottom edge doubles as the indicator, so it costs
+   no space and there is nothing new on the screen to look at. On a desktop
+   the whole nav is visible at once and this would be noise.
+*/
+.progress {
+  display: none;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  z-index: 130;
+  transform-origin: left center;
+  background: var(--maroon);
+}
+
+.dark .progress {
+  background: var(--gold);
+}
+
+/* ── Hamburger (hidden on desktop) ───────────────────── */
+.menuBtn {
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  z-index: 120;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.menuBar {
+  position: absolute;
+  display: block;
+  width: 26px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--ink);
+  transition: transform 0.3s ease, opacity 0.2s ease, background 0.45s ease;
+}
+
+.dark .menuBar {
+  background: var(--mist);
+}
+
+.menuBar:nth-child(1) {
+  transform: translateY(-8px);
+}
+
+.menuBar:nth-child(3) {
+  transform: translateY(8px);
+}
+
+.menuBtnOpen .menuBar:nth-child(1) {
+  transform: rotate(45deg);
+}
+
+.menuBtnOpen .menuBar:nth-child(2) {
+  opacity: 0;
+}
+
+.menuBtnOpen .menuBar:nth-child(3) {
+  transform: rotate(-45deg);
+}
+
+/* ── Full-screen mobile menu ─────────────────────────── */
+/*
+   Not a dropdown. It takes the whole screen and reads like a contents
+   page: numbered, left-aligned, at a size you could hit without looking.
+   The ground and the accent come from the tone the bar is currently in, so
+   the menu never contradicts the page behind it.
+*/
+.mobilePanel {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(2rem, 6vh, 3rem);
+  padding: 6.5rem 1.5rem calc(2.5rem + env(safe-area-inset-bottom, 0px));
+}
+
+.mobileList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileLink {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  /* Well past the 44px minimum: this is the one control on the screen */
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--ink-4);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 10vw, 3rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--ink-1);
+  transition: color 0.3s ease;
+}
+
+.mobileIndex {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--ink-4);
+  transition: color 0.3s ease;
+}
+
+.mobileLink:active,
+.mobileLinkActive {
+  color: var(--accent);
+}
+
+.mobileLinkActive .mobileIndex {
+  color: var(--accent);
+}
+
+.mobileJoinBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1.15rem 2rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.mobileJoinBtn:active {
+  background: var(--accent-hi);
+  transform: translateY(1px);
+}
+
+/* ── Mobile layout ───────────────────────────────────── */
+@media (max-width: 900px) {
+  .header {
+    --logo-size: 52px;
+    --logo-gutter: 8px;
+    padding: 0 1rem;
+  }
+
+  .floatingLogoLink {
+    left: 1rem;
+  }
+
+  .inner {
+    padding: 0;
+  }
+
+  /* Desktop nav and CTA give way to the hamburger */
+  .nav,
+  .ctaWrap {
+    display: none;
+  }
+
+  .menuBtn {
+    display: flex;
+  }
+
+  .progress {
+    display: block;
+  }
+}
+
+/* Pointer-based hover effects only where hover actually exists */
+@media (hover: none) {
+  .navLink:hover {
+    background: transparent;
+    transform: none;
+  }
+
+  .navLink:hover .navText {
+    color: inherit;
+  }
+}

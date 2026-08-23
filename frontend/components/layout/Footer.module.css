@@ -1,0 +1,220 @@
+/* ─── Footer ────────────────────────────────────────────
+   Dark, full-width footer at the bottom of every page.
+   Three-column grid (brand / links / connect) with a thin
+   bottom bar for copyright.
+   ─────────────────────────────────────────────────────── */
+
+.footer {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--pine-900);
+  color: var(--on-pine-2);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  border-top: 1px solid var(--hairline-inverse);
+}
+
+/*
+   No gold wash down here. The hero carries one, but it works there because
+   a 900px-tall section turns that ellipse into a corner glow. The footer is
+   a third of the height, so the same gradient flattens against the bottom
+   edge and reads as a bar rather than a glow. The ridgeline alone carries
+   the gold.
+*/
+
+/* The footer's crop of the shared ridgeline. `YMax` anchors the field to
+   the bottom of the page, so the crop keeps the tall front ridges rather
+   than a thin slice of the middle — the footer is a few hundred pixels
+   tall, and the middle band reads as stray arcs at that height. */
+.plotLayer {
+  --ridgeline-opacity: 0.42;
+}
+
+/* Scrim: sits between the ridgeline and the columns, so three columns of
+   small text keep solid ground under them. */
+.footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(11, 36, 31, 0.1) 0%,
+    rgba(11, 36, 31, 0.3) 45%,
+    rgba(11, 36, 31, 0.5) 100%
+  );
+}
+
+/* ── Main grid ─────────────────────────────────────────── */
+.footerInner {
+  position: relative;
+  z-index: 3;
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 3.6rem 2rem 2.8rem;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr 1fr;
+  gap: 3rem;
+}
+
+/* ── Brand column ──────────────────────────────────────── */
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.logoLink {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  transition: opacity 0.2s ease;
+}
+
+.logoLink:hover {
+  opacity: 0.85;
+}
+
+.logoWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background: #fff;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.logoImage {
+  border-radius: 0;
+}
+
+.tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--gold);
+  font-size: 0.88rem;
+  letter-spacing: 0.01em;
+  margin-top: 0.15rem;
+}
+
+.brandBlurb {
+  color: var(--on-pine-3);
+  font-size: 0.84rem;
+  line-height: 1.65;
+  max-width: 34ch;
+}
+
+/* ── Quick links column ────────────────────────────────── */
+.linksColumn h3,
+.connectColumn h3 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--on-pine-1);
+  letter-spacing: 0.02em;
+  margin-bottom: 1rem;
+}
+
+.linksList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.linkItem {
+  color: var(--on-pine-2);
+  font-size: 0.87rem;
+  transition: color 0.2s ease;
+  width: fit-content;
+}
+
+.linkItem:hover {
+  color: var(--gold);
+}
+
+/* ── Connect column ────────────────────────────────────── */
+.connectColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.connectDetail {
+  color: var(--on-pine-2);
+  font-size: 0.87rem;
+}
+
+.connectEmail {
+  color: var(--on-pine-2);
+  font-size: 0.87rem;
+  transition: color 0.2s ease;
+  width: fit-content;
+}
+
+.connectEmail:hover {
+  color: var(--gold);
+}
+
+/* ── Social icons row ──────────────────────────────────── */
+.socialRow {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.85rem;
+}
+
+.socialIconLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(232, 239, 233, 0.06);
+  color: var(--on-pine-2);
+  transition:
+    background 0.22s ease,
+    color 0.22s ease,
+    transform 0.22s ease;
+}
+
+.socialIconLink:hover {
+  background: var(--gold);
+  color: var(--pine-900);
+  transform: translateY(-2px);
+}
+
+.socialSvg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Copyright (inside brand column) ───────────────────── */
+.copyright {
+  color: var(--on-pine-3);
+  font-size: 0.78rem;
+  margin-top: 0.4rem;
+}
+
+/* ── Responsive ────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .footerInner {
+    grid-template-columns: 1fr;
+    gap: 2.4rem;
+    padding: 2.8rem 1.5rem 2rem;
+  }
+
+  .brandBlurb {
+    max-width: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .footerInner {
+    padding: 2.2rem 1.2rem 1.6rem;
+  }
+}

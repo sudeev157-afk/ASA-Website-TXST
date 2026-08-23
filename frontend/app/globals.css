@@ -1,0 +1,283 @@
+@import "tailwindcss";
+
+/* ─── Design Tokens ─────────────────────────────────── */
+/*
+   "Pine & Gild". Two grounds — deep evergreen and a green-cast off-white —
+   with maroon and gold carried straight out of the ASA seal. The seal is
+   fixed artwork and is never recoloured or filtered; the palette is built
+   to let it sit on either ground unaltered.
+*/
+:root {
+  /* Dark ground */
+  --pine-900: #0b241f;
+  --pine-800: #10302a;
+  --pine-700: #164036;
+  --pine-600: #235a4c;
+
+  /* Light ground */
+  --paper: #f2f5f1;
+  --paper-100: #e3eae2;
+  --paper-200: #d2dcd1;
+
+  /* Type */
+  --ink: #12251f;
+  --ink-muted: #55665f;
+  --mist: #e8efe9;
+  --mist-muted: #9db3aa;
+
+  /* Brand — fixed, taken from the seal */
+  --maroon: #501214;
+  --maroon-dark: #3a0d0e;
+
+  /* The lift — the seal's own gold */
+  --gold: #e0a548;
+  --gold-hi: #f0c173;
+  --gold-deep: #b8832f;
+
+  /* Derived */
+  --hairline: rgba(18, 37, 31, 0.12);
+  --hairline-inverse: rgba(232, 239, 233, 0.14);
+
+  /*
+     Text in four steps of one colour, on each ground. Hierarchy comes from
+     how present a line is, not from giving it a different hue — which is
+     why the pages that use this need almost no colour at all.
+
+     Alpha rather than the `opacity` property: nesting never compounds it,
+     and the value stays the value.
+  */
+  --on-pine-1: var(--mist);
+  --on-pine-2: rgba(232, 239, 233, 0.62);
+  --on-pine-3: rgba(232, 239, 233, 0.34);
+  --on-pine-4: rgba(232, 239, 233, 0.14);
+
+  --on-paper-1: var(--ink);
+  --on-paper-2: rgba(18, 37, 31, 0.66);
+  --on-paper-3: rgba(18, 37, 31, 0.44);
+  --on-paper-4: rgba(18, 37, 31, 0.14);
+
+  /*
+     Editorial type scale. Three sizes with nothing between them: a reader
+     should be able to tell what matters from across the room. Shared by the
+     About and Membership pages so the two cannot drift apart.
+  */
+  --type-display: clamp(3rem, 9.5vw, 8.5rem); /* the page's one claim */
+  --type-statement: clamp(2.2rem, 6.2vw, 5rem); /* one thought per section */
+  --type-word: clamp(2.3rem, 7vw, 5.5rem); /* list items, read at a glance */
+  --type-sub: clamp(1.02rem, 1.5vw, 1.3rem);
+  --type-body: clamp(0.95rem, 1.25vw, 1.08rem);
+  --type-meta: 0.66rem; /* labels, and nothing else */
+
+  /* What the claim drops to when a figure takes the other half of the
+     measure. On a phone there is no other half, so it goes back up. */
+  --type-display-split: clamp(2.6rem, 6.4vw, 5.4rem);
+
+  /* Typography — the font-family stacks are supplied by next/font in
+     app/layout.tsx, which self-hosts them at build time. */
+  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+  --font-body: var(--font-inter-tight), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+
+  /*
+     Legacy aliases. The old theme was a pure monochrome ramp; these keep any
+     unmigrated rule landing inside the palette instead of falling back to
+     pure black or white. Prefer the named tokens above in new code.
+  */
+  --black: var(--pine-900);
+  --white: var(--paper);
+  --grey-900: var(--pine-800);
+  --grey-700: var(--ink-muted);
+  --grey-500: var(--ink-muted);
+  --grey-300: var(--paper-200);
+  --grey-100: var(--paper-100);
+}
+
+@theme inline {
+  --color-pine-900: var(--pine-900);
+  --color-pine-800: var(--pine-800);
+  --color-pine-700: var(--pine-700);
+  --color-pine-600: var(--pine-600);
+  --color-paper: var(--paper);
+  --color-paper-100: var(--paper-100);
+  --color-paper-200: var(--paper-200);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-mist: var(--mist);
+  --color-mist-muted: var(--mist-muted);
+  --color-maroon: var(--maroon);
+  --color-maroon-dark: var(--maroon-dark);
+  --color-gold: var(--gold);
+  --color-gold-hi: var(--gold-hi);
+  --color-gold-deep: var(--gold-deep);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+/* ─── The two voices ────────────────────────────────────
+   The site speaks in two registers, and the landing page established both:
+
+     tone-pine   pine and gold — ASA itself, the club
+     tone-paper  maroon on white — Texas State, the university it belongs to
+
+   A section declares which one it is speaking in, and everything inside it
+   follows: the four text steps, the accent, and the surface a tile sits on
+   are all read from these. Nothing downstream names a colour directly,
+   which is what lets one component work on either ground.
+   ─────────────────────────────────────────────────────── */
+.tone-pine {
+  --ink-1: var(--on-pine-1);
+  --ink-2: var(--on-pine-2);
+  --ink-3: var(--on-pine-3);
+  --ink-4: var(--on-pine-4);
+
+  --accent: var(--gold);
+  --accent-soft: rgba(224, 165, 72, 0.36);
+  --accent-line: rgba(224, 165, 72, 0.45);
+  /* What an action filled with the accent needs to stay readable */
+  --on-accent: var(--pine-900);
+  --accent-hi: var(--gold-hi);
+  --accent-shadow: rgba(224, 165, 72, 0.3);
+
+  /* What a raised surface (a tile) is, on this ground */
+  --surface: rgba(232, 239, 233, 0.028);
+  --surface-hi: rgba(232, 239, 233, 0.055);
+
+  /*
+     The seam: the ground the next section stands on, arriving as a fade so
+     the change of voice is not a rule drawn across the page.
+
+     The stops are eased rather than evenly spaced. A linear ramp spends
+     most of its length at the halfway mix — which, between two grounds this
+     far apart, is a band of grey. Weighting the stops toward the boundary
+     keeps each section its own colour until the last moment and leaves the
+     blend too short to read as fog.
+
+     Because the tones strictly alternate, one value serves both edges.
+  */
+  --seam-fade: linear-gradient(
+    to top,
+    rgba(242, 245, 241, 1) 0%,
+    rgba(242, 245, 241, 0.95) 16%,
+    rgba(242, 245, 241, 0.76) 36%,
+    rgba(242, 245, 241, 0.42) 60%,
+    rgba(242, 245, 241, 0.15) 80%,
+    rgba(242, 245, 241, 0) 100%
+  );
+
+  background-color: var(--pine-900);
+  color: var(--ink-1);
+}
+
+.tone-paper {
+  --ink-1: var(--on-paper-1);
+  --ink-2: var(--on-paper-2);
+  --ink-3: var(--on-paper-3);
+  --ink-4: var(--on-paper-4);
+
+  --accent: var(--maroon);
+  --accent-soft: rgba(80, 18, 20, 0.3);
+  --accent-line: rgba(80, 18, 20, 0.4);
+  --on-accent: var(--paper);
+  --accent-hi: var(--maroon-dark);
+  --accent-shadow: rgba(80, 18, 20, 0.28);
+
+  --surface: rgba(18, 37, 31, 0.024);
+  --surface-hi: rgba(18, 37, 31, 0.05);
+
+  --seam-fade: linear-gradient(
+    to top,
+    rgba(11, 36, 31, 1) 0%,
+    rgba(11, 36, 31, 0.95) 16%,
+    rgba(11, 36, 31, 0.76) 36%,
+    rgba(11, 36, 31, 0.42) 60%,
+    rgba(11, 36, 31, 0.15) 80%,
+    rgba(11, 36, 31, 0) 100%
+  );
+
+  background-color: var(--paper);
+  color: var(--ink-1);
+}
+
+/* ─── The phone is not a narrow desktop ─────────────────
+   Type here is cut to the viewport rather than scaled down from the wide
+   ramp. On a phone the headline is the entire page: it should reach both
+   edges and leave no doubt about what it is saying. Everything else steps
+   back further than it does on a desktop, because there is no room for two
+   things to compete.
+   ─────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  :root {
+    /* Sized so the hand-set line breaks still hold at 390px. Any larger
+       and lines like "learn in a classroom" break again on their own, in
+       the wrong place. */
+    --type-display: clamp(2.4rem, 11.5vw, 3.8rem);
+    --type-display-split: clamp(2.4rem, 11.5vw, 3.8rem);
+    --type-statement: clamp(1.9rem, 9vw, 3rem);
+    --type-word: clamp(1.9rem, 9vw, 2.8rem);
+    --type-sub: clamp(1rem, 4.4vw, 1.15rem);
+    --type-body: clamp(0.95rem, 4vw, 1.05rem);
+  }
+}
+
+/* ─── Base Reset ────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  /* Anchor links and in-page jumps clear the fixed header bar */
+  scroll-padding-top: 96px;
+}
+
+body {
+  min-height: 100%;
+  /* Vertical scrolling is enabled; nothing should ever scroll sideways */
+  overflow-x: hidden;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Global Utility ────────────────────────────────── */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--pine-900);
+}
+
+/* Gold is the focus colour on both grounds — it is the only value in the
+   palette that clears 4.5:1 against pine and still reads on paper as a mark. */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Anything that animates does so only by consent */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

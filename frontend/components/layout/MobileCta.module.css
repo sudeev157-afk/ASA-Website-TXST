@@ -1,0 +1,38 @@
+/* ═══════════════════════════════════════════════════════
+   Thumb-zone action – MobileCta.module.css
+   ═══════════════════════════════════════════════════════ */
+
+.bar {
+  display: none;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  /* Under the full-screen menu, over everything else */
+  z-index: 80;
+  padding: 0.85rem 1.25rem;
+  /* Clears the home indicator on a notched phone */
+  padding-bottom: calc(0.85rem + env(safe-area-inset-bottom, 0px));
+  pointer-events: none;
+  /* No plate behind it: a floating pill lets the page keep its ground, and
+     the gradient is only there so the button never lands on top of a line
+     of text it cannot be told apart from. */
+  background: linear-gradient(
+    to top,
+    rgba(11, 36, 31, 0.16) 0%,
+    rgba(11, 36, 31, 0) 100%
+  );
+}
+
+.button {
+  pointer-events: auto;
+  width: 100%;
+  justify-content: center;
+  box-shadow: 0 12px 30px -8px rgba(11, 36, 31, 0.45);
+}
+
+@media (max-width: 900px) {
+  .bar {
+    display: block;
+  }
+}
