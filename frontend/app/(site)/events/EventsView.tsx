@@ -1,13 +1,13 @@
 "use client";
 
-import ActionButton from "@/app/Components/ActionButton";
-import LineRise from "@/app/Components/LineRise";
-import { Cadence, CalendarFill } from "@/app/Components/Motifs";
-import Reveal from "@/app/Components/Reveal";
-import SectionLabel from "@/app/Components/SectionLabel";
-import { JOIN_FORM_URL } from "@/app/lib/links";
-import { ADD_TO_CALENDAR_URL, FIRST_MEETING } from "@/app/lib/meeting";
-import styles from "./events.module.css";
+import ActionButton from "@/components/ui/ActionButton";
+import LineRise from "@/components/ui/LineRise";
+import { Cadence, CalendarFill } from "@/components/graphics/Motifs";
+import Reveal from "@/components/ui/Reveal";
+import SectionLabel from "@/components/ui/SectionLabel";
+import { JOIN_FORM_URL } from "@/lib/links";
+import { ADD_TO_CALENDAR_URL, FIRST_MEETING } from "@/lib/meeting";
+import styles from "./EventsView.module.css";
 
 const DETAILS = [
   { key: "Time", value: `${FIRST_MEETING.start} to ${FIRST_MEETING.end}` },
@@ -15,7 +15,7 @@ const DETAILS = [
   { key: "Then", value: FIRST_MEETING.cadence },
 ];
 
-export default function EventsPage() {
+export default function EventsView() {
   return (
     <main className={styles.page}>
       {/* ══ 1 — the first meeting ═══════════════════════ */}

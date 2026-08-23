@@ -4,20 +4,20 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import anime from "animejs";
-import ActionButton from "@/app/Components/ActionButton";
-import Bento, { type BentoItem } from "@/app/Components/Bento";
+import ActionButton from "@/components/ui/ActionButton";
+import Bento, { type BentoItem } from "@/components/ui/Bento";
 import {
   CalendarIcon,
   SparkIcon,
   UsersIcon,
-} from "@/app/Components/Icons";
-import LineRise from "@/app/Components/LineRise";
-import { Branches } from "@/app/Components/Motifs";
-import Reveal from "@/app/Components/Reveal";
-import SectionLabel from "@/app/Components/SectionLabel";
-import { JOIN_FORM_URL } from "@/app/lib/links";
-import { mulberry32 } from "@/app/lib/random";
-import styles from "./landing.module.css";
+} from "@/components/graphics/Icons";
+import LineRise from "@/components/ui/LineRise";
+import { Branches } from "@/components/graphics/Motifs";
+import Reveal from "@/components/ui/Reveal";
+import SectionLabel from "@/components/ui/SectionLabel";
+import { JOIN_FORM_URL } from "@/lib/links";
+import { mulberry32 } from "@/lib/random";
+import styles from "./HomeView.module.css";
 
 /* ────────────────────────────────────────────────────────
    The three doors.
@@ -220,7 +220,7 @@ const SOCIAL_LINKS = [
 /* ────────────────────────────────────────────────────────
    Page Component
    ──────────────────────────────────────────────────────── */
-export default function LandingPage() {
+export default function HomeView() {
   const plotRef = useRef<SVGSVGElement>(null);
 
   /* ── The field arrives, then keeps drifting ─────────── */

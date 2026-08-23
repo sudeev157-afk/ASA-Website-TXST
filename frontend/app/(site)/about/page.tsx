@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import About from "./about";
+import AboutView from "./AboutView";
 
 export const metadata: Metadata = {
   title: "About | ASA – Texas State University",
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  return <About />;
+  return <AboutView />;
 }

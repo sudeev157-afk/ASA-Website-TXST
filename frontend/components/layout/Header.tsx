@@ -6,11 +6,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import MobileCta from "./MobileCta";
-import { JOIN_FORM_URL } from "@/app/lib/links";
+import { JOIN_FORM_URL } from "@/lib/links";
 import styles from "./Header.module.css";
 
 const NAV_LINKS = [
-  { label: "Home", href: "/landing" },
+  { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Membership", href: "/membership" },
   { label: "Events", href: "/events" },
@@ -37,10 +37,10 @@ export default function Header() {
   });
 
   /* Sections may declare `data-header-theme`; otherwise fall back to the route
-     (landing sits on dark video, every other route is a white page). */
+     (home sits on dark video, every other route is a white page). */
   const isDark = sectionTheme
     ? sectionTheme === "dark"
-    : pathname.startsWith("/landing");
+    : pathname === "/";
 
   /* Track scroll position and the theme of the section under the header */
   useEffect(() => {
@@ -115,7 +115,7 @@ export default function Header() {
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
     >
       {/* ── Logo moved outside header box ── */}
-      <Link href="/landing" className={styles.floatingLogoLink} aria-label="ASA Home">
+      <Link href="/" className={styles.floatingLogoLink} aria-label="ASA Home">
         <div className={styles.floatingLogoWrapper}>
           {/* The seal is unaltered artwork, served at the size it is drawn
               at. The 1254px original stays in public/ as the master. */}

@@ -2,9 +2,9 @@
 
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import ActionButton from "@/app/Components/ActionButton";
-import Bento, { type BentoItem } from "@/app/Components/Bento";
-import { AnyMajor, OneStep } from "@/app/Components/Motifs";
+import ActionButton from "@/components/ui/ActionButton";
+import Bento, { type BentoItem } from "@/components/ui/Bento";
+import { AnyMajor, OneStep } from "@/components/graphics/Motifs";
 import {
   BriefcaseIcon,
   ChartIcon,
@@ -12,12 +12,12 @@ import {
   ResearchIcon,
   ToolsIcon,
   UsersIcon,
-} from "@/app/Components/Icons";
-import LineRise from "@/app/Components/LineRise";
-import Reveal from "@/app/Components/Reveal";
-import SectionLabel from "@/app/Components/SectionLabel";
-import { JOIN_FORM_URL } from "@/app/lib/links";
-import styles from "./membership.module.css";
+} from "@/components/graphics/Icons";
+import LineRise from "@/components/ui/LineRise";
+import Reveal from "@/components/ui/Reveal";
+import SectionLabel from "@/components/ui/SectionLabel";
+import { JOIN_FORM_URL } from "@/lib/links";
+import styles from "./MembershipView.module.css";
 
 /* ────────────────────────────────────────────────────────
    What you get.
@@ -132,7 +132,7 @@ const INITIAL_RADII = CELLS.map((c) => radiusAt(c, 0, driftSource(0)));
 /* ────────────────────────────────────────────────────────
    Page
    ──────────────────────────────────────────────────────── */
-export default function MembershipPage() {
+export default function MembershipView() {
   const svgRef = useRef<SVGSVGElement>(null);
   const pointerRef = useRef<{ x: number; y: number } | null>(null);
 

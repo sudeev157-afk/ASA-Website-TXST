@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
-import type { IconProps } from "./Icons";
+import type { IconProps } from "@/components/graphics/Icons";
 import styles from "./Bento.module.css";
 
 /**

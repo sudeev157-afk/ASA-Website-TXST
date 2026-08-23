@@ -2,25 +2,25 @@
 
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import ActionButton from "@/app/Components/ActionButton";
-import Bento, { type BentoItem } from "@/app/Components/Bento";
+import ActionButton from "@/components/ui/ActionButton";
+import Bento, { type BentoItem } from "@/components/ui/Bento";
 import {
   CampusLine,
   Cluster,
   OpenSlot,
   ScatterFit,
-} from "@/app/Components/Motifs";
+} from "@/components/graphics/Motifs";
 import {
   ChartIcon,
   ResearchIcon,
   SparkIcon,
-} from "@/app/Components/Icons";
-import LineRise from "@/app/Components/LineRise";
-import Reveal from "@/app/Components/Reveal";
-import SectionLabel from "@/app/Components/SectionLabel";
-import { AMSTAT_URL, JOIN_FORM_URL } from "@/app/lib/links";
-import { mulberry32 } from "@/app/lib/random";
-import styles from "./about.module.css";
+} from "@/components/graphics/Icons";
+import LineRise from "@/components/ui/LineRise";
+import Reveal from "@/components/ui/Reveal";
+import SectionLabel from "@/components/ui/SectionLabel";
+import { AMSTAT_URL, JOIN_FORM_URL } from "@/lib/links";
+import { mulberry32 } from "@/lib/random";
+import styles from "./AboutView.module.css";
 
 /* ────────────────────────────────────────────────────────
    Four ways in.
@@ -174,7 +174,7 @@ const INITIAL_EDGES = edgesAt(INITIAL_POINTS);
 /* ────────────────────────────────────────────────────────
    Page
    ──────────────────────────────────────────────────────── */
-export default function AboutPage() {
+export default function AboutView() {
   const svgRef = useRef<SVGSVGElement>(null);
   const pointerRef = useRef<Point | null>(null);
 

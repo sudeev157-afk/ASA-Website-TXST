@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Membership from "./membership";
+import MembershipView from "./MembershipView";
 
 export const metadata: Metadata = {
   title: "Membership | ASA – Texas State University",
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function MembershipPage() {
-  return <Membership />;
+  return <MembershipView />;
 }

@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { JOIN_FORM_URL } from "@/app/lib/links";
+import { JOIN_FORM_URL } from "@/lib/links";
 import styles from "./Footer.module.css";
 
 const NAV_LINKS = [
-  { label: "Home", href: "/landing" },
+  { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Membership", href: "/membership" },
   { label: "Events", href: "/events" },
@@ -64,7 +64,7 @@ export default function Footer() {
       <div className={styles.footerInner}>
         {/* ── Brand column ── */}
         <div className={styles.brand}>
-          <Link href="/landing" className={styles.logoLink} aria-label="ASA Home">
+          <Link href="/" className={styles.logoLink} aria-label="ASA Home">
             <span className={styles.logoWrap}>
               <Image
                 src="/Logo_ASA_transparent-256.png"

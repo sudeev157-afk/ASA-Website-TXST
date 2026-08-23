@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, Inter_Tight, IBM_Plex_Mono } from "next/font/google";
-import MotionProvider from "./Components/MotionProvider";
+import MotionProvider from "@/components/providers/MotionProvider";
 import "./globals.css";
 
 /* Three voices, self-hosted at build time by next/font — no third-party

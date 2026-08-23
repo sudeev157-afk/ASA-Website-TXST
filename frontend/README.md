@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ASA — Association for Statistics and Analytics
 
-## Getting Started
-
-First, run the development server:
+Website for the Association for Statistics and Analytics at Texas State University.
+Next.js App Router, shipped as a static export (`next build` emits `out/`).
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev     # http://localhost:3000
+npm run build   # static site -> out/
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+app/
+├── layout.tsx              root layout: fonts, site metadata, MotionProvider
+├── globals.css             tokens + base styles
+└── (site)/                 route group — shared chrome, adds nothing to URLs
+    ├── layout.tsx          Header + Footer, applied to every page below
+    ├── page.tsx            /             -> HomeView
+    ├── HomeView.tsx
+    ├── about/page.tsx      /about        -> AboutView
+    ├── events/page.tsx     /events       -> EventsView
+    └── membership/page.tsx /membership   -> MembershipView
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+components/
+├── layout/     Header, Footer, MobileCta   (site chrome)
+├── ui/         ActionButton, Bento, SectionLabel, LineRise, Reveal
+├── graphics/   Icons, Motifs               (inline SVG artwork)
+└── providers/  MotionProvider
 
-## Learn More
+lib/            links.ts, meeting.ts, random.ts
+public/         logos and images, pre-sized (images are unoptimized under export)
+assets-source/  original assets, not shipped
+```
 
-To learn more about Next.js, take a look at the following resources:
+Each route folder holds a `page.tsx` and its view:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **`page.tsx`** — server component. Exports `metadata`, renders the view. Nothing else.
+- **`*View.tsx`** — the `"use client"` component with the page's markup and animation,
+  paired with a colocated `*View.module.css`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Imports resolve through the `@/` alias from the `frontend/` root — `@/components/ui/ActionButton`,
+`@/lib/links`.

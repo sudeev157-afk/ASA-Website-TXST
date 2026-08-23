@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
-import ActionButton from "./ActionButton";
-import { JOIN_FORM_URL } from "@/app/lib/links";
+import ActionButton from "@/components/ui/ActionButton";
+import { JOIN_FORM_URL } from "@/lib/links";
 import styles from "./MobileCta.module.css";
 
 /**

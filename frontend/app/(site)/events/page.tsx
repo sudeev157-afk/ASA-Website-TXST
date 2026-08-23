@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Events from "./events";
+import EventsView from "./EventsView";
 
 export const metadata: Metadata = {
   title: "Events | ASA – Texas State University",
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function EventsPage() {
-  return <Events />;
+  return <EventsView />;
 }
