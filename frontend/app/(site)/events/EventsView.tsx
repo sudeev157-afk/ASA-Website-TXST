@@ -31,7 +31,7 @@ export default function EventsView() {
               lines={[
                 `${FIRST_MEETING.weekday},`,
                 <>
-                  <span className={styles.accent}>{FIRST_MEETING.date}</span>.
+                  <span className={styles.accent}>{FIRST_MEETING.date}</span>
                 </>,
               ]}
             />
@@ -50,9 +50,6 @@ export default function EventsView() {
             <Reveal delay={0.45} className={styles.actions}>
               <ActionButton href={ADD_TO_CALENDAR_URL} external>
                 Add to calendar
-              </ActionButton>
-              <ActionButton href={JOIN_FORM_URL} variant="ghost" external>
-                Join ASA
               </ActionButton>
             </Reveal>
           </div>
@@ -88,9 +85,6 @@ export default function EventsView() {
             <Reveal delay={0.4} className={styles.actions}>
               <ActionButton href={JOIN_FORM_URL} external>
                 Join ASA
-              </ActionButton>
-              <ActionButton href="/membership" variant="ghost">
-                See membership
               </ActionButton>
             </Reveal>
           </div>
