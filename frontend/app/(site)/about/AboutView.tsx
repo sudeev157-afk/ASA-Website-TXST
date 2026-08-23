@@ -60,7 +60,6 @@ const BOARD = [
   "President",
   "Vice President",
   "Treasurer",
-  "Secretary",
   "Events & Outreach",
   "Faculty Advisor",
 ];
@@ -308,8 +307,6 @@ export default function AboutView() {
         </div>
 
         <div className={styles.heroInner}>
-          <SectionLabel onLoad>About</SectionLabel>
-
           <LineRise
             as="h1"
             onLoad
@@ -366,7 +363,7 @@ export default function AboutView() {
         data-header-theme="dark"
       >
         <div className={styles.inner}>
-          <SectionLabel>Four ways in</SectionLabel>
+          <SectionLabel>what we will be doing</SectionLabel>
 
           <Bento items={WAYS_IN} className={styles.bentoWays} />
         </div>
@@ -411,7 +408,7 @@ export default function AboutView() {
       >
         <div className={`${styles.inner} ${styles.innerSplit}`}>
           <div className={styles.col}>
-            <SectionLabel>Beyond campus</SectionLabel>
+            <SectionLabel>Beyond The campus</SectionLabel>
             <LineRise
               className={styles.statement}
               lines={["This does not", "stop at the", "campus line."]}
@@ -425,7 +422,7 @@ export default function AboutView() {
           <div className={`${styles.notes} ${styles.spanAll}`}>
             <Reveal delay={0.08}>
               <p className={styles.noteBody}>
-                We&rsquo;re working on a connection with the American
+                We are working on a connection with the American
                 Statistical Association. It would open up resources, events,
                 and research outside the university.
               </p>
@@ -439,15 +436,14 @@ export default function AboutView() {
                 external
                 className={styles.noteAction}
               >
-                Visit amstat.org
+                American Statistical Association
               </ActionButton>
             </Reveal>
 
             <Reveal delay={0.16}>
               <p className={styles.noteBody}>
-                Analytics turns up in finance, marketing, operations, and
-                management. We give you somewhere to practice it before it&rsquo;s
-                your job.
+                Analytics and Statistics turns up in finance, marketing, operations, and
+                management. We give you somewhere to practice it.
               </p>
               <p className={styles.noteMeta}>McCoy College of Business</p>
             </Reveal>
