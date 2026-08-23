@@ -27,11 +27,21 @@
 
 /* The pine screen carries a wash; the paper one below it does not need one */
 .stage:first-child {
+  /* The ridgeline reaches past the section on a slice crop */
+  overflow: hidden;
   background-image: radial-gradient(
     110% 85% at 12% 100%,
     rgba(224, 165, 72, 0.13) 0%,
     transparent 62%
   );
+}
+
+/* This screen's crop of the shared ridgeline. Held back from the hero's
+   0.32: the calendar motif sits on the right, exactly where the tall front
+   ridges land, and the two read as noise if the field is given equal
+   weight. */
+.plotLayer {
+  --ridgeline-opacity: 0.24;
 }
 
 

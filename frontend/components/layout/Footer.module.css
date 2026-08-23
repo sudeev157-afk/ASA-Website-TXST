@@ -5,6 +5,8 @@
    ─────────────────────────────────────────────────────── */
 
 .footer {
+  position: relative;
+  overflow: hidden;
   background-color: var(--pine-900);
   color: var(--on-pine-2);
   font-family: var(--font-body);
@@ -13,8 +15,42 @@
   border-top: 1px solid var(--hairline-inverse);
 }
 
+/*
+   No gold wash down here. The hero carries one, but it works there because
+   a 900px-tall section turns that ellipse into a corner glow. The footer is
+   a third of the height, so the same gradient flattens against the bottom
+   edge and reads as a bar rather than a glow. The ridgeline alone carries
+   the gold.
+*/
+
+/* The footer's crop of the shared ridgeline. `YMax` anchors the field to
+   the bottom of the page, so the crop keeps the tall front ridges rather
+   than a thin slice of the middle — the footer is a few hundred pixels
+   tall, and the middle band reads as stray arcs at that height. */
+.plotLayer {
+  --ridgeline-opacity: 0.42;
+}
+
+/* Scrim: sits between the ridgeline and the columns, so three columns of
+   small text keep solid ground under them. */
+.footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(11, 36, 31, 0.1) 0%,
+    rgba(11, 36, 31, 0.3) 45%,
+    rgba(11, 36, 31, 0.5) 100%
+  );
+}
+
 /* ── Main grid ─────────────────────────────────────────── */
 .footerInner {
+  position: relative;
+  z-index: 3;
   max-width: 1220px;
   margin: 0 auto;
   padding: 3.6rem 2rem 2.8rem;

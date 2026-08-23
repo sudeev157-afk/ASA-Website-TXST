@@ -1,0 +1,40 @@
+/* ─── Ridgeline ─────────────────────────────────────────
+   The drifting kernel-density field. Ground for a pine
+   surface, never a graphic sitting on one.
+   ─────────────────────────────────────────────────────── */
+
+.layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  /* Sits well back: atmosphere, not a graphic on the page. Callers dial it
+     per surface — the hero can carry more of it than a footer can. */
+  opacity: var(--ridgeline-opacity, 0.32);
+}
+
+.plot {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.ridge {
+  /* Set per-ridge in the markup: 0.32 at the back, 1 at the front */
+  opacity: var(--depth);
+}
+
+/* Opaque, and the same colour as the ground. Invisible in itself, but it is
+   what makes each ridge hide the crests behind it, and that occlusion is
+   the whole effect. */
+.ridgeFill {
+  fill: var(--pine-900);
+}
+
+.ridgeCrest {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}

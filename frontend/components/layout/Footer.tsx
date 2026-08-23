@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Ridgeline from "@/components/graphics/Ridgeline";
 import {
   CONTACT_EMAIL,
   CONTACT_EMAIL_HREF,
@@ -70,6 +71,10 @@ export default function Footer() {
 
   return (
     <footer className={styles.footer}>
+      {/* The same drifting field as the home hero, seen at a shallower crop.
+          It runs only while the footer is actually on screen. */}
+      <Ridgeline className={styles.plotLayer} preserveAspectRatio="xMidYMax slice" />
+
       <div className={styles.footerInner}>
         {/* ── Brand column ── */}
         <div className={styles.brand}>

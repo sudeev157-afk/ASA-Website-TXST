@@ -3,6 +3,7 @@
 import ActionButton from "@/components/ui/ActionButton";
 import LineRise from "@/components/ui/LineRise";
 import { Cadence, CalendarFill } from "@/components/graphics/Motifs";
+import Ridgeline from "@/components/graphics/Ridgeline";
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { JOIN_FORM_URL } from "@/lib/links";
@@ -20,6 +21,10 @@ export default function EventsView() {
     <main className={styles.page}>
       {/* ══ 1 — the first meeting ═══════════════════════ */}
       <section className={`${styles.stage} tone-pine`} data-header-theme="dark">
+        {/* The same drifting field as the home hero — this is the other
+            screen the site opens on, so it stands on the same ground. */}
+        <Ridgeline className={styles.plotLayer} />
+
         <div className={styles.inner}>
           <div className={styles.col}>
             <SectionLabel onLoad>First meeting</SectionLabel>
