@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import MobileCta from "./MobileCta";
+import { asset } from "@/lib/asset";
 import { JOIN_FORM_URL } from "@/lib/links";
 import styles from "./Header.module.css";
 
@@ -120,7 +121,7 @@ export default function Header() {
           {/* The seal is unaltered artwork, served at the size it is drawn
               at. The 1254px original stays in public/ as the master. */}
           <Image
-            src="/Logo_ASA_transparent-256.png"
+            src={asset("/Logo_ASA_transparent-256.png")}
             alt="Association for Statistics and Analytics – Texas State University"
             width={76}
             height={76}

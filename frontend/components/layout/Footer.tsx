@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Ridgeline from "@/components/graphics/Ridgeline";
+import { asset } from "@/lib/asset";
 import {
   CONTACT_EMAIL,
   CONTACT_EMAIL_HREF,
@@ -81,7 +82,7 @@ export default function Footer() {
           <Link href="/" className={styles.logoLink} aria-label="ASA Home">
             <span className={styles.logoWrap}>
               <Image
-                src="/Logo_ASA_transparent-256.png"
+                src={asset("/Logo_ASA_transparent-256.png")}
                 alt="Association for Statistics and Analytics"
                 width={56}
                 height={56}
