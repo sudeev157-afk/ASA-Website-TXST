@@ -14,6 +14,7 @@ import { Branches } from "@/components/graphics/Motifs";
 import Ridgeline from "@/components/graphics/Ridgeline";
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
+import { asset } from "@/lib/asset";
 import { CONTACT_EMAIL_HREF, INSTAGRAM_URL, JOIN_FORM_URL } from "@/lib/links";
 import styles from "./HomeView.module.css";
 
@@ -197,7 +198,7 @@ export default function HomeView() {
           >
             <div className={styles.heroMediaFrame}>
               <Image
-                src="/hero-placeholder.jpg"
+                src={asset("/hero-placeholder.jpg")}
                 alt=""
                 fill
                 priority
