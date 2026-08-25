@@ -131,6 +131,12 @@ export default function Footer() {
             Twice a month on Wednesdays
           </p>
           <p className={styles.connectDetail}>
+            5:00PM - 6:00PM
+          </p>
+          <p className={styles.connectDetail}>
+            McCoy Building, Room 240
+          </p>
+          <p className={styles.connectDetail}>
             Texas State University, San Marcos
           </p>
           <a href={CONTACT_EMAIL_HREF} className={styles.connectEmail}>
