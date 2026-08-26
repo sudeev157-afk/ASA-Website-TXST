@@ -90,12 +90,24 @@ export default function Footer() {
               />
             </span>
           </Link>
+          <div className={styles.connectColumn}>
           <p className={styles.tagline}>Patterns into Possibilities.</p>
-          <p className={styles.brandBlurb}>
-            A student organization at Texas State University for anyone
-            interested in statistics, analytics, research, and working with
-            data.
+          <p className={styles.connectDetail}>
+            Texas State University
           </p>
+          <p className={styles.connectDetail}>
+            ISAN Department
+          </p>
+          <p className={styles.connectDetail}>
+            McCoy Hall 404
+          </p>
+          <p className={styles.connectDetail}>
+            San Marcos, Texas, 78666
+          </p>
+          <p className={styles.connectDetail}>
+            (512)245-2291
+          </p>
+          </div>
           <span className={styles.copyright}>
             © {year} ASA TXST. All rights reserved.
           </span>
@@ -135,7 +147,7 @@ export default function Footer() {
             5:00PM - 6:00PM
           </p>
           <p className={styles.connectDetail}>
-            McCoy Building, Room 240
+            McCoy Building, Room 240 - Meerting Room
           </p>
           <p className={styles.connectDetail}>
             Texas State University, San Marcos
