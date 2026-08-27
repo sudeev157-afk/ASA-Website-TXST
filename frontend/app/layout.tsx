@@ -33,7 +33,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ASA - Association for Statistics and Analytics | Texas State University",
+  title: "ASA - Texas State University",
   description:
     "The Association for Statistics and Analytics at Texas State University. A student organization for anyone interested in statistics, analytics, research, and working with data.",
 };
