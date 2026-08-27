@@ -15,7 +15,7 @@ import Ridgeline from "@/components/graphics/Ridgeline";
 import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { asset } from "@/lib/asset";
-import { CONTACT_EMAIL_HREF, INSTAGRAM_URL, JOIN_FORM_URL } from "@/lib/links";
+import { CONTACT_EMAIL_HREF, INSTAGRAM_URL, JOIN_FORM_URL, LINKEDIN_URL } from "@/lib/links";
 import styles from "./HomeView.module.css";
 
 /* ────────────────────────────────────────────────────────
@@ -105,7 +105,7 @@ const SOCIAL_LINKS = [
   {
     /* TODO: swap "#" for the real profile URL once the page exists. */
     label: "LinkedIn",
-    href: "#",
+    href: LINKEDIN_URL,
     external: true,
     Icon: LinkedInIcon,
     brandClass: styles.socialLinkedin,
@@ -288,7 +288,7 @@ export default function HomeView() {
             </ul>
           </Reveal>
         </div>
-      </section>
+      </section>z
     </main>
   );
 }

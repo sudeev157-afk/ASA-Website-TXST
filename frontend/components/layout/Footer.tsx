@@ -7,6 +7,7 @@ import {
   CONTACT_EMAIL_HREF,
   INSTAGRAM_URL,
   JOIN_FORM_URL,
+  LINKEDIN_URL,
 } from "@/lib/links";
 import styles from "./Footer.module.css";
 
@@ -43,7 +44,7 @@ const SOCIAL_LINKS = [
   {
     /* TODO: swap "#" for the real profile URL once the page exists. */
     label: "LinkedIn",
-    href: "#",
+    href: LINKEDIN_URL,
     external: true,
     icon: (
       <svg className={styles.socialSvg} {...iconProps}>
