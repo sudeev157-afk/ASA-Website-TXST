@@ -288,7 +288,7 @@ export default function HomeView() {
             </ul>
           </Reveal>
         </div>
-      </section>
+      </section>z
     </main>
   );
 }
