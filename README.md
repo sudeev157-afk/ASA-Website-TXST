@@ -1,68 +1,59 @@
-# ASA — Association for Statistics and Analytics, Texas State University
+# ASA at Texas State
 
-The official website of the **Association for Statistics and Analytics (ASA)** at
-Texas State University — a student organization for anyone interested in
-statistics, analytics, research, and working with data.
+This is the website for the Association for Statistics and Analytics at Texas
+State University. We're a student org for anyone who likes working with data:
+stats and analytics majors, but also people from other departments who do
+research, or who just want to get better at this stuff.
 
-The site is where prospective and current members find out who we are, how to
-join, and when we meet:
+The site is mostly for people who haven't joined yet. Four pages:
 
-| Page | What it is for |
-| --- | --- |
-| `/` | The landing page — what ASA is, in one screen |
-| `/about` | The club's purpose, and its relationship to Texas State and the national ASA |
-| `/membership` | Who can join, what membership gets you, and the sign-up form |
-| `/events` | Meeting time, place, cadence, and an add-to-calendar link |
+- `/` tells you what ASA is
+- `/about` covers what we actually do, and how we relate to the department and
+  to the national ASA
+- `/membership` is who can join and the sign-up form
+- `/events` has the meeting time, where it is, and a button to drop it in your
+  calendar
 
-**Live site:** https://sudeev157-afk.github.io/ASA-Website-TXST/
+It's live at https://sudeev157-afk.github.io/ASA-Website-TXST/
 
-## How it is built
+## How it's built
 
-A single Next.js application in [frontend/](frontend/), shipped as a **static
-export** — `next build` emits a plain `out/` folder of HTML, CSS, and JS with no
-server behind it. Every push to `main` is built and published to GitHub Pages by
-[.github/workflows/nextjs.yml](.github/workflows/nextjs.yml).
+One Next.js app, all of it in [frontend/](frontend/). It builds to static files
+and gets published to GitHub Pages every time we push to `main`, which is what
+[.github/workflows/nextjs.yml](.github/workflows/nextjs.yml) does.
 
-There is no backend, no database, and no CMS. Content lives in the components
-and in a handful of small modules under `frontend/lib/` (meeting details, outbound
-links), so updating the site means editing code and pushing.
+No backend, no database, no CMS. Meeting times and links live in small files
+under `frontend/lib/`, so updating the site means editing code and pushing. That
+was a deliberate tradeoff: a club site gets updated a few times a semester, and
+running a CMS for that is more work than it saves.
 
-For anything about the code itself — structure, conventions, how to run it
-locally — see [frontend/README.md](frontend/README.md).
+If you want to know how the code is organized, that's in
+[frontend/README.md](frontend/README.md).
 
-## Maintainers
+## Who runs this
 
-Built and maintained by **Sudip Bhandari** and **Bibesh Timalsina** for the
-Texas State University chapter of ASA.
+Sudip Bhandari and Bibesh Timalsina. We built it and we maintain it.
 
-Club contact: asatxst@gmail.com
+Club email: asatxst@gmail.com
 
 ## Contributions
 
-**This project is closed to outside contributions.** We are not accepting pull
-requests or feature issues from outside the maintainers — the site is a small,
-opinionated piece of work for one specific student organization, and we would
-rather keep it that way than manage it as an open project.
+We're not taking outside contributions, so please don't open pull requests. It's
+a small site for one specific club and it's easier for the two of us to just
+keep it in our heads.
 
-If you have found a genuine problem with the live site (a broken link, wrong
-meeting information, an accessibility issue), email us at the address above
-instead of opening a PR.
+If something on the live site is broken (dead link, wrong meeting time, anything
+that doesn't work with a screen reader) we'd genuinely like to know. Email us at
+the address above.
 
-## Using this as a starting point
+## If you want to copy it
 
-You are welcome to take the idea, the structure, or the code and build your own
-club's site from it — **as long as you credit us.** The project is
-[MIT licensed](LICENSE), so the terms are the familiar ones: do what you like
-with it, keep the copyright notice and license text in what you ship.
+Go ahead. If you're building a site for your own club and this is a useful
+starting point, take it. It's [MIT licensed](LICENSE), so keep the license file
+in whatever you ship, and credit us somewhere people can see it: a line in your
+README, or in your site footer, naming Sudip Bhandari and Bibesh Timalsina and
+linking back here.
 
-In practice, crediting us means:
-
-- Keep [LICENSE](LICENSE) intact in your copy.
-- Say where it came from — a line in your own README, or a credit in your site's
-  footer, naming Sudip Bhandari and Bibesh Timalsina and linking back to this
-  repository.
-
-What you should **not** carry over is our identity: the ASA seal and logos in
-`frontend/public/`, the club name, and the Texas State association are ours and
-are not covered by the code license. Swap in your own artwork and your own
-organization's name.
+Don't take our identity with it, though. The ASA seal and logos in
+`frontend/public/`, the club name, and the Texas State connection aren't ours to
+license to you. Use your own artwork and your own org's name.
