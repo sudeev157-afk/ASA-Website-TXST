@@ -14,7 +14,7 @@ The site is mostly for people who haven't joined yet. Four pages:
 - `/events` has the meeting time, where it is, and a button to drop it in your
   calendar
 
-It's live at https://sudeev157-afk.github.io/ASA-Website-TXST/
+It's live at https://asa-website-txst.vercel.app/
 
 ## How it's built
 
