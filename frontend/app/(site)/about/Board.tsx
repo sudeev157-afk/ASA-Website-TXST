@@ -51,6 +51,12 @@ type BoardMember = {
   major: string;
   /** A path in public/ */
   photo: string;
+  /**
+   * Where to aim the crop, as a CSS `object-position`. Only for a photo the
+   * default framing gets wrong — a tight, passport-style shot comes out as
+   * just a face, and aiming lower brings the shoulders back into frame.
+   */
+  focus?: string;
   /** Where the card sits in the honeycomb on a desktop */
   seat: Seat;
 };
@@ -65,27 +71,33 @@ type BoardMember = {
    Listed row by row, as the honeycomb reads, which is also the order a
    screen reader and a phone get.
 */
-const PLACEHOLDER_PHOTO = "/board/placeholder.svg";
+const Faculty_Advisor = "/board/Advisor.jpg";
+const President = "/board/Rohan.png";
+const Vice_President = "/board/sudip.jpg";
+const IT_Support = "/board/Bibesh.JPEG";
+const Treasurer = "/board/Aubrey.jpeg";
+const Member_Outreach = "/board/Anthony.jpeg";
+const Director_of_Marketing = "/board/Britney.jpeg";
 
 const BOARD: BoardMember[] = [
-  { seat: "hub", role: "Faculty Advisor", name: "Dr. Rasim M Musal", major: "Associate Professor - Department of Information Systems & Analytics", photo: PLACEHOLDER_PHOTO },
-  { seat: "nw", role: "President", name: "Rohan Dahal", major: "Major: CIS(Business Analytics)", photo: PLACEHOLDER_PHOTO },
-  { seat: "ne", role: "Vice President", name: "Sudip Bhandari", major: "Major: CIS(Business Analytics)", photo: PLACEHOLDER_PHOTO },
-  { seat: "e", role: "IT Support", name: "Bibesh Timalsina", major: "Major: Computer Science Minor: Data Analytics", photo: PLACEHOLDER_PHOTO },
-  { seat: "w", role: "Treasurer", name: "Aubrey Dang", major: "Major: CIS(Business Analytics)", photo: PLACEHOLDER_PHOTO },
+  { seat: "hub", role: "Faculty Advisor", name: "Dr. Rasim M Musal", major: "Associate Professor - Department of Information Systems & Analytics", photo: Faculty_Advisor },
+  { seat: "nw", role: "President", name: "Rohan Dahal", major: "Major: CIS(Business Analytics)", photo: President },
+  { seat: "ne", role: "Vice President", name: "Sudip Bhandari", major: "Major: CIS(Business Analytics)", photo: Vice_President },
+  { seat: "e", role: "IT Support", name: "Bibesh Timalsina", major: "Major: Computer Science Minor: Data Analytics", photo: IT_Support },
+  { seat: "w", role: "Treasurer", name: "Aubrey Dang", major: "Major: CIS(Business Analytics)", photo: Treasurer, focus: "50% 60%" },
   {
     seat: "sw",
     role: "Member Outreach & Events Manager",
     name: "Anthony Ramos",
     major: "Major: Computer Information Systems",
-    photo: PLACEHOLDER_PHOTO,
+    photo: Member_Outreach,
   },
   {
     seat: "se",
     role: "Director of Marketing & Social Media",
     name: "Britney Zuniga",
     major: "Major: Business Analytics",
-    photo: PLACEHOLDER_PHOTO,
+    photo: Director_of_Marketing,
   },
 ];
 
@@ -344,7 +356,7 @@ export default function Board() {
       </svg>
 
       <ul className={styles.board}>
-        {BOARD.map(({ seat, role, name, major, photo }) => {
+        {BOARD.map(({ seat, role, name, major, photo, focus }) => {
           const arr = arrival(seat);
           const isHub = seat === "hub";
 
@@ -384,6 +396,7 @@ export default function Board() {
                         fill
                         sizes="(max-width: 640px) 50vw, (max-width: 900px) 45vw, 380px"
                         className={styles.photoImg}
+                        style={focus ? { objectPosition: focus } : undefined}
                       />
                     </motion.div>
                   </motion.div>
