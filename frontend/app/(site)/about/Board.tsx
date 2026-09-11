@@ -73,7 +73,7 @@ type BoardMember = {
 */
 const Faculty_Advisor = "/board/Advisor.jpg";
 const President = "/board/Rohan.png";
-const Vice_President = "/board/sudip.jpg";
+const Vice_President = "/board/Sudip.jpg";
 const IT_Support = "/board/Bibesh.JPEG";
 const Treasurer = "/board/Aubrey.jpeg";
 const Member_Outreach = "/board/Anthony.jpeg";
