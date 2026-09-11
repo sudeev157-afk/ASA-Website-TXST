@@ -256,33 +256,6 @@
   grid-area: c;
 }
 
-/* ── Roster ─────────────────────────────────────────── */
-.roster {
-  list-style: none;
-  max-width: 760px;
-}
-
-.rosterRow {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 2rem;
-  padding: clamp(0.85rem, 1.8vh, 1.15rem) 0;
-  border-bottom: 1px solid var(--ink-4);
-  font-family: var(--font-body);
-  font-size: clamp(1rem, 1.4vw, 1.2rem);
-  letter-spacing: -0.012em;
-  color: var(--ink-2);
-}
-
-.rosterName {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ink-4);
-}
-
 /* ── Beyond campus ──────────────────────────────────── */
 .notes {
   display: grid;
@@ -400,10 +373,6 @@
   .actions {
     align-items: stretch;
     flex-direction: column;
-  }
-
-  .rosterRow {
-    font-size: 1rem;
   }
 }
 

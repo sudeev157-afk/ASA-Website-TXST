@@ -87,35 +87,6 @@
   z-index: 1;
 }
 
-/* ── The arrow loop ─────────────────────────────────── */
-/* A window exactly one arrow wide. The track holds two. */
-.window {
-  position: relative;
-  z-index: 1;
-  display: block;
-  width: 18px;
-  height: 18px;
-  overflow: hidden;
-}
-
-.track {
-  display: flex;
-  width: 200%;
-  height: 100%;
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.button:hover .track {
-  /* Half the track is one arrow — the first leaves as the second arrives */
-  transform: translateX(-50%);
-}
-
-.arrow {
-  flex: 0 0 50%;
-  width: 18px;
-  height: 18px;
-}
-
 /* Full width when the row becomes a column on a phone */
 @media (max-width: 900px) {
   .button {
