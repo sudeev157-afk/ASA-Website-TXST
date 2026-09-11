@@ -97,7 +97,7 @@ export default function Footer() {
             Texas State University
           </p>
           <p className={styles.connectDetail}>
-            ISAN Department
+            ISA Department
           </p>
           <p className={styles.connectDetail}>
             McCoy Hall 404

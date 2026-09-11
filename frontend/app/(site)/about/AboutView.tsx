@@ -6,7 +6,6 @@ import ActionButton from "@/components/ui/ActionButton";
 import Bento, { type BentoItem } from "@/components/ui/Bento";
 import {
   CampusLine,
-  Cluster,
   OpenSlot,
   ScatterFit,
 } from "@/components/graphics/Motifs";
@@ -20,6 +19,7 @@ import Reveal from "@/components/ui/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { AMSTAT_URL, JOIN_FORM_URL } from "@/lib/links";
 import { mulberry32 } from "@/lib/random";
+import Board from "./Board";
 import styles from "./AboutView.module.css";
 
 /* ────────────────────────────────────────────────────────
@@ -54,14 +54,6 @@ const WAYS_IN: BentoItem[] = [
     className: styles.tileC,
     from: { x: 44 },
   },
-];
-
-const BOARD = [
-  "President",
-  "Vice President",
-  "Treasurer",
-  "Events & Outreach",
-  "Faculty Advisor",
 ];
 
 /* ────────────────────────────────────────────────────────
@@ -374,30 +366,16 @@ export default function AboutView() {
         className={`${styles.stage} tone-paper`}
         data-header-theme="light"
       >
-        <div className={`${styles.inner} ${styles.innerSplit}`}>
+        <div className={styles.inner}>
           <div className={styles.col}>
             <SectionLabel>The board</SectionLabel>
             <LineRise
               className={styles.statement}
               lines={["Student-led.", "Faculty-guided."]}
             />
-
-            {/* TODO: names go beside the roles once the officers are set */}
-            <ul className={styles.roster}>
-              {BOARD.map((role, i) => (
-                <li key={role}>
-                  <Reveal delay={i * 0.04} distance={14} className={styles.rosterRow}>
-                    <span>{role}</span>
-                    <span className={styles.rosterName}>To be announced</span>
-                  </Reveal>
-                </li>
-              ))}
-            </ul>
           </div>
 
-          <div className={styles.motif}>
-            <Cluster />
-          </div>
+          <Board />
         </div>
       </section>
 

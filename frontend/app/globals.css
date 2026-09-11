@@ -115,6 +115,13 @@
   --font-display: var(--font-display);
   --font-body: var(--font-body);
   --font-mono: var(--font-mono);
+
+  /* shadcn/ui's semantic names. Defined per tone below, so a component
+     added from it follows the section it sits in like everything else. */
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
 }
 
 /* ─── The two voices ────────────────────────────────────
@@ -145,6 +152,12 @@
   /* What a raised surface (a tile) is, on this ground */
   --surface: rgba(232, 239, 233, 0.028);
   --surface-hi: rgba(232, 239, 233, 0.055);
+
+  /* The same roles under shadcn/ui's names */
+  --card: rgba(232, 239, 233, 0.04);
+  --card-foreground: var(--ink-1);
+  --muted-foreground: var(--ink-2);
+  --border: var(--ink-4);
 
   /*
      The seam: the ground the next section stands on, arriving as a fade so
@@ -187,6 +200,11 @@
 
   --surface: rgba(18, 37, 31, 0.024);
   --surface-hi: rgba(18, 37, 31, 0.05);
+
+  --card: #fbfcfa;
+  --card-foreground: var(--ink-1);
+  --muted-foreground: var(--ink-2);
+  --border: var(--ink-4);
 
   --seam-fade: linear-gradient(
     to top,
