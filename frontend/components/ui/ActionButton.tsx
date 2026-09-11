@@ -13,25 +13,6 @@ import styles from "./ActionButton.module.css";
  * A server component — all of its motion is CSS, which means it costs no
  * JavaScript and honours `prefers-reduced-motion` through the global rule.
  */
-function Arrow() {
-  return (
-    <svg
-      className={styles.arrow}
-      viewBox="0 0 20 20"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.6}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <path d="M3.5 10h12" />
-      <path d="m10.8 5.2 4.8 4.8-4.8 4.8" />
-    </svg>
-  );
-}
-
 export default function ActionButton({
   href,
   children,
@@ -50,21 +31,7 @@ export default function ActionButton({
 }) {
   const cls = [styles.button, styles[variant], className].filter(Boolean).join(" ");
 
-  const inner = (
-    <>
-      <span className={styles.label}>{children}</span>
-
-      {/* Two arrows on one track in a one-arrow window: on hover the track
-          slides by exactly one arrow, so the first leaves as the second
-          arrives and the button never looks empty mid-gesture. */}
-      <span className={styles.window} aria-hidden="true">
-        <span className={styles.track}>
-          <Arrow />
-          <Arrow />
-        </span>
-      </span>
-    </>
-  );
+  const inner = <span className={styles.label}>{children}</span>;
 
   if (external) {
     return (
