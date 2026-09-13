@@ -14,7 +14,7 @@ The site is mostly for people who haven't joined yet. Four pages:
 - `/events` has the meeting time, where it is, and a button to drop it in your
   calendar
 
-It's live at https://asa-website-txst.vercel.app/
+It's live at https://www.asa-txstate.org
 
 ## How it's built
 
