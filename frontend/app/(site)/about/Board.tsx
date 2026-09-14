@@ -83,7 +83,7 @@ const BOARD: BoardMember[] = [
   { seat: "hub", role: "Faculty Advisor", name: "Dr. Rasim M Musal", major: "Associate Professor - Department of Information Systems & Analytics", photo: Faculty_Advisor },
   { seat: "nw", role: "President", name: "Rohan Dahal", major: "Major: CIS(Business Analytics)", photo: President },
   { seat: "ne", role: "Vice President", name: "Sudip Bhandari", major: "Major: CIS(Business Analytics)", photo: Vice_President },
-  { seat: "e", role: "IT Support", name: "Bibesh Timalsina", major: "Major: Computer Science Minor: Data Analytics", photo: IT_Support },
+  { seat: "e", role: "IT Support & Website Maintainer", name: "Bibesh Timalsina", major: "Major: Computer Science Minor: Data Analytics", photo: IT_Support },
   { seat: "w", role: "Treasurer", name: "Aubrey Dang", major: "Major: CIS(Business Analytics)", photo: Treasurer, focus: "50% 60%" },
   {
     seat: "sw",
