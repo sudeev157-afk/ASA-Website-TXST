@@ -148,7 +148,7 @@ export default function Footer() {
             5:00PM - 6:00PM
           </p>
           <p className={styles.connectDetail}>
-            McCoy Building, Room 240 - Meerting Room
+            McCoy Building, Room 240 - Meeting Room
           </p>
           <p className={styles.connectDetail}>
             Texas State University, San Marcos
